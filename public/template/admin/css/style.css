@@ -1,0 +1,18 @@
+ .splide__slide img {
+     width: 100%;
+ }
+ 
+ #thumbnail-slider .splide__slide {
+     padding: 4px;
+     margin: 0 7px;
+     opacity: 0.5;
+ }
+ 
+ #thumbnail-slider .splide__slide img {
+     background-color: #f1f5f7;
+     display: block !important;
+ }
+ 
+ #thumbnail-slider .splide__slide.is-active {
+     opacity: 1;
+ }
