@@ -36,11 +36,9 @@
                                             <td>'. $value['created_at'] .'</td>
                                             <td>
                                                 <ul class="list-inline table-action m-0">
+                                                    
                                                     <li class="list-inline-item">
-                                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                        <a href="'. Url::createLink('admin', 'user', 'form', ['task' => 'edit', 'id' => $value['id']]) .'" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
                                                     </li>
                                                     <li class="list-inline-item">
                                                         <a href="javascript:void(0)" onclick="deleteItem('. $value['id'] .')" class="action-icon"> <i class="mdi mdi-delete"></i></a>
@@ -62,3 +60,7 @@
     </div>
 
 </div>
+
+<!--<li class="list-inline-item">-->
+<!--    <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>-->
+<!--</li>-->

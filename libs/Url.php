@@ -19,9 +19,7 @@ class URL
     }
     public static function redirect($module, $controller, $action, $param = null, $router = null)
     {
-
         $link = self::createLink($module, $controller, $action, $param, $router);
-
         header('location: ' . $link . '');
         exit();
     }

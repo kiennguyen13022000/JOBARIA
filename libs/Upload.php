@@ -15,7 +15,7 @@ class Upload {
         }
     }
 
-    public function removeFile($folder, $prefix, $arrfile) {
+    public function removeFile($folder, $prefix = null, $arrfile) {
 
         if (is_array($arrfile)) {
             foreach ($arrfile as $item) {
@@ -25,10 +25,10 @@ class Upload {
                 @unlink($dirFile);
             }
         } else {
-            $dirFile = UPLOAD_PATH . $folder . '/' . $arrfile;
-            @unlink($dirFile);
-            $dirFile = UPLOAD_PATH . $folder . '/' . $prefix . '-' . $arrfile;
-            @unlink($dirFile);
+            $dirFile = 'public/upload/' . $folder . '/' . $arrfile;
+            if(file_exists($dirFile)){
+                @unlink($dirFile);
+            }
         }
 
     }

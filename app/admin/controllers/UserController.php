@@ -8,11 +8,22 @@ class UserController extends Controller
     }
 
     public function formAction(){
-        if(!empty($_FILES['avatar'])) $this->_arrParam['form']['avatar'] = $_FILES['avatar'];
         $this->createLinkCss();
         $this->createLinkJs();
         $this->_view->title     = 'add user';
+        if(!empty($_FILES['avatar'])) $this->_arrParam['form']['avatar'] = $_FILES['avatar'];
+        $task = 'add';
+        $requiredPass = true;
 
+        if (isset($this->_arrParam['id'])){
+            $task = 'edit';
+            $requiredPass = false;
+            $this->_view->result = $this->_model->info($this->_arrParam['id']);
+            $this->_view->result['password'] = '';
+            $this->_view->id = $this->_arrParam['id'];
+        }
+
+        $this->_view->task = $task;
         $this->_view->errors    = null;
 
         if(isset($this->_arrParam['form'])){
@@ -24,24 +35,29 @@ class UserController extends Controller
                      ->addRule('lastname', 'min', ['min' => 3])
                      ->addRule('username', 'min', ['min' => 3])
                      ->addRule('email', 'email')
-                     ->addRule('password', 'password', ['action' => 'add'])
+                     ->addRule('password', 'password', ['action' => 'add'], $requiredPass)
                      ->addRule('avatar', 'file', ['extension' => ['png', 'jpg']], false)
-                     ->addRule('confirm_password', 'confirm_password');
-
+                     ->addRule('confirm_password', 'confirm_password', null , $requiredPass);
 
             $validate->run();
-
             if(!empty($validate->getError())){
                 $this->_view->errors = $validate->getError();
+                $this->_view->result = $validate->getResult();
             }else{
-                $this->_model->form($validate->getResult(), 'add');
+                $this->_model->form($this->_arrParam, $task);
                 if($this->_model->affectedAction() == 1){
-                    Session::set('success', '\'' . 'add'.  '\'' );
-                    Url::redirect('admin', 'user', 'form');
+                    if ($task == 'add'){
+                        Session::set('success', '\'' . 'add'.  '\'' );
+                        Url::redirect('admin', 'user', 'form');
+                    }else{
+                        Session::set('success', '\'' . 'edit'.  '\'' );
+                        Url::redirect('admin', 'user', 'form', ['task' => 'edit', 'id' => $this->_arrParam['id']]);
+                    }
+
                 }
             }
 
-            $this->_view->result = $validate->getResult();
+
         }
 
 
@@ -55,6 +71,17 @@ class UserController extends Controller
 
         $this->_view->data = $this->_model->list();
         $this->_view->render('user/index');
+    }
+
+    public function deleteAction(){
+        $info = $this->_model->info($this->_arrParam['id']);
+        $affected = $this->_model->deleteItem($this->_arrParam['id']);
+        if ($affected > 0){
+            $upload = new Upload();
+            $upload->removeFile('users', null, $info['avatar']);
+            Session::set('success', '\'' . 'delete' . '\'');
+        }
+        echo json_encode(['affected' => 1]);
     }
 
     private function createLinkCss(){

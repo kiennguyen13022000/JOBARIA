@@ -16,10 +16,7 @@
  #thumbnail-slider .splide__slide.is-active {
      opacity: 1;
  }
- .preview__avatar{
-     width: 100px;
-     height: 150px;
- }
+
 
  .table-data td{
      vertical-align: middle;
