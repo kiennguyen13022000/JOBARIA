@@ -15,6 +15,7 @@ class URL
             }
         }
         $url = 'index.php?module=' . $module . '&controller=' . $controller . '&action=' . $action . $link;
+       
         return $url;
     }
     public static function redirect($module, $controller, $action, $param = null, $router = null)

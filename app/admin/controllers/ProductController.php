@@ -1,28 +1,40 @@
 <?php
 
-class UserController extends Controller
+class ProductController extends Controller
 {
     public function __construct($arrParams)
     {
         parent::__construct($arrParams);
     }
 
-    public function formAction(){
+    public function editAction(){
         $this->createLinkCss();
         $this->createLinkJs();
-        $this->_view->title     = 'add user';
+        $this->_view->title     = 'Add product';
         //$validate   = new Validate();
        // $this->form             = $this->_model->form($this->_view->_arrParam['form']);
-
-        if(isset($this->_arrParam['form'])){
+       
+        if(isset($this->_arrParam['edit'])){
             echo '<pre>';
-            print_r($this->_arrParam['form']);
+            print_r($this->_arrParam['edit']);
             echo '</pre>';
         }
 
-        $this->_view->render('user/form');
+        $this->_view->render('product/edit');
     }
-
+    function pre ($expression, $wrap = true){
+		  $css = 'border:1px dashed #06f;padding:1em;text-align:left;';
+		  if ($wrap) {
+			$str = '<p style="' . $css . '"><tt>' . str_replace(
+			  array('  ', "\n"), array('&nbsp; ', '<br />'),
+			  htmlspecialchars(print_r($expression, true))
+			) . '</tt></p>';
+		  } else {
+			$str = '<pre style="' . $css . '">'
+			. htmlspecialchars(print_r($expression, true)) . '</pre>';
+		  }
+		  echo $str;
+	}
     private function createLinkCss(){
         $css = array(
             array(

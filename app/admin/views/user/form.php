@@ -1,4 +1,5 @@
 <?php
+
 $label = ['label' => 'First name', 'id' => 'validationFirstname'];
 $inputFirstname = Helper::cmsFormGroup($label, 'text', 'firstname', null, 'form-control', null, null, 'form-group mb-3 col-lg-6');
 $label = ['label' => 'Last name', 'id' => 'validationLastname'];
