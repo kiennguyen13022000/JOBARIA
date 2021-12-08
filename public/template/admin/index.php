@@ -234,7 +234,7 @@
                             <a href="index.php?module=admin&controller=user&action=form">Add user</a>
                         </li>
                         <li>
-                            <a href="html/list.html">List User</a>
+                            <a href="index.php?module=admin&controller=user&action=index">List User</a>
                         </li>
 
                     </ul>
@@ -363,7 +363,19 @@
 <div class="rightbar-overlay"></div>
 
 <?php echo $this->linkJs; ?>
+<script>
+    let options = {
+        position: 'top-right',
+        animationDuration: 300
+    };
+    let success = <?php echo Session::get("success", '\'' . 'default' . '\'' ); Session::delete('success');?>;
+    if(success == 'add'){
+        let notifier = new AWN(options);
+        notifier.success('Them thanh cong', {durations: {success: 2000}})
+    }
 
+
+</script>
 </body>
 
 </html>

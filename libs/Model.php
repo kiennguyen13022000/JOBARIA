@@ -60,6 +60,7 @@ class Model{
 
     // insert
     private function CreateInsert($arrData){
+
         $cols = '';
         $vals = '';
         foreach($arrData as $key => $value){

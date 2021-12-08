@@ -9,8 +9,10 @@ class Session{
         $_SESSION[$key] = $value;
     }
 
-    public static function get($key){
+    public static function get($key, $default = null){
         if(isset($_SESSION[$key])) return $_SESSION[$key];
+
+        return $default;
     }
 
     public static function delete($key){
