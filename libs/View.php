@@ -8,11 +8,13 @@ class View{
 
     public function __construct($moduleName){
         $this->_moduleName = $moduleName;
-        $this->setTemplatePath();
+       $this->setTemplatePath();
     }
 
     public function render($fileInclude, $loadFull = true){
+
         $path = APPLICATION_PATH. $this->_moduleName . DS . 'views' . DS . $fileInclude . '.php';
+       
         if(file_exists($path)){
              if($loadFull == true){
                 $this->_fileView = $fileInclude;

@@ -69,6 +69,16 @@ class Helper{
 
         return $htmlFormGroup;
     }
+    public static function cmsTextFormGroup($arrlabel, $type, $name, $value = null, $class  = null, $size  = null, $required = 'required', $formGroup){
+      $label = '<label for="'. $arrlabel['id'] .'">'. $arrlabel['label'] .'</label>';
+      $strHtml = "<textarea  name='form[$name]'  cols='30' rows='10' id='$arrlabel[id]' value='$value' class='$class' size='$size' placeholder='$arrlabel[label]' $required></textarea>" ;
+      $label_input = $label . $strHtml;
+      $htmlFormGroup = '<div class="'. $formGroup .'">
+                      '. $label_input .'
+                  </div>';
+
+      return $htmlFormGroup;
+  }
 
     public static function cmsFormGroupFile($arrlabel, $type, $name, $value = null, $class  = null, $size  = null, $required = 'required', $formGroup, $errors, $folder = null, $task = 'add'){
         $placeholder = ucfirst($name);

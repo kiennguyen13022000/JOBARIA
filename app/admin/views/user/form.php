@@ -1,4 +1,5 @@
 <?php
+
 $valueFirstname         = (isset($this->result['firstname'])) ? $this->result['firstname'] : '';
 $valueLastname          = (isset($this->result['lastname'])) ? $this->result['lastname'] : '';
 $valueUsername          = (isset($this->result['username'])) ? $this->result['username'] : '';

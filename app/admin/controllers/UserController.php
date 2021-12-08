@@ -26,6 +26,10 @@ class UserController extends Controller
         $this->_view->task = $task;
         $this->_view->errors    = null;
 
+        //$validate   = new Validate();
+       // $this->form             = $this->_model->form($this->_view->_arrParam['form']);
+
+
         if(isset($this->_arrParam['form'])){
 
             $form = $this->_arrParam['form'];
