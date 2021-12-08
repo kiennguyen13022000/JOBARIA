@@ -6,4 +6,5 @@ spl_autoload_register(function ($classname){
 });
 
 $bootstrap = new Bootstrap();
+Session::init();
 $bootstrap->init();

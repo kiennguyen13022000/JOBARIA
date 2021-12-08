@@ -43,4 +43,8 @@ class View{
     public function setTemplatePath(){
         $this->_templatePath = TEMPLATE_PATH . $this->_moduleName . DS . 'index.php';
     }
+
+    public function getField($field){
+        return isset($field) ? $field : '';
+    }
 }

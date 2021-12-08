@@ -10,6 +10,7 @@ class IndexController extends Controller
     }
 
     private function createLinkCss(){
+
         $css = array(
             array(
                 'link' => 'public/template/admin/images\custom\favicon.ico',
@@ -47,6 +48,7 @@ class IndexController extends Controller
         $this->_view->linkCss = $link;
     }
     private function createLinkJs(){
+
         $css = array(
             array(
                 'link' => 'public/template/admin/js\vendor.min.js',
@@ -63,5 +65,4 @@ class IndexController extends Controller
 
         $this->_view->linkJs = $link;
     }
-
 }

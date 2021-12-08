@@ -11,7 +11,7 @@ class Controller{
     protected $_arrParam;
 
     public function __construct($arrParams){
-//        $this->setModel($arrParams['module'], $arrParams['controller']);
+        $this->setModel($arrParams['module'], $arrParams['controller']);
         $this->setView($arrParams['module']);
         $this->setParams($arrParams);
         $this->_view->arrParam = $this->_arrParam;

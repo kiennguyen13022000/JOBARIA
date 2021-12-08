@@ -11,7 +11,7 @@ class Helper{
 
     public static function cmsRadio($name, $type, $val, $checked = null){
         $radio = '<div class="custom-control custom-radio">
-                           <input type="radio" id="'. $name .''. $val .'" name="'. $name .'"
+                           <input value="'. $val .'" type="radio" id="'. $name .''. $val .'" name="form['. $name .']"
                                    class="custom-control-input" '.$checked.'>
                             <label class="custom-control-label" for="'. $name .''. $val .'">'. $type .'</label>
                         </div>';
@@ -34,28 +34,36 @@ class Helper{
 
     public static function cmsMessage($message, $type){
         $strMessage = '';
-        if(!empty($message)){
-            if($type == 'is-valid'){
-                $strMessage .= '<div class="valid-feedback">
-                                    '. $message .'
-                                </div>';
-            }else{
-                $strMessage .= '<div class="invalid-feedback">
-                                    '. $message .'
-                                </div>';
-            }
-
+        if($type == 'is-valid'){
+            $strMessage .= '<div class="valid-feedback">
+                                Good
+                            </div>';
+        }else{
+            $strMessage .= '<div class="invalid-feedback">
+                                '. $message .'
+                            </div>';
         }
         return $strMessage;
     }
 
-    public static function cmsFormGroup($arrlabel, $type, $name, $value = null, $class  = null, $size  = null, $required = 'required', $formGroup){
-        $label = '<label for="'. $arrlabel['id'] .'">'. $arrlabel['label'] .'</label>';
-        $strHtml = "<input type='$type' name='form[$name]' id='$arrlabel[id]' value='$value' class='$class' size='$size' placeholder='$arrlabel[label]' $required>" ;
+    public static function cmsFormGroup($arrlabel, $type, $name, $value = null, $class  = null, $size  = null, $required, $formGroup, $errors){
+        $star = empty($required) ? '' : '<span class="text-danger">*</span>';
+        $label = '<label for="'. $arrlabel['id'] .'">'. $arrlabel['label'] .'</label>' . $star;
+        $resultInput = '';
+        $resultFeedback = '';
+        if(isset($errors)){
+            if($required == true && isset($errors[$name])){
+                $resultInput    .= empty($errors[$name]) ? 'is-valid' : ' is-invalid';
+                $resultFeedback .= self::cmsMessage($errors[$name], $resultInput);
+                $class .= ' ' . $resultInput;
+            }
+        }
 
+
+        $strHtml = "<input type='$type' name='form[$name]' id='$arrlabel[id]' value='$value' class='$class' size='$size' placeholder='$arrlabel[label]'>" ;
         $label_input = $label . $strHtml;
         $htmlFormGroup = '<div class="'. $formGroup .'">
-                        '. $label_input .'
+                        '. $label_input . $resultFeedback .'  
                     </div>';
 
         return $htmlFormGroup;
@@ -71,18 +79,28 @@ class Helper{
       return $htmlFormGroup;
   }
 
-    public static function cmsFormGroupFile($arrlabel, $type, $name, $value = null, $class  = null, $size  = null, $required = 'required', $formGroup){
+    public static function cmsFormGroupFile($arrlabel, $type, $name, $value = null, $class  = null, $size  = null, $required = 'required', $formGroup, $errors, $img = false){
         $placeholder = ucfirst($name);
-        $label1 = '<label for="'. $arrlabel['id'] .'">'. $arrlabel['label'] .'</label>';
-        $strHtml = "<input type='$type' name='form[$name]' id='$arrlabel[id]' value='$value' class='$class' size='$size' placeholder='$placeholder' $required>" ;
+        $label1 = '<label for="'. $arrlabel['id'] .'">'. $arrlabel['label'] .'</label>'  ;
+        $resultInput = '';
+        $resultFeedback = '';
 
+        if(isset($errors[$name])){
+            $resultInput    .= empty($errors[$name]) ? 'is-valid' : ' is-invalid';
+            $resultFeedback .= self::cmsMessage($errors[$name], $resultInput);
+            $class .= ' ' . $resultInput;
+        }
+
+        $strHtml = "<input type='$type' name='$name' id='$arrlabel[id]' value='$value' class='$class' size='$size' placeholder='$placeholder' $required>" ;
+        $img = $img == false ? '' : '<img class="preview__avatar">';
         $groupFile = '<div class="custom-file">
                            '. $strHtml .' 
                            <label class="custom-file-label" for="'.$arrlabel['id'].'">Choose file</label>
+                           '. $resultFeedback .'
                         </div>';
         $label_input = $label1 . $groupFile;
         $htmlFormGroup = '<div class="'. $formGroup .'">
-                        '. $label_input .'
+                        '. $label_input . $img.'
                     </div>';
 
         return $htmlFormGroup;
