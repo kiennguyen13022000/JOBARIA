@@ -10,6 +10,7 @@ class Helper{
     }
 
     public static function cmsRadio($name, $type, $val, $checked = null){
+        $checked = $val == $checked ? 'checked' : '';
         $radio = '<div class="custom-control custom-radio">
                            <input value="'. $val .'" type="radio" id="'. $name .''. $val .'" name="form['. $name .']"
                                    class="custom-control-input" '.$checked.'>
@@ -79,7 +80,7 @@ class Helper{
       return $htmlFormGroup;
   }
 
-    public static function cmsFormGroupFile($arrlabel, $type, $name, $value = null, $class  = null, $size  = null, $required = 'required', $formGroup, $errors, $img = false){
+    public static function cmsFormGroupFile($arrlabel, $type, $name, $value = null, $class  = null, $size  = null, $required = 'required', $formGroup, $errors, $folder = null, $task = 'add'){
         $placeholder = ucfirst($name);
         $label1 = '<label for="'. $arrlabel['id'] .'">'. $arrlabel['label'] .'</label>'  ;
         $resultInput = '';
@@ -90,9 +91,18 @@ class Helper{
             $resultFeedback .= self::cmsMessage($errors[$name], $resultInput);
             $class .= ' ' . $resultInput;
         }
-
+        if (is_array($value))
+            $value = '';
         $strHtml = "<input type='$type' name='$name' id='$arrlabel[id]' value='$value' class='$class' size='$size' placeholder='$placeholder' $required>" ;
-        $img = $img == false ? '' : '<img class="preview__avatar">';
+
+        $img = '<img src="'. $value .'" class="preview__avatar ">';
+        if($task == 'edit'){
+            $src = 'public/upload/' . $folder . DS . $value;
+            $img = '<img src="'. $src .'" class="preview__avatar border rounded mt-2" width="100" height="130">';
+            $inputHidden = '<input class="d-none" type="text" value="'. $value .'" name="form[avartar]">';
+            $img .= $inputHidden;
+        }
+
         $groupFile = '<div class="custom-file">
                            '. $strHtml .' 
                            <label class="custom-file-label" for="'.$arrlabel['id'].'">Choose file</label>

@@ -48,10 +48,10 @@ class Validate{
         foreach($this->rules as $element => $value){
             if(isset($this->getError()[$element]))
                 unset($this->source[$element]);
-            if($value['required'] == true && trim($this->source[$element])==null){
+            if($value['required'] == true && trim($this->source[$element]) == null){
                 $this->errors[$element] = ucfirst($element) . ' is not empty!';
             }else{
-                if(!isset($this->getError()[$element])){
+                if(!isset($this->getError()[$element]) && $value['required'] == true){
                     switch ($value['type']) {
                         case 'int':
                             $this->validateInt($element, $value['options']['min'], $value['options']['max']);

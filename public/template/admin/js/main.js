@@ -13,11 +13,17 @@ $('#validationAvatar').change(function(){
 
 
 function deleteItem(id){
-    $('#row-' + id).hide(600).remove();
-    $("#scroll-horizontal-datatable").load(" #scroll-horizontal-datatable > *");
-    $.post('index.php?module=admin&controller=user&action=delete', {id: id}, function (){
+    let notifier = new AWN(options);
+    let onOk = () => {
+        $.post('index.php?module=admin&controller=user&action=delete', {id: id}, function (data){
+            if (data.affected > 0){
+                location.reload();
+            }
+        }, 'json');
+    };
+    notifier.confirm('Ban co chac muon xoa khong?', onOk);
 
-    });
+
 }
 
 

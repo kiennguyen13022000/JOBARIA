@@ -369,10 +369,20 @@
         animationDuration: 300
     };
     let success = <?php echo Session::get("success", '\'' . 'default' . '\'' ); Session::delete('success');?>;
+    let notifier = new AWN(options);
+    let msg = '';
     if(success == 'add'){
-        let notifier = new AWN(options);
-        notifier.success('Them thanh cong', {durations: {success: 2000}})
+        msg = 'Them thanh cong';
+        notifier.success(msg, {durations: {success: 2000}});
+    }else if (success == 'delete'){
+        msg = 'Xoa thanh cong';
+        notifier.success(msg, {durations: {success: 2000}});
     }
+    else if (success == 'edit'){
+        msg = 'Sua thanh cong';
+        notifier.success(msg, {durations: {success: 2000}});
+    }
+
 
 
 </script>

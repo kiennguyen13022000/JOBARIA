@@ -142,7 +142,9 @@ class Model{
         return $result;
     }
 
-    public function OneRecord(){
+    public function OneRecord($sql){
+        $this->Query($sql);
+        $result = null;
         if(mysqli_num_rows($this->resultQuery) > 0){
             $result = mysqli_fetch_assoc($this->resultQuery);
         }
