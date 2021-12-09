@@ -12,14 +12,13 @@ class UserModel extends Model
         $query = 'select * from users';
         $this->Query($query);
         $result = $this->ListRecord();
-        return  $result;
+        return $result;
     }
 
-    public function form($params, $task){
+    public function form($arrParams, $task){
          if($task == 'add'){
-             $arrParams = $params['form'];
              $arrParams['user_id']    = 1;
-             $arrParams['created_at'] = date('Y-m-d H:i:s');
+             $arrParams['created_at'] = date('Y-m-d H:i:s', time());
              $arrParams['password']   = md5($arrParams['password']);
              unset($arrParams['confirm_password']);
              $uploadObj = new Upload();
@@ -27,19 +26,20 @@ class UserModel extends Model
              $this->Insert($arrParams);
 
          }else{
-             $arrParams['updated_at'] = date('Y-m-d H:i:s');
-             $id = $params['id'];
+             $arrParams['updated_at'] = date('Y-m-d H:i:s', time());
+             $id = $arrParams['id'];
              unset($arrParams['confirm_password']);
              $arrParams['password']   = md5($arrParams['password']);
              if (empty($arrParams['password']))
                  unset($arrParams['password']);
 
-             if (isset($arrParams['avatar']['name'])){
+             if (!empty($arrParams['avatar']['name'])){
                 $info = $this->info($id);
-                $imageOld = 'public/upload/user/' . $info['avatar'];
-                unset($imageOld);
                 $uploadObj = new Upload();
+                $uploadObj->removeFile('users', null, $info['avatar']);
                 $arrParams['avatar'] = $uploadObj->uploadFile($arrParams['avatar'], 'users', 100, 130);
+             }else{
+                 unset($arrParams['avatar']);
              }
 
              $this->Update($arrParams, [['id', $id, '']]);
