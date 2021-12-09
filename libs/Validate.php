@@ -97,7 +97,7 @@ class Validate{
                             break;
                         case 'string-notExistsRecord':
                             $this->validateNotExistsRecord($element, $value['options']);
-                            $this->validateString($element, $value['options']['min'], $value['options']['max']);
+                            $this->validateMin($element, $value['options']['min']);
                             break;
                         case 'email-notExistsRecord':
                             $this->validateNotExistsRecord($element, $value['options']);
@@ -240,7 +240,7 @@ class Validate{
         $db = $data['database'];
         $query = $data['query'];
         if($db->isExists($query) == true){
-            $this->errors[$element] = 'giá trị này đã tồn tại';
+            $this->errors[$element] = ucfirst($element) . ' này đã tồn tại!';
         }
     }
 

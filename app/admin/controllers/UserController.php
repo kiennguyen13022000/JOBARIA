@@ -10,38 +10,34 @@ class UserController extends Controller
     public function formAction(){
         $this->createLinkCss();
         $this->createLinkJs();
-        $this->_view->title     = 'add user';
-
-        $this->_view->errors = null;
-
-        if(!empty($_FILES['avatar'])) $this->_arrParam['form']['avatar'] = $_FILES['avatar'];
+        $this->_view->title     = 'Add user';
         $task = 'add';
+        $this->_view->errors    = null;
         $requiredPass = true;
-
+        if(!empty($_FILES['avatar'])) $this->_arrParam['form']['avatar'] = $_FILES['avatar'];
         if (isset($this->_arrParam['id'])){
-            $task = 'edit';
-            $requiredPass = false;
             $this->_view->result = $this->_model->info($this->_arrParam['id']);
             $this->_view->result['password'] = '';
+            $task = 'edit';
+            $requiredPass = false;
+            $this->_view->title     = 'Edit user';
             $this->_view->id = $this->_arrParam['id'];
         }
-
-        $this->_view->task = $task;
-        $this->_view->errors    = null;
-
-        //$validate   = new Validate();
-       // $this->form             = $this->_model->form($this->_view->_arrParam['form']);
-
-
         if(isset($this->_arrParam['form'])){
+            $queryUserName = "select `id` from `users` where `username` = ". "'" . $this->_arrParam['form']['username'] . "'";
+            $queryEmail = "select `id` from `users` where `email` = " . "'" . $this->_arrParam['form']['email'] . "'";
+            if (isset($this->_arrParam['id'])){
+                $queryUserName .= " and `id` <> ". $this->_arrParam['id'];
+                $queryEmail .= " and `id` <> ". $this->_arrParam['id'];
+            }
 
             $form = $this->_arrParam['form'];
 
             $validate   = new Validate($form);
             $validate->addRule('firstname', 'min', ['min' => 3])
                      ->addRule('lastname', 'min', ['min' => 3])
-                     ->addRule('username', 'min', ['min' => 3])
-                     ->addRule('email', 'email')
+                     ->addRule('username', 'string-notExistsRecord', ['database' => $this->_model, 'query' => $queryUserName ,'min' => 3])
+                     ->addRule('email', 'email-notExistsRecord', ['database' => $this->_model, 'query' => $queryEmail])
                      ->addRule('password', 'password', ['action' => 'add'], $requiredPass)
                      ->addRule('avatar', 'file', ['extension' => ['png', 'jpg']], false)
                      ->addRule('confirm_password', 'confirm_password', null , $requiredPass);
@@ -51,7 +47,9 @@ class UserController extends Controller
                 $this->_view->errors = $validate->getError();
                 $this->_view->result = $validate->getResult();
             }else{
-                $this->_model->form($this->_arrParam, $task);
+                $form = $validate->getResult();
+                $form['id'] = $this->_arrParam['id'];
+                $this->_model->form($form, $task);
                 if($this->_model->affectedAction() == 1){
                     if ($task == 'add'){
                         Session::set('success', '\'' . 'add'.  '\'' );
@@ -66,8 +64,7 @@ class UserController extends Controller
 
 
         }
-
-
+        $this->_view->task = $task;
         $this->_view->render('user/form');
     }
 
@@ -189,10 +186,10 @@ class UserController extends Controller
                 'link' => 'public/template/admin/libs\datatables\buttons.flash.min.js',
             ),
             array(
-                'link' => 'public/template/admin/libs\datatables\dataTables.keyTable.min.js',
+                'link' => 'public/template/admin/libs\datatables\buttons.print.min.js',
             ),
             array(
-                'link' => 'public/template/admin/libs\datatables\buttons.print.min.js',
+                'link' => 'public/template/admin/libs\datatables\dataTables.keyTable.min.js',
             ),
             array(
                 'link' => 'public/template/admin/libs\datatables\dataTables.select.min.js',

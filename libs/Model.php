@@ -94,7 +94,7 @@ class Model{
 
         $ud = $this->CreateUpdate($param);
         $w = $this->CreateWhere($where);
-        $sql = "update `$this->table` set $ud where $w";
+        echo $sql = "update `$this->table` set $ud where $w";
         $this->Query($sql);
         return mysqli_affected_rows($this->connect);
     }
@@ -167,6 +167,7 @@ class Model{
     }
 
     public function isExists($query){
+
         if($query != null){
             $this->Query($query);
         }

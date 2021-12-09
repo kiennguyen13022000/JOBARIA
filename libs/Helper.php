@@ -96,11 +96,10 @@ class Helper{
         $strHtml = "<input type='$type' name='$name' id='$arrlabel[id]' value='$value' class='$class' size='$size' placeholder='$placeholder' $required>" ;
 
         $img = '<img src="'. $value .'" class="preview__avatar ">';
-        if($task == 'edit'){
+        if($task == 'edit' && !empty($value)){
             $src = 'public/upload/' . $folder . DS . $value;
             $img = '<img src="'. $src .'" class="preview__avatar border rounded mt-2" width="100" height="130">';
-            $inputHidden = '<input class="d-none" type="text" value="'. $value .'" name="form[avartar]">';
-            $img .= $inputHidden;
+
         }
 
         $groupFile = '<div class="custom-file">
