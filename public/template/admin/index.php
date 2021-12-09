@@ -265,10 +265,10 @@
                     </a>
                     <ul class="nav-second-level" aria-expanded="false">
                         <li>
-                            <a href="email-inbox.html">Add Product</a>
+                            <a href="index.php?module=admin&controller=product&action=edit">Add Product</a>
                         </li>
                         <li>
-                            <a href="email-read.html">List Product</a>
+                            <a href="index.php?module=admin&controller=product&action=list">List Product</a>
                         </li>
 
                     </ul>
@@ -344,7 +344,7 @@
 <!--                                <li class="breadcrumb-item active">adduser</li>-->
                             </ol>
                         </div>
-                        <h4 class="page-title">Add user</h4>
+                        <h4 class="page-title">Jobaria</h4>
                     </div>
                 </div>
             </div>

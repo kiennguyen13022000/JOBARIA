@@ -24,3 +24,6 @@
  .table-data td{
      vertical-align: middle;
  }
+ .cursor_label label{
+     cursor: pointer;
+ }

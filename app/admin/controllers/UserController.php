@@ -12,9 +12,7 @@ class UserController extends Controller
         $this->createLinkCss();
         $this->createLinkJs();
         $this->_view->title     = 'add user';
-        //$validate   = new Validate();
-       // $this->form             = $this->_model->form($this->_view->_arrParam['form']);
-
+        $this->_view->errors = null;
         if(isset($this->_arrParam['form'])){
 
             $form = $this->_arrParam['form'];
@@ -155,10 +153,10 @@ class UserController extends Controller
                 'link' => 'public/template/admin/libs\datatables\buttons.flash.min.js',
             ),
             array(
-                'link' => 'public/template/admin/libs\datatables\buttons.print.min.js',
+                'link' => 'public/template/admin/libs\datatables\dataTables.keyTable.min.js',
             ),
             array(
-                'link' => 'public/template/admin/libs\datatables\dataTables.keyTable.min.js',
+                'link' => 'public/template/admin/libs\datatables\buttons.print.min.js',
             ),
             array(
                 'link' => 'public/template/admin/libs\datatables\dataTables.select.min.js',

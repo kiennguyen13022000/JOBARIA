@@ -15,8 +15,8 @@ const DEFAULT_ACTION = 'index';
 
 // ====================== DATABASE ===========================
 const DB_HOST = 'localhost';
-const DB_USER = 'admin';
-const DB_PASS = 'adminspassword';
+const DB_USER = 'root';
+const DB_PASS = '';
 const DB_NAME = 'jobaria';
 const DB_TABLE = 'users';
 
