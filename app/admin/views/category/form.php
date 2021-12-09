@@ -10,7 +10,6 @@ $valueAvatar            = (isset($this->result['avatar'])) ? $this->result['avat
 $valuePassword          = (isset($this->result['password'])) ? $this->result['password'] : '';
 $valueConfirmPassword   = (isset($this->result['confirm_password'])) ? $this->result['confirm_password'] : '';
 
-
 $label = ['label' => 'First name', 'id' => 'validationFirstname'];
 $inputFirstname = Helper::cmsFormGroup($label, 'text', 'firstname', $valueFirstname, 'form-control', null, true, 'form-group mb-3 col-lg-6', $this->errors);
 $label = ['label' => 'Last name', 'id' => 'validationLastname'];
