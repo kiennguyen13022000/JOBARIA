@@ -14,6 +14,19 @@ class Upload {
             }
         }
     }
+    public function getUrlFile($file, $folder, $width = 60, $height = 90, $option = null) {
+        if ($option == null) {
+            if ($file['tmp_name'] != null) {
+                $uploadDir = 'public/upload/' . $folder . '/';
+                $fileName = $uploadDir . $file['name'];
+                copy($file['tmp_name'], $fileName);
+//                $thum = PhpThumbFactory::create($fileName);
+//                $thum->adaptiveResize($width, $height);
+//                $thum->save($uploadDir . $file['name']);
+                return $uploadDir.$file['name'];
+            }
+        }
+    }
 
     public function removeFile($folder, $prefix = null, $arrfile) {
 

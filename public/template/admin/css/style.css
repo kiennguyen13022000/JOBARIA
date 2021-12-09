@@ -24,3 +24,6 @@
  .cursor_label label{
      cursor: pointer;
  }
+.cursor{
+    cursor: pointer;
+}

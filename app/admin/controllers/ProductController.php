@@ -8,17 +8,64 @@ class ProductController extends Controller
     }
 
     public function editAction(){
+        error_reporting (E_ALL ^ E_NOTICE);
         $this->createLinkCss();
         $this->createLinkJs();
         $this->_view->title     = 'Add product';
-        //$validate   = new Validate();
-       // $this->form             = $this->_model->form($this->_view->_arrParam['form']);
-       
-        if(isset($this->_arrParam['edit'])){
-            echo '<pre>';
-            print_r($this->_arrParam['edit']);
-            echo '</pre>';
+
+        $this->_view->errors = null;
+
+        if(!empty($_FILES['image'])) $this->_arrParam['edit']['image'] = $_FILES['image'];
+        $task = 'add';
+        $this->_view->button_form = '<button class="btn btn-primary" type="submit">Save</button>';
+        $requiredPass = true;
+        $this->_view->result= array();
+        if (isset($this->_arrParam['id'])){
+            $this->_view->button_form = '<button class="btn btn-primary" type="submit">Update</button>';
+            $task = 'edit';
+            $requiredPass = false;
+
+            $this->_view->result = $this->_model->info($this->_arrParam['id']);
+            $this->_view->title     = $this->_view->result['product_name'].' | Product';
+            $this->_view->id = $this->_arrParam['id'];
         }
+
+        $this->_view->task = $task;
+        $this->_view->errors    = null;
+
+        //$validate   = new Validate();
+        // $this->form             = $this->_model->form($this->_view->_arrParam['form']);
+
+
+        if(isset($this->_arrParam['form'])){
+            $form = $this->_arrParam['form'];
+            $form['image'] = $_FILES['image'];
+            $validate   = new Validate($form);
+            $validate->addRule('product_name', 'min', ['min' => 1])
+                ->addRule('price', 'int_min', ['min' => 0])
+                ->addRule('quantity', 'int_min', ['min' => 1])
+                ->addRule('image', 'file', ['extension' => ['png', 'jpg', 'gif']], false);
+            if(!empty($validate->getError())){
+                $this->_view->errors = $validate->getError();
+                $this->_view->result = $validate->getResult();
+            }else{
+                $form['id']=$this->_model->edit($this->_arrParam, $task);
+                if($this->_model->affectedAction() == 1){
+                    if ($task == 'add'){
+                        Session::set('success', '\'' . 'edit'.  '\'' );
+                        Url::redirect('admin', 'product', 'edit',['task' => 'edit', 'id' => $form['id']]);
+
+                    }else{
+                        Session::set('success', '\'' . 'edit'.  '\'' );
+                        Url::redirect('admin', 'product', 'edit',['task' => 'edit', 'id' => $form['id']]);
+                    }
+
+                }
+            }
+
+
+        }
+
 
         $this->_view->render('product/edit');
     }
@@ -30,19 +77,7 @@ class ProductController extends Controller
         $this->_view->data = $this->_model->list();
         $this->_view->render('product/list');
     }
-    function pre ($expression, $wrap = true){
-		  $css = 'border:1px dashed #06f;padding:1em;text-align:left;';
-		  if ($wrap) {
-			$str = '<p style="' . $css . '"><tt>' . str_replace(
-			  array('  ', "\n"), array('&nbsp; ', '<br />'),
-			  htmlspecialchars(print_r($expression, true))
-			) . '</tt></p>';
-		  } else {
-			$str = '<pre style="' . $css . '">'
-			. htmlspecialchars(print_r($expression, true)) . '</pre>';
-		  }
-		  echo $str;
-	}
+
     private function createLinkCss(){
         $css = array(
             array(
@@ -141,10 +176,10 @@ class ProductController extends Controller
                 'link' => 'public/template/admin/libs\datatables\buttons.flash.min.js',
             ),
             array(
-                'link' => 'public/template/admin/libs\datatables\buttons.print.min.js',
+                'link' => 'public/template/admin/libs\datatables\dataTables.keyTable.min.js',
             ),
             array(
-                'link' => 'public/template/admin/libs\datatables\dataTables.keyTable.min.js',
+                'link' => 'public/template/admin/libs\datatables\buttons.print.min.js',
             ),
             array(
                 'link' => 'public/template/admin/libs\datatables\dataTables.select.min.js',

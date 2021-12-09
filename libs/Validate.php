@@ -56,6 +56,12 @@ class Validate{
                         case 'int':
                             $this->validateInt($element, $value['options']['min'], $value['options']['max']);
                             break;
+                        case 'int_min':
+                            $this->validateIntMin($element, $value['options']['min']);
+                            break;
+                        case 'int_max':
+                            $this->validateIntMax($element, $value['options']['max']);
+                            break;
                         case 'min':
                             $this->validateMin($element, $value['options']['min']);
                             break;
@@ -116,6 +122,19 @@ class Validate{
             $this->errors[$element] = "'" . $this->source[$element] . "' phải từ 3 ký tự";
         }
     }
+    // Validate Integer Min
+    private function validateIntMin($element, $min){
+        if($this->source[$element] < $min ){
+            $this->errors[$element] = "'" . $this->source[$element] . "' phải lớn hơn hoặc bằng ".$min."";
+        }
+    }
+    // Validate Integer Min
+    private function validateIntMax($element, $max){
+        if($this->source[$element] > $max ){
+            $this->errors[$element] = "'" . $this->source[$element] . "' phải nhỏ hơn hoặc bằng ".$max."";
+        }
+    }
+
 
     // Validate Min
     private function validateMin($element, $min = 0){

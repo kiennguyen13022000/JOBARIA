@@ -32,6 +32,7 @@ class UserController extends Controller
         //$validate   = new Validate();
        // $this->form             = $this->_model->form($this->_view->_arrParam['form']);
 
+
         if(isset($this->_arrParam['form'])){
 
             $form = $this->_arrParam['form'];
