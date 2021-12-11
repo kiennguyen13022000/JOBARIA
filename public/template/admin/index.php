@@ -236,8 +236,10 @@
                         <li>
                             <a href="index.php?module=admin&controller=user&action=index">List User</a>
                         </li>
+
                     </ul>
                 </li>
+
                 <li>
                     <a href="javascript: void(0);" class="waves-effect">
                         <i class="remixicon-list-check"></i>
@@ -246,10 +248,10 @@
                     </a>
                     <ul class="nav-second-level" aria-expanded="false">
                         <li>
-                            <a href="index.php?module=admin&controller=category&action=form">Add Category</a>
+                            <a href="layouts-sidebar-sm.html">Add Category</a>
                         </li>
                         <li>
-                            <a href="index.php?module=admin&controller=category&action=index">List Category</a>
+                            <a href="layouts-dark-sidebar.html">List Category</a>
                         </li>
 
                     </ul>
@@ -263,10 +265,10 @@
                     </a>
                     <ul class="nav-second-level" aria-expanded="false">
                         <li>
-                            <a href="email-inbox.html">Add Product</a>
+                            <a href="index.php?module=admin&controller=product&action=edit">Add Product</a>
                         </li>
                         <li>
-                            <a href="email-read.html">List Product</a>
+                            <a href="index.php?module=admin&controller=product&action=list">List Product</a>
                         </li>
 
                     </ul>
@@ -359,7 +361,24 @@
 <!-- Left Sidebar End -->
 <!-- Right bar overlay-->
 <div class="rightbar-overlay"></div>
-
+<!-- Footer Start -->
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                2016 - 2019 &copy; Jobaria Admin  by <a href="https://simstech.vn/">SimsTech</a>
+            </div>
+            <div class="col-md-6">
+                <div class="text-md-right footer-links d-none d-sm-block">
+                    <a href="https://simstech.vn/about/">About Us</a>
+                    <a href="https://simstech.vn/services/">Service</a>
+                    <a href="https://simstech.vn/contact-us/">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- end Footer -->
 <?php echo $this->linkJs; ?>
 <script>
     let options = {
@@ -369,21 +388,20 @@
     let success = <?php echo Session::get("success", '\'' . 'default' . '\'' ); Session::delete('success');?>;
      let msg = '';
     if(success == 'add'){
-
         let notifier = new AWN(options);
-        msg = 'Them thanh cong';
+        msg = 'Add successful';
         notifier.success(msg, {durations: {success: 2000}});
     }else if (success == 'delete'){
         options.labels = {
             confirm: "Remove notifications",
         }
         let notifier = new AWN(options);
-        msg = 'Xoa thanh cong';
+        msg = 'Delete successful';
         notifier.success(msg, {durations: {success: 2000}});
     }
     else if (success == 'edit'){
+        msg = 'Update successful';
         let notifier = new AWN(options);
-        msg = 'Sua thanh cong';
         notifier.success(msg, {durations: {success: 2000}});
     }
 

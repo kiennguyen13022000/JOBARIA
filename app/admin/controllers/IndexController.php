@@ -36,6 +36,11 @@ class IndexController extends Controller
                 'link' => 'public/template/admin/css/app.min.css',
                 'type' => 'text/css',
                 'rel'  => 'stylesheet'
+            ),
+            array(
+                'link' => 'public/template/admin/libs/jquery-vectormap/jquery-jvectormap-1.2.2.css',
+                'type' => 'text/css',
+                'rel'  => 'stylesheet'
             )
         );
 
@@ -52,6 +57,24 @@ class IndexController extends Controller
         $css = array(
             array(
                 'link' => 'public/template/admin/js\vendor.min.js',
+            ),
+            array(
+                'link' => 'public/template/admin/libs/apexcharts/apexcharts.min.js',
+            ),
+            array(
+                'link' => 'public/template/admin/libs/jquery-sparkline/jquery.sparkline.min.js',
+            ),
+            array(
+                'link' => 'public/template/admin/libs/jquery-vectormap/jquery-jvectormap-1.2.2.min.js',
+            ),
+            array(
+                'link' => 'public/template/admin/libs/jquery-vectormap/jquery-jvectormap-world-mill-en.js',
+            ),
+            array(
+                'link' => 'public/template/admin/libs/peity/jquery.peity.min.js',
+            ),
+            array(
+                'link' => 'public/template/admin/js/pages/dashboard-2.init.js',
             ),
             array(
                 'link' => 'public/template/admin/js\app.min.js',

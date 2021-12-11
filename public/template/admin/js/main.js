@@ -17,6 +17,22 @@ $('#validationImage').change(function(){
     img.height = 130;
     $('.preview__avatar').addClass('border rounded mt-2');
 });
+$(function () {
+    $(window).keydown(function(event){
+        if(event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+    });
+    $('.input__image').change(function(){
+        let img = $('.preview__image')[0];
+        img.src = URL.createObjectURL(this.files[0]);
+        img.width = 120;
+        img.height = 120;
+        $('.preview__image').addClass('border rounded mt-2');
+    });
+
+})
 
 function deleteItem(id, controller){
     let options = {
