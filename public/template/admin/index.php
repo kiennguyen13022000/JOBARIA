@@ -236,10 +236,8 @@
                         <li>
                             <a href="index.php?module=admin&controller=user&action=index">List User</a>
                         </li>
-
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="waves-effect">
                         <i class="remixicon-list-check"></i>
@@ -248,10 +246,10 @@
                     </a>
                     <ul class="nav-second-level" aria-expanded="false">
                         <li>
-                            <a href="layouts-sidebar-sm.html">Add Category</a>
+                            <a href="index.php?module=admin&controller=category&action=form">Add Category</a>
                         </li>
                         <li>
-                            <a href="layouts-dark-sidebar.html">List Category</a>
+                            <a href="index.php?module=admin&controller=category&action=index">List Category</a>
                         </li>
 
                     </ul>
@@ -369,16 +367,22 @@
         animationDuration: 300
     };
     let success = <?php echo Session::get("success", '\'' . 'default' . '\'' ); Session::delete('success');?>;
-    let notifier = new AWN(options);
-    let msg = '';
+     let msg = '';
     if(success == 'add'){
+
+        let notifier = new AWN(options);
         msg = 'Them thanh cong';
         notifier.success(msg, {durations: {success: 2000}});
     }else if (success == 'delete'){
+        options.labels = {
+            confirm: "Remove notifications",
+        }
+        let notifier = new AWN(options);
         msg = 'Xoa thanh cong';
         notifier.success(msg, {durations: {success: 2000}});
     }
     else if (success == 'edit'){
+        let notifier = new AWN(options);
         msg = 'Sua thanh cong';
         notifier.success(msg, {durations: {success: 2000}});
     }

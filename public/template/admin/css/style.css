@@ -20,9 +20,10 @@
 
  .table-data td{
      vertical-align: middle;
+     text-align: center;
  }
 
- .active{
+ .activeStatus, .activeAdmin{
      background: #d6f3ed;
      color: #1ac8ce;
      font-size: 11px;
@@ -42,4 +43,25 @@
      padding-bottom: 3px;
      padding-left: 4px;
      padding-right: 4px;
+ }
+
+ .img__table{
+     width: 40px;
+     height: 60px;
+     object-fit: cover;
+     object-position: center;
+ }
+ .btnMove{
+     border-radius: 50%;
+     border: none;
+     padding-top: 3px;
+     font-size: 25px;
+     padding-left: 7px;
+     color: #2ea8e5;
+ }
+ .btnMove:hover{
+     cursor: pointer;
+ }
+ .btnMove:focus{
+     outline: 1px solid #1abc9c  ;
  }

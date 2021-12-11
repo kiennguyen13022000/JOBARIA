@@ -32,7 +32,6 @@ class Model{
     public function SetDatabase($database = null){
         if($database != null){
             $this->database = $database;
-
         }
         mysqli_select_db($this->connect,$this->database);
     }
@@ -60,7 +59,6 @@ class Model{
 
     // insert
     private function CreateInsert($arrData){
-
         $cols = '';
         $vals = '';
         foreach($arrData as $key => $value){
@@ -76,7 +74,6 @@ class Model{
             $newQuery = $this->CreateInsert($param);
             $sql = "insert into `$this->table`(".$newQuery['cols'] .") values(". $newQuery['vals'] .")";
             $this->Query($sql);
-            return $this->LastId();
         }else if($type == 'multiple'){
             foreach ($param as $key => $value) {
                 $newQuery = $this->CreateInsert($value);
@@ -94,7 +91,7 @@ class Model{
 
         $ud = $this->CreateUpdate($param);
         $w = $this->CreateWhere($where);
-        echo $sql = "update `$this->table` set $ud where $w";
+        $sql = "update `$this->table` set $ud where $w";
         $this->Query($sql);
         return mysqli_affected_rows($this->connect);
     }
@@ -132,7 +129,8 @@ class Model{
 
     // select
 
-    public function ListRecord(){
+    public function ListRecord($query){
+        $this->Query($query);
         $result = array();
         if(mysqli_num_rows($this->resultQuery) > 0){
             while($row = mysqli_fetch_assoc($this->resultQuery))
@@ -159,8 +157,8 @@ class Model{
             $arrData = $this->ListRecord();
             foreach ($arrData as $key => $value) {
                 $result[$value['id']] = $value['name'];
+
             }
-            $result['default'] = '--Select Group--';
         }
         ksort($result);
         return $result;
@@ -185,5 +183,12 @@ class Model{
         }
         return $result['total'] ;
     }
+
+    public function lastPosition(){
+        $query = 'select MAX(`position`) as max from `'. $this->table .'`';
+        $result = $this->OneRecord($query);
+        return $result['max'];
+    }
+
 }
 ?>

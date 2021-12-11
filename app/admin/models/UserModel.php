@@ -10,8 +10,7 @@ class UserModel extends Model
 
     public function list(){
         $query = 'select * from users';
-        $this->Query($query);
-        $result = $this->ListRecord();
+        $result = $this->ListRecord($query);
         return $result;
     }
 
@@ -50,6 +49,16 @@ class UserModel extends Model
        return $this->Delete([$id]);
     }
 
+    public function changeStatus($id, $status){
+       $param   = array('status' => $status);
+       $where   = array(array('id', $id, ''));
+       return $this->Update($param, $where);
+    }
+    public function changeIsAdmin($id, $isAdmin){
+        $param   = array('is_Admin' => $isAdmin);
+        $where   = array(array('id', $id, ''));
+        return $this->Update($param, $where);
+    }
     public function info($id){
         $query = 'select * from users where `id` = ' . $id;
         $result = $this->OneRecord($query);

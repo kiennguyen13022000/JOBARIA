@@ -14,7 +14,7 @@
                         <th>Address</th>
                         <th>Status</th>
                         <th>Is admin</th>
-                        <th>Create at</th>
+<!--                        <th>Create at</th>-->
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -24,14 +24,14 @@
 
                         foreach ($this->data as $key => $value){
                             if($value['avatar'] == null){
-                                $value['avatar'] = 'avatar-1.jpg';
+                                $value['avatar'] = 'public/upload/users/avatar-1.jpg';
                             }
-                            $status     = $value['status'] == 1 ? 'active' : 'deactive';
-                            $admin      = $value['is_Admin'] == 1 ? 'active' : 'deactive';
-
-
+                            $status         = $value['status'] == 1 ? 'active' : 'deactive';
+                            $admin          = $value['is_Admin'] == 1 ? 'active' : 'deactive';
+                            $classStatus    = $value['status'] == 1 ? 'activeStatus' : 'deactive';
+                            $classAdmin     = $value['is_Admin'] == 1 ? 'activeAdmin' : 'deactive';
                             $xhtml .= '<tr id="row-'. $value['id'] .'">
-                                            <td><img width="40" height="60" src="public/upload/users/'. $value['avatar'] .'"></td>
+                                            <td><img class="img__table" src="'. $value['avatar'] .'"></td>
                                             <td>'. $value['firstname'] .'</td>
                                             <td>'. $value['lastname'] .'</td>
                                             <td class="font-weight-bold">'. $value['username'] .'</td>
@@ -39,12 +39,12 @@
                                             <td>'. $value['phone'] .'</td>
                                             <td>'. $value['address'] .'</td>
                                             <td>
-                                                <span class="'. $status .'">'. ucfirst($status) .'</span>
+                                                <span data-control="user" data-id="'.$value['id'].'" data-status="'.$value['status'].'" class="'. $classStatus .' status__item">'. ucfirst($status) .'</span>
                                             </td>
                                             <td>
-                                                <span class="'. $admin .'">'.  ucfirst($admin) .'</span>
+                                                <span data-control="user"  data-id="'.$value['id'].'" data-admin="'.$value['is_Admin'].'" class="'. $classAdmin .' is__admin__item">'.  ucfirst($admin) .'</span>
                                             </td>
-                                            <td>'. $value['created_at'] .'</td>
+                                           
                                             <td>
                                                 <ul class="list-inline table-action m-0">
                                                     
@@ -52,17 +52,14 @@
                                                         <a href="'. Url::createLink('admin', 'user', 'form', ['task' => 'edit', 'id' => $value['id']]) .'" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
                                                     </li>
                                                     <li class="list-inline-item">
-                                                        <a href="javascript:void(0)" onclick="deleteItem('. $value['id'] .')" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                                        <a href="javascript:void(0)" onclick="deleteItem('. $value['id'] .', \'user\')" class="action-icon"> <i class="mdi mdi-delete"></i></a>
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>';
                         }
-
                         echo $xhtml;
-
                     ?>
-
                     </tbody>
                 </table>
             </div>
@@ -75,3 +72,5 @@
 <!--<li class="list-inline-item">-->
 <!--    <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>-->
 <!--</li>-->
+
+<!--<td>'. $value['created_at'] .'</td>-->

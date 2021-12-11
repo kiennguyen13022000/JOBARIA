@@ -8,7 +8,6 @@ class Helper{
         }
         return $result;
     }
-
     public static function cmsRadio($name, $type, $val, $checked = null){
         $checked = $val == $checked ? 'checked' : '';
         $radio = '<div class="custom-control custom-radio">
@@ -16,20 +15,31 @@ class Helper{
                                    class="custom-control-input" '.$checked.'>
                             <label class="custom-control-label" for="'. $name .''. $val .'">'. $type .'</label>
                         </div>';
-
-
         return $radio;
     }
+    public static function cmsSelectBox($arrlabel, $name, $class, $arrData, $formGroup, $keySelect = 'default'){
+        $select = '<select name="form['.$name.']" class="'.$class.'" id="'. $arrlabel['id'] .'">';
+        $star = empty($required) ? '' : '<span class="text-danger">*</span>';
+        $label = '<label for="'. $arrlabel['id'] .'">'. $arrlabel['label'] .'</label>' . $star;
 
-    public static function cmsSelectBox($name, $class, $arrData, $keySelect = 'default'){
-        $xhtml = '<select name="'.$name.'" class="'.$class.'">';
+
         foreach ($arrData as $key => $value) {
-            if($key == $keySelect && is_numeric($keySelect))
-                $xhtml .= '<option selected value="'.$key.'">'.$value.'</option>';
-            else $xhtml .= '<option value="'.$key.'">'.$value.'</option>';
+            $nameCategory = '';
+            if ($name == 'parent_id'){
+                 $nameCategory = str_repeat('-', $value['level'] * 2) . $value['name'] . str_repeat('-', $value['level'] * 2);
+            }
+            if($value['id'] == $keySelect && is_numeric($keySelect))
+                $select .= '<option selected value="'.$value['id'].'">'.$nameCategory.'</option>';
+            else $select .= '<option value="'.$value['id'].'">'.$nameCategory.'</option>';
         }
-        $xhtml .= '</select>' ;
-        return $xhtml;
+        $select .= '</select>' ;
+
+        $label_select = $label . $select;
+        $htmlFormGroup = '<div class="'. $formGroup .'">
+                        '. $label_select .'  
+                    </div>';
+
+        return $htmlFormGroup;
     }
 
 
@@ -59,7 +69,6 @@ class Helper{
                 $class .= ' ' . $resultInput;
             }
         }
-
 
         $strHtml = "<input type='$type' name='form[$name]' id='$arrlabel[id]' value='$value' class='$class' size='$size' placeholder='$arrlabel[label]'>" ;
         $label_input = $label . $strHtml;
@@ -97,8 +106,8 @@ class Helper{
 
         $img = '<img src="'. $value .'" class="preview__avatar ">';
         if($task == 'edit' && !empty($value)){
-            $src = 'public/upload/' . $folder . DS . $value;
-            $img = '<img src="'. $src .'" class="preview__avatar border rounded mt-2" width="100" height="130">';
+
+            $img = '<img src="'. $value .'" class="preview__avatar border rounded mt-2" width="100" height="130">';
 
         }
 
