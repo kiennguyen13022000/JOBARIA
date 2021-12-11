@@ -9,7 +9,7 @@ class Bootstrap{
 
         $controllerName	= ucfirst($this->_params['controller']) . 'Controller';
         $filePath	= APPLICATION_PATH . $this->_params['module'] . DS . 'controllers' . DS . $controllerName . '.php';
-
+        
         if(file_exists($filePath)){
             $this->loadExistingController($filePath, $controllerName);
             $this->callMethod();
@@ -25,15 +25,16 @@ class Bootstrap{
             $module = $this->_params['module'];
             $controller = $this->_params['controller'];
             $action = $this->_params['action'];
-
             if($module == 'admin'){
                 $this->_controllerObject->{$actionName}();
             }else if($module == 'default'){
+
             }
 
         }else{
             $this->_error();
         }
+
     }
     private function callLoginAction($module = 'default'){
         Session::delete('user');

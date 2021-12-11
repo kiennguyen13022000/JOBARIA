@@ -94,7 +94,7 @@ class Model{
 
         $ud = $this->CreateUpdate($param);
         $w = $this->CreateWhere($where);
-        echo $sql = "update `$this->table` set $ud where $w";
+        $sql = "update `$this->table` set $ud where $w";
         $this->Query($sql);
         return mysqli_affected_rows($this->connect);
     }
@@ -132,8 +132,9 @@ class Model{
 
     // select
 
-    public function ListRecord(){
+    public function ListRecord($query){
         $result = array();
+        $this->Query($query);
         if(mysqli_num_rows($this->resultQuery) > 0){
             while($row = mysqli_fetch_assoc($this->resultQuery))
                 $result[] = $row;

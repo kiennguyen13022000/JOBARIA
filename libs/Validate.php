@@ -125,13 +125,13 @@ class Validate{
     // Validate Integer Min
     private function validateIntMin($element, $min){
         if($this->source[$element] < $min ){
-            $this->errors[$element] = "'" . $this->source[$element] . "' phải lớn hơn hoặc bằng ".$min."";
+            $this->errors[$element] = "'" . $element . "' phải lớn hơn hoặc bằng ".$min."";
         }
     }
     // Validate Integer Min
     private function validateIntMax($element, $max){
         if($this->source[$element] > $max ){
-            $this->errors[$element] = "'" . $this->source[$element] . "' phải nhỏ hơn hoặc bằng ".$max."";
+            $this->errors[$element] = "'" . $element . "' phải nhỏ hơn hoặc bằng ".$max."";
         }
     }
 

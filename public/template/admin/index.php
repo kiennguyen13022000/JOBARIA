@@ -183,7 +183,7 @@
 
         <!-- LOGO -->
         <div class="logo-box">
-            <a href="index.html" class="logo text-center">
+            <a href="index.php?module=admin&controller=index&action=index" class="logo text-center">
                     <span class="logo-lg">
                     <img src="public/template/admin/images/custom/logo/1.png" alt="" height="40">
                         <!-- <span class="logo-lg-text-light">Xeria</span> -->
@@ -361,7 +361,24 @@
 <!-- Left Sidebar End -->
 <!-- Right bar overlay-->
 <div class="rightbar-overlay"></div>
-
+<!-- Footer Start -->
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                2016 - 2019 &copy; Jobaria Admin  by <a href="https://simstech.vn/">SimsTech</a>
+            </div>
+            <div class="col-md-6">
+                <div class="text-md-right footer-links d-none d-sm-block">
+                    <a href="https://simstech.vn/about/">About Us</a>
+                    <a href="https://simstech.vn/services/">Service</a>
+                    <a href="https://simstech.vn/contact-us/">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- end Footer -->
 <?php echo $this->linkJs; ?>
 <script>
     let options = {
@@ -372,14 +389,14 @@
     let notifier = new AWN(options);
     let msg = '';
     if(success == 'add'){
-        msg = 'Them thanh cong';
+        msg = 'Add successful';
         notifier.success(msg, {durations: {success: 2000}});
     }else if (success == 'delete'){
-        msg = 'Xoa thanh cong';
+        msg = 'Delete successful';
         notifier.success(msg, {durations: {success: 2000}});
     }
     else if (success == 'edit'){
-        msg = 'Sua thanh cong';
+        msg = 'Update successful';
         notifier.success(msg, {durations: {success: 2000}});
     }
 

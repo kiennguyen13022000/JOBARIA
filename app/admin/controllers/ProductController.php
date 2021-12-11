@@ -12,22 +12,23 @@ class ProductController extends Controller
         $this->createLinkCss();
         $this->createLinkJs();
         $this->_view->title     = 'Add product';
-
         $this->_view->errors = null;
-
         if(!empty($_FILES['image'])) $this->_arrParam['edit']['image'] = $_FILES['image'];
         $task = 'add';
         $this->_view->button_form = '<button class="btn btn-primary" type="submit">Save</button>';
         $requiredPass = true;
         $this->_view->result= array();
-        if (isset($this->_arrParam['id'])){
+        $product_id = $this->_arrParam['id'];
+        if (isset($product_id)){
             $this->_view->button_form = '<button class="btn btn-primary" type="submit">Update</button>';
             $task = 'edit';
             $requiredPass = false;
-
-            $this->_view->result = $this->_model->info($this->_arrParam['id']);
+            $this->_view->result = $this->_model->info($product_id);
             $this->_view->title     = $this->_view->result['product_name'].' | Product';
-            $this->_view->id = $this->_arrParam['id'];
+            $this->_view->id = $product_id;
+
+            $this->_view->listImages = $this->_model->getImage($product_id);
+            $this->_model->setTable('products');
         }
 
         $this->_view->task = $task;
@@ -43,8 +44,10 @@ class ProductController extends Controller
             $validate   = new Validate($form);
             $validate->addRule('product_name', 'min', ['min' => 1])
                 ->addRule('price', 'int_min', ['min' => 0])
-                ->addRule('quantity', 'int_min', ['min' => 1])
+                ->addRule('quantity', 'int_min', ['min' => 0])
                 ->addRule('image', 'file', ['extension' => ['png', 'jpg', 'gif']], false);
+            $validate->run();
+
             if(!empty($validate->getError())){
                 $this->_view->errors = $validate->getError();
                 $this->_view->result = $validate->getResult();
@@ -54,16 +57,13 @@ class ProductController extends Controller
                     if ($task == 'add'){
                         Session::set('success', '\'' . 'edit'.  '\'' );
                         Url::redirect('admin', 'product', 'edit',['task' => 'edit', 'id' => $form['id']]);
-
                     }else{
+                        $id = $this->_arrParam['id'];
                         Session::set('success', '\'' . 'edit'.  '\'' );
-                        Url::redirect('admin', 'product', 'edit',['task' => 'edit', 'id' => $form['id']]);
+                        Url::redirect('admin', 'product', 'edit',['task' => 'edit', 'id' => $id]);
                     }
-
                 }
             }
-
-
         }
 
 
@@ -75,28 +75,65 @@ class ProductController extends Controller
         $this->createLinkJs();
 
         $this->_view->data = $this->_model->list();
+
         $this->_view->render('product/list');
     }
+    public function deleteAction(){
+        $info = $this->_model->info($this->_arrParam['id']);
+        $affected = $this->_model->deleteItem($this->_arrParam['id']);
+        if ($affected > 0){
+            $upload = new Upload();
+            $upload->removeFileName($info['image'], null);
+            Session::set('success', '\'' . 'delete' . '\'');
+        }
+        echo json_encode(['affected' => 1]);
+    }
+    public function addImageAction(){
 
+        $product_id = $_POST['product_id'];
+
+        $img_product = !empty($_FILES['img_product']) ? $_FILES['img_product'] : array();
+        $uploadObj = new Upload();
+        $arrParams['product_id'] = $product_id;
+        $arrParams['position']= 1;
+        $sql = "UPDATE product_image SET position = position + 1";
+        $this->_model->setTable('product_image');
+        $this->_model->Query($sql);
+        $image = $uploadObj->getUrlFile($img_product, 'product', 300, 300);
+        $arrParams['image'] = $image;
+
+        $this->_model->Insert($arrParams);
+        //$listImages = $this->_model->getImage($product_id);
+        $html = '
+            <div class="nav-item">
+                <img class="preview__image img_product"
+                     src="'.$image.'">
+            </div>
+        ';
+        echo json_encode(array(
+            'msg' => 'ok',
+            'html' => $html
+        ));die();
+    }
     private function createLinkCss(){
         $css = array(
             array(
-                'link' => 'public/template/admin/libs\datatables\dataTables.bootstrap4.css',
+                'link' => 'public/template/admin/libs/datatables/dataTables.bootstrap4.css',
                 'type' => 'text/css',
                 'rel'  => 'stylesheet'
             ),
             array(
-                'link' => 'public/template/admin/libs\datatables\responsive.bootstrap4.css',
+                'link' => 'public/template/admin/libs/datatables/responsive.bootstrap4.css',
                 'type' => 'text/css',
                 'rel'  => 'stylesheet'
             ),
             array(
-                'link' => 'public/template/admin/libs\datatables\buttons.bootstrap4.css',
+                'link' => 'public/template/admin/libs/datatables/buttons.bootstrap4.css',
                 'type' => 'text/css',
                 'rel'  => 'stylesheet'
             ),
             array(
-                'link' => 'public/template/admin/libs\datatables\select.bootstrap4.css',
+                'link' => 'public/template/admin/libs/datatables/select.bootstrap4.css',
                 'type' => 'text/css',
                 'rel'  => 'stylesheet'
             ),
@@ -106,7 +143,7 @@ class ProductController extends Controller
                 'rel'  => 'stylesheet'
             ),
             array(
-                'link' => 'public/template/admin/images\custom\favicon.ico',
+                'link' => 'public/template/admin/images/custom/favicon.ico',
                 'type' => '',
                 'rel'  => 'shortcut icon'
             ),
@@ -149,58 +186,64 @@ class ProductController extends Controller
     private function createLinkJs(){
         $css = array(
             array(
-                'link' => 'public/template/admin/js\vendor.min.js',
+                'link' => 'public/template/admin/js/vendor.min.js',
             ),
             array(
-                'link' => 'public/template/admin/libs\datatables\jquery.dataTables.min.js',
+                'link' => 'public/template/admin/libs/datatables/jquery.dataTables.min.js',
             ),
             array(
-                'link' => 'public/template/admin\libs\datatables\dataTables.bootstrap4.js',
+                'link' => 'public/template/admin/libs/datatables/dataTables.bootstrap4.js',
             ),
             array(
-                'link' => 'public/template/admin\libs\datatables\dataTables.responsive.min.js',
+                'link' => 'public/template/admin/libs/datatables/dataTables.responsive.min.js',
             ),
             array(
-                'link' => 'public/template/admin\libs\datatables\responsive.bootstrap4.min.js',
+                'link' => 'public/template/admin/libs/datatables/responsive.bootstrap4.min.js',
             ),
             array(
-                'link' => 'public/template/admin\libs\datatables\dataTables.buttons.min.js',
+                'link' => 'public/template/admin/libs/datatables/dataTables.buttons.min.js',
             ),
             array(
-                'link' => 'public/template/admin/libs\datatables\buttons.bootstrap4.min.js',
+                'link' => 'public/template/admin/libs/datatables/buttons.bootstrap4.min.js',
             ),
             array(
-                'link' => 'public/template/admin/libs\datatables\buttons.html5.min.js',
+                'link' => 'public/template/admin/libs/datatables/buttons.html5.min.js',
             ),
             array(
-                'link' => 'public/template/admin/libs\datatables\buttons.flash.min.js',
+                'link' => 'public/template/admin/libs/datatables/buttons.flash.min.js',
             ),
             array(
-                'link' => 'public/template/admin/libs\datatables\dataTables.keyTable.min.js',
+                'link' => 'public/template/admin/libs/datatables/dataTables.keyTable.min.js',
             ),
             array(
-                'link' => 'public/template/admin/libs\datatables\buttons.print.min.js',
+                'link' => 'public/template/admin/libs/datatables/buttons.print.min.js',
             ),
             array(
-                'link' => 'public/template/admin/libs\datatables\dataTables.select.min.js',
+                'link' => 'public/template/admin/libs/datatables/dataTables.select.min.js',
             ),
             array(
-                'link' => 'public/template/admin/libs\pdfmake\pdfmake.min.js',
+                'link' => 'public/template/admin/libs/pdfmake/pdfmake.min.js',
             ),
             array(
-                'link' => 'public/template/admin/libs\pdfmake\vfs_fonts.js',
+                'link' => 'public/template/admin/libs/pdfmake/vfs_fonts.js',
             ),
             array(
-                'link' => 'public/template/admin/js\pages\datatables.init.js',
+                'link' => 'public/template/admin/js/pages/datatables.init.js',
             ),
             array(
                 'link' => 'public/notification/index.js',
             ),
             array(
-                'link' => 'public/template/admin/js\app.min.js',
+                'link' => 'public/template/admin/js/app.min.js',
             ),
             array(
-                'link' => 'public/template/admin/js\main.js',
+                'link' => 'public/template/admin/js/main.js',
+            ),
+            array(
+                'link' => 'public/template/admin/js/ajax.js',
+            ),
+            array(
+                'link' => 'public/template/admin/js/jquery.form.js',
             )
         );
 
