@@ -68,6 +68,9 @@ class Validate{
                         case 'max':
                             $this->validateMax($element, $value['options']['max']);
                             break;
+                        case 'string-between':
+                            $this->validateStringBetween($element, $value['options']);
+                            break;
                         case 'url':
                             $this->validateUrl($element);
                             break;
@@ -151,7 +154,12 @@ class Validate{
             $this->errors[$element] = ucfirst($element) . " must be less than ". $max ." characters";
         }
     }
-
+//    Validate string between
+    private function validateStringBetween($element, $option){
+        if(mb_strlen($this->source[$element]) < $option['min'] || mb_strlen($this->source[$element]) > $option['max'] ){
+            $this->errors[$element] = ucfirst($element) . " must be between ". $option['min'] . ' and ' . $option['max'] ." characters";
+        }
+    }
     // Validate URL
     private function validateURL($element){
         if(!filter_var($this->source[$element], FILTER_VALIDATE_URL)){
@@ -201,22 +209,6 @@ class Validate{
         }
 
         return true;
-    }
-
-    public function showErrors(){
-
-    }
-
-    public function showErrorsPublish(){
-        $xhtml =  '';
-        if(!empty($this->errors)){
-            $xhtml = '<ul class="error-public">';
-            foreach($this->errors as $key => $value){
-                $xhtml .=  '<li>'.ucfirst($key).': '.$value.'</li>';
-            }
-            $xhtml .=  '</ul>';
-        }
-        return $xhtml;
     }
 
     public function isValid(){

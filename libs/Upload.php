@@ -9,7 +9,7 @@ class Upload {
                     mkdir('public/upload/' .$folder, 0777, true);
                 }
                 try {
-                    echo $fileName = $uploadDir . bin2hex(random_bytes(10)) . '.' .pathinfo(basename($file["name"]), PATHINFO_EXTENSION);
+                    $fileName = $uploadDir . bin2hex(random_bytes(10)) . '.' .pathinfo(basename($file["name"]), PATHINFO_EXTENSION);
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }

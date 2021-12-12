@@ -1,14 +1,16 @@
 <?php
 
 $valueUsername          = (isset($this->result['name'])) ? $this->result['name'] : '';
-$valueParentId          = (isset($this->result['parent_id'])) ? $this->result['parent_id'] : '';
+$valuePosition         = (isset($this->result['position'])) ? $this->result['position'] : '';
+$valueUrl         = (isset($this->result['url'])) ? $this->result['url'] : '';
 $valueAvatar            = (isset($this->result['image'])) ? $this->result['image'] : '';
 
 $label = ['label' => 'Name', 'id' => 'validationName'];
-$inputName = Helper::cmsFormGroup($label, 'text', 'name', $valueUsername, 'form-control', null, true, 'form-group mb-3', $this->errors);
-$label = ['label' => 'Parent', 'id' => 'validationParentID'];
-$arrDataParent = $this->categories;
-$arrParent = Helper::cmsSelectBox($label, 'parent_id', 'custom-select', $arrDataParent, 'form-group mb-3', $valueParentId);
+$inputName = Helper::cmsFormGroup($label, 'text', 'name', $valueUsername, 'form-control',true, 'form-group mb-3', $this->errors);
+$label = ['label' => 'Position', 'id' => 'validationPosition'];
+$inputPosition = Helper::cmsFormGroup($label, 'text', 'position', $valuePosition, 'form-control',true, 'form-group mb-3', $this->errors);
+$label = ['label' => 'Url', 'id' => 'validationUrl'];
+$inputUrl = Helper::cmsFormGroup($label, 'text', 'url', $valueUrl, 'form-control',  true, 'form-group mb-3', $this->errors);
 $label = ['label' => 'Image', 'id' => 'validationImage'];
 $inputAvatar = Helper::cmsFormGroupFile($label, 'file', 'image', $valueAvatar, 'custom-file-input', false, 'form-group mb-3', $this->errors, 'category', $this->task);
 
@@ -17,9 +19,9 @@ $valueStatus          = (isset($this->result['status'])) ? $this->result['status
 
 $raidoStatusActive = Helper::cmsRadio('status', 'Active', 1, $valueStatus);
 $raidoStatusNotActive = Helper::cmsRadio('status','Not active',0, $valueStatus);
-$link =Url::createLink('admin', 'category', 'form', ['task' => $this->task]);
+$link =Url::createLink('admin', 'banner', 'form', ['task' => $this->task]);
 if($this->task == 'edit'){
-    $link =Url::createLink('admin', 'category', 'form', ['task' => $this->task, 'id' => $this->id]);
+    $link =Url::createLink('admin', 'banner', 'form', ['task' => $this->task, 'id' => $this->id]);
 }
 ?>
 
@@ -28,7 +30,7 @@ if($this->task == 'edit'){
         <div class="col-xl-5 col-lg-7">
             <div class="card">
                 <div class="card-body">
-                    <?php echo $inputName . $arrParent . $inputAvatar; ?>
+                    <?php echo $inputName . $inputPosition . $inputUrl . $inputAvatar; ?>
                     <button class="btn btn-primary" type="submit">Ok</button>
                 </div>
             </div>

@@ -21,6 +21,7 @@
  .table-data td{
      vertical-align: middle;
      text-align: center;
+     white-space: normal !important;
  }
 
  .activeStatus, .activeAdmin{
@@ -31,10 +32,24 @@
      border-radius: 10px;
      padding-bottom: 3px;
      padding-left: 4px;
+     cursor: pointer;
      padding-right: 4px;
+     -webkit-touch-callout: none; /* iOS Safari */
+     -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Old versions of Firefox */
+     -ms-user-select: none; /* Internet Explorer/Edge */
+     user-select: none;
  }
 
  .deactive{
+     cursor: pointer;
+     -webkit-touch-callout: none; /* iOS Safari */
+     -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Old versions of Firefox */
+     -ms-user-select: none; /* Internet Explorer/Edge */
+     user-select: none;
      background: #fce0e4;
      color: #f58c75;
      font-size: 11px;
@@ -50,6 +65,12 @@
      height: 60px;
      object-fit: cover;
      object-position: center;
+ }
+ .img__table__slide{
+     object-fit: scale-down;
+     object-position: center;
+     width: 200px;
+     height: 150px;
  }
  .btnMove{
      border-radius: 50%;

@@ -63,6 +63,29 @@ function moveNode(type, id){
     $('#datatable').load('index.php?module=admin&controller=category&action=moveNode', data);
 
 }
+function changeStatus(){
+    $('.status__item').click(function (){
+        var id = $(this).attr('data-id');
+        var status = $(this).attr('data-status');
+        var control = $(this).attr('data-control');
+        var url = 'index.php?module=admin&controller=' + control + '&action=changeStatus';
+        var dataPost = {id: id, status: status};
+        var obj = this;
+        $.post(url, dataPost, function (data){
+            if (data.affected > 0){
+                $(obj).attr('data-status', data.status);
+                if(data.status == 1){
+                    $(obj).text('Active');
+                    $(obj).addClass('activeStatus').removeClass('deactive');
+                }else{
+                    $(obj).text('Deactive');
+                    $(obj).addClass('deactive').removeClass('activeStatus');
+                }
+            }
+
+        }, 'json');
+    });
+}
 
 $('.status__item').click(function (){
     var id = $(this).attr('data-id');
@@ -86,12 +109,12 @@ $('.status__item').click(function (){
     }, 'json');
 });
 $('.is__admin__item').click(function (){
-    var id = $(this).attr('data-id');
-    var isAdmin = $(this).attr('data-admin');
-    var control = $(this).attr('data-control');
-    var url = 'index.php?module=admin&controller=' + control + '&action=changeIsAdmin';
-    var dataPost = {id: id, isAdmin: isAdmin};
-    var obj = this;
+    var id          = $(this).attr('data-id');
+    var isAdmin     = $(this).attr('data-admin');
+    var control     = $(this).attr('data-control');
+    var url         = 'index.php?module=admin&controller=' + control + '&action=changeIsAdmin';
+    var dataPost    = {id: id, isAdmin: isAdmin};
+    var obj         = this;
     $.post(url, dataPost, function (data){
         if (data.affected > 0){
             $(obj).attr('data-admin', data.isAdmin);
@@ -107,3 +130,19 @@ $('.is__admin__item').click(function (){
     }, 'json');
 });
 
+function changeOrder(){
+    $('.btnMove').click(function (){
+        var id          = $(this).attr('data-id');
+        var type        = $(this).attr('data-type');
+        var control     = $(this).attr('data-control');
+        var position    = $(this).attr('data-position');
+        var dataPost    = {id: id, type: type, position : position };
+        var url         = 'index.php?module=admin&controller='+control+'&action=changeOrder';
+        $('#datatable').load(url, dataPost, function (){
+            changeStatus();
+            changeOrder();
+        });
+    });
+}
+
+changeOrder();

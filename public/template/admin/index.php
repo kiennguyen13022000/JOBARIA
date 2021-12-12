@@ -248,10 +248,10 @@
                     </a>
                     <ul class="nav-second-level" aria-expanded="false">
                         <li>
-                            <a href="layouts-sidebar-sm.html">Add Category</a>
+                            <a href="index.php?module=admin&controller=category&action=form">Add Category</a>
                         </li>
                         <li>
-                            <a href="layouts-dark-sidebar.html">List Category</a>
+                            <a href="index.php?module=admin&controller=category&action=index">List Category</a>
                         </li>
 
                     </ul>
@@ -295,10 +295,10 @@
                     </a>
                     <ul class="nav-second-level" aria-expanded="false">
                         <li>
-                            <a href="pages-starter.html">Add Slider</a>
+                            <a href="index.php?module=admin&controller=slide&action=form">Add Slider</a>
                         </li>
                         <li>
-                            <a href="pages-starter.html">List Slider</a>
+                            <a href="index.php?module=admin&controller=slide&action=index">List Slider</a>
                         </li>
                     </ul>
                 </li>
@@ -310,10 +310,10 @@
                     </a>
                     <ul class="nav-second-level" aria-expanded="false">
                         <li>
-                            <a href="pages-starter.html">Add Banner</a>
+                            <a href="index.php?module=admin&controller=banner&action=form">Add Banner</a>
                         </li>
                         <li>
-                            <a href="pages-starter.html">List Banner</a>
+                            <a href="index.php?module=admin&controller=banner&action=index">List Banner</a>
                         </li>
                     </ul>
                 </li>
