@@ -21,19 +21,31 @@ class Bootstrap{
     // CALL METHODE
     private function callMethod(){
         $actionName = $this->_params['action'] . 'Action';
-        if(method_exists($this->_controllerObject, $actionName)==true){
-            $module = $this->_params['module'];
-            $controller = $this->_params['controller'];
-            $action = $this->_params['action'];
-            if($module == 'admin'){
-                $this->_controllerObject->{$actionName}();
-            }else if($module == 'default'){
+            if(method_exists($this->_controllerObject, $actionName)==true){
+                $module = $this->_params['module'];
+                $controller = $this->_params['controller'];
+                $action = $this->_params['action'];
+                if($module == 'admin'){
+                    if (!empty($_SESSION['userAdmin']['loggedIn'])){
+                        if ($controller == 'login' || $action == 'login'){
+                            header('Location: index.php?module=admin&controller=index&action=index');
+                        }
+                        $this->_controllerObject->{$actionName}();
+                    }else{
+                        if ($controller != 'login' && $action != 'login'){
+                            header('Location: index.php?module=admin&controller=login&action=login');
+                        }
+                        $this->_controllerObject->{$actionName}();
 
+                    }
+                }else if($module == 'default'){
+
+                }
+
+            }else{
+                $this->_error();
             }
 
-        }else{
-            $this->_error();
-        }
 
     }
     private function callLoginAction($module = 'default'){

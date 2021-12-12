@@ -14,24 +14,20 @@ class ProductModel extends Model
         return  $result;
     }
     public function edit($params, $task){
+        $arrParams = $params['form'];
+        $arrParams['user_id'] = $_SESSION['userAdmin']['user_id'];
         if($task == 'add'){
-            $arrParams = $params['form'];
-            $arrParams['user_id']    = 1;
             $arrParams['created_at'] = date('Y-m-d H:i:s');
-
             $uploadObj = new Upload();
             $arrParams['image'] = $uploadObj->getUrlFile($params['edit']['image'], 'product', 300, 300);
             $arrParams['position']= 1;
             $sql = "UPDATE products SET position = position + 1";
             $this->Query($sql);
-
             return $this->Insert($arrParams);
         }else{
-            $arrParams = $params['form'];
             $arrParams['updated_at'] = date('Y-m-d H:i:s');
             $id = $arrParams['id'] = $params['id'];
             $arrParams['image'] = $params['edit']['image'];
-
             if (isset($arrParams['image'])){
                 $info = $this->info($id);
                 $uploadObj = new Upload();
@@ -52,6 +48,13 @@ class ProductModel extends Model
     public function getImage($id){
         $this->setTable('product_image');
         $result = $this->ListRecord("SELECT * FROM product_image WHERE product_id=".$id);
+        $this->setTable('products');
+        return $result;
+    }
+    public function getListCategories($id){
+        $this->setTable('categories');
+        $result = $this->ListRecord("SELECT * FROM categories WHERE status=1");
+        $this->setTable('products');
         return $result;
     }
     public function addImage($id){

@@ -54,6 +54,20 @@ if($this->task == 'edit'){
        }
    }
 }
+$listCategories = '
+     <select class="form-control" name="form[category_id]" id="">
+';
+$getListCategories = $this->getListCategories;
+if (!empty($getListCategories)){
+    foreach ($getListCategories as $k =>$v){
+        $category_id = $this->result['category_id'];
+        ($category_id == $v['id']) ? $selected = 'selected' : $selected = '';
+        $listCategories .='
+            <option '.$selected.' value="'.$v['id'].'">'.$v['name'].'</option>
+        ';
+    }
+}
+$listCategories .= '</select>';
 ?>
 <ul class="nav nav-pills navtab-bg nav-tabs-detail">
     <li class="nav-item">
@@ -74,7 +88,6 @@ if($this->task == 'edit'){
                             <div class="form-group mb-3">
                                 <label for="validationAvatar">Image</label>
                                 <div class="custom-file cursor_label">
-
                                     <input type="file" name="image" id="validationImage" value="<?php echo  $image; ?>"
                                            class="input__image custom-file-input cursor"
                                            size="" placeholder="Image">
@@ -85,33 +98,10 @@ if($this->task == 'edit'){
                                      src="<?php echo $image; ?>">
                             </div>
                             <?php echo $inputProductname.$inputPrice.$inputQuantity ?>
-                            <!--                    <div class="form-group mb-3">-->
-                            <!--                        <label for="validationAvatar">Image</label>-->
-                            <!--                        <div class="custom-file cursor_label">-->
-                            <!---->
-                            <!--                            <input type="file" name="image" id="validationImage" value="--><?php //echo  $image; ?><!--"-->
-                            <!--                                   class="input__image custom-file-input cursor"-->
-                            <!--                                   size="" placeholder="Image">-->
-                            <!--                            <label class="custom-file-label" for="validationImage">--><?php //echo $choose_file; ?><!--</label>-->
-                            <!---->
-                            <!--                        </div>-->
-                            <!--                        <img class="preview__image --><?php //echo $img_product; ?><!--"-->
-                            <!--                             src="--><?php //echo $image; ?><!--">-->
-                            <!--                    </div>-->
-                            <!--                    <div class="form-group mb-3">-->
-                            <!--                        <label for="validationPrice">Price</label>-->
-                            <!--                        <span class="text-danger">*</span>-->
-                            <!--                        <input type="number" name="form[price]" id="validationPrice"-->
-                            <!--                               value="--><?php //echo $this->result['price']; ?><!--" class="form-control"-->
-                            <!--                                 placeholder="Price">-->
-                            <!--                    </div>-->
-                            <!--                    <div class="form-group mb-3">-->
-                            <!--                        <label for="validationQuantity">Quantity</label>-->
-                            <!--                        <span class="text-danger">*</span>-->
-                            <!--                        <input type="number" min="0" name="form[quantity]" id="validationQuantity"-->
-                            <!--                               value="--><?php //echo $this->result['quantity']; ?><!--" class="form-control"-->
-                            <!--                               placeholder="Price">-->
-                            <!--                    </div>-->
+                            <div class="form-group mb-3">
+                                <label for="">Category</label>
+                                <?php echo $listCategories; ?>
+                            </div>
                             <div class="form-group mb-3">
                                 <label for="">Promotion</label>
                                 <input type="number" name="form[promotion]" min="0" id="validationPromotion"
