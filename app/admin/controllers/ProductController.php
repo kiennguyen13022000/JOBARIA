@@ -19,6 +19,8 @@ class ProductController extends Controller
         $requiredPass = true;
         $this->_view->result= array();
         $product_id = $this->_arrParam['id'];
+        $this->_view->getListCategories = $this->_model->getListCategories($product_id);
+
         if (isset($product_id)){
             $this->_view->button_form = '<button class="btn btn-primary" type="submit">Update</button>';
             $task = 'edit';
@@ -26,9 +28,8 @@ class ProductController extends Controller
             $this->_view->result = $this->_model->info($product_id);
             $this->_view->title     = $this->_view->result['product_name'].' | Product';
             $this->_view->id = $product_id;
-
             $this->_view->listImages = $this->_model->getImage($product_id);
-            $this->_model->setTable('products');
+
         }
 
         $this->_view->task = $task;
@@ -65,8 +66,6 @@ class ProductController extends Controller
                 }
             }
         }
-
-
         $this->_view->render('product/edit');
     }
     public function listAction(){

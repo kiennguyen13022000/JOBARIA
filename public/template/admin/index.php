@@ -172,7 +172,7 @@
                     <div class="dropdown-divider"></div>
 
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <a href="index.php?module=admin&controller=login&action=logout" class="dropdown-item notify-item">
                         <i class="remixicon-logout-box-line"></i>
                         <span>Logout</span>
                     </a>

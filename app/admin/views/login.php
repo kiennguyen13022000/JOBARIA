@@ -1,22 +1,26 @@
 <?php
     $link =Url::createLink('admin', 'login', 'login');
+//    $label = ['label' => 'Password', 'id' => 'validationPassword'];
+//    $inputPassword = Helper::cmsFormGroup($label, 'password', 'password', $this->result['password'], 'form-control', null, true, 'form-group mb-3', $this->errors);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Minton - Responsive Admin Dashboard Template</title>
+    <title>Login | Jobaria - Admin Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
     <meta content="Coderthemes" name="author">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="assets\images\favicon.ico">
+    <link rel="shortcut icon" href="public/template/admin\images\favicon.ico">
 
     <!-- App css -->
     <link href="public/template/admin/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="public/template/admin/css/icons.min.css" rel="stylesheet" type="text/css">
     <link href="public/template/admin/css/app.min.css" rel="stylesheet" type="text/css">
+    <link href="public/template/admin/css/style.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -47,12 +51,16 @@
                             <div class="form-group mb-3">
                                 <label for="password">Password</label>
                                 <input class="form-control" name="form[password]" type="password" required="" id="password" placeholder="Enter your password">
+                                <div class="invalid-feedback <?php echo $this->block_errors ?>">
+                                    Incorrect account or password
+                                </div>
+
                             </div>
 
                             <div class="form-group mb-3">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="checkbox-signin" checked="">
-                                    <label class="custom-control-label" for="checkbox-signin">Remember me</label>
+                                    <label class="custom-control-label cursor" for="checkbox-signin">Remember me</label>
                                 </div>
                             </div>
 
@@ -86,8 +94,8 @@
 
                 <div class="row mt-3">
                     <div class="col-12 text-center">
-                        <p> <a href="pages-recoverpw.html" class="text-muted ml-1">Forgot your password?</a></p>
-                        <p class="text-muted">Don't have an account? <a href="pages-register.html" class="text-primary font-weight-medium ml-1">Sign Up</a></p>
+                        <p> <a href="index.php?module=admin&controller=login&action=forgot" class="text-muted ml-1">Forgot your password?</a></p>
+                        <p class="text-muted d-none">Don't have an account? <a href="pages-register.html" class="text-primary font-weight-medium ml-1">Sign Up</a></p>
                     </div> <!-- end col -->
                 </div>
                 <!-- end row -->
