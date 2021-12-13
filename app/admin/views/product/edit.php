@@ -11,11 +11,11 @@ $raidoIsNew = Helper::cmsRadio('is_new', 'Active', 1, $valueIsNew);
 $raidoIsNotNew = Helper::cmsRadio('is_new','Not active',0, $valueIsNew);
 
 $label = ['label' => 'Product name', 'id' => 'validationProductname'];
-$inputProductname = Helper::cmsFormGroup($label, 'text', 'product_name', $this->result['product_name'], 'form-control', null, true, 'form-group mb-3', $this->errors);
+$inputProductname = Helper::cmsFormGroup($label, 'text', 'product_name', $this->result['product_name'], 'form-control', true, 'form-group mb-3', $this->errors);
 $label = ['label' => 'Price', 'id' => 'validationPrice'];
-$inputPrice = Helper::cmsFormGroup($label, 'number', 'price', $this->result['price'], 'form-control', null, true, 'form-group mb-3', $this->errors);
+$inputPrice = Helper::cmsFormGroup($label, 'number', 'price', $this->result['price'], 'form-control', true, 'form-group mb-3', $this->errors);
 $label = ['label' => 'Quantity', 'id' => 'validationQuantity'];
-$inputQuantity = Helper::cmsFormGroup($label, 'number', 'quantity', $this->result['quantity'], 'form-control', null, true, 'form-group mb-3', $this->errors);
+$inputQuantity = Helper::cmsFormGroup($label, 'number', 'quantity', $this->result['quantity'], 'form-control', true, 'form-group mb-3', $this->errors);
 
 $link =Url::createLink('admin', 'product', 'edit');
 if($this->task == 'edit'){
@@ -60,10 +60,11 @@ $listCategories = '
 $getListCategories = $this->getListCategories;
 if (!empty($getListCategories)){
     foreach ($getListCategories as $k =>$v){
+        $name = str_repeat('-', $v['level'] * 2) . $v['name'] . str_repeat('-', $v['level'] * 2);
         $category_id = $this->result['category_id'];
         ($category_id == $v['id']) ? $selected = 'selected' : $selected = '';
         $listCategories .='
-            <option '.$selected.' value="'.$v['id'].'">'.$v['name'].'</option>
+            <option '.$selected.' value="'.$v['id'].'">'.$name.'</option>
         ';
     }
 }
@@ -130,14 +131,11 @@ $listCategories .= '</select>';
                                 <textarea class="form-control" name="form[product_features]" placeholder="Product Features"
                                           id="" cols="30" rows="10"><?php echo htmlentities($this->result['content']); ?></textarea>
                             </div>
-
-
                             <?php echo $this->button_form; ?>
                         </div>
                     </div>
 
                 </div>
-
                 <div class="col-lg-4 col-12">
                     <div class="row">
                         <div class="col-12">
@@ -191,7 +189,6 @@ $listCategories .= '</select>';
                         <nav class="product_images nav mb-3">
                             <?php echo $list_images_view ?>
                         </nav>
-
                         <label for="img_product" class="dropzone dz-clickable cursor px-3">
                             <div class="dz-message needsclick mt-3 mb-3 text-center ">
                                 <input type="file"  id="img_product" name="img_product" class="filePhotoImage d-none">

@@ -72,13 +72,16 @@
      width: 200px;
      height: 150px;
  }
- .btnMove{
+ .btnMove, .btnMove-category{
      border-radius: 50%;
      border: none;
      padding-top: 3px;
      font-size: 25px;
      padding-left: 7px;
      color: #2ea8e5;
+ }
+ .btnMove-category:hover{
+     cursor: pointer;
  }
  .btnMove:hover{
      cursor: pointer;
@@ -114,4 +117,8 @@
  .product_images .nav-item {
      width: 150px;
      margin-right: 20px;
+ }
+ .nav-user img{
+     object-fit: cover;
+     object-position: center;
  }

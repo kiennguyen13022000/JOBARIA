@@ -387,7 +387,7 @@ class NestedSetModel{
         mysqli_query($this->connect, $updateLeft);
 
 
-        echo $updateRight = 'update '. $this->table .' set `right` = (`right` - '. $widthNodeMove .') where `right` > '. $nodeMoveInfo['right'] .'';
+        $updateRight = 'update '. $this->table .' set `right` = (`right` - '. $widthNodeMove .') where `right` > '. $nodeMoveInfo['right'] .'';
         mysqli_query($this->connect, $updateRight);
 
 

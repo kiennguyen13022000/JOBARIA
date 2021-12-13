@@ -11,16 +11,16 @@ foreach ($this->data as $key => $value){
         continue;
 //        $move .= '<i onclick="moveNode(\'down\', '.$value['id'].')" class="btnMove remixicon-arrow-down-circle-fill"></i>';
     }else if($value['left'] - 1 == $this->data[$key - 1]['left'] && $this->data[$key - 1]['id'] == $value['parent_id']){
-        $move .= '<i onclick="moveNode(\'down\', '.$value['id'].')" class="btnMove remixicon-arrow-down-circle-fill"></i>';
+        $move .= '<i onclick="moveNode(\'down\', '.$value['id'].')" class="btnMove-category remixicon-arrow-down-circle-fill"></i>';
     }else if(count($this->data) - 1 >= $key + 1 && $this->data[$key + 1]['left'] > $value['left'] + 2){
-        $move .= '<i onclick="moveNode(\'up\', '.$value['id'].')" class="btnMove remixicon-arrow-up-circle-fill"></i>';
+        $move .= '<i onclick="moveNode(\'up\', '.$value['id'].')" class="btnMove-category remixicon-arrow-up-circle-fill"></i>';
     }else {
-        $move .= '<i onclick="moveNode(\'up\', '.$value['id'].')" class="btnMove remixicon-arrow-up-circle-fill"></i>';
-        $move .= '<i onclick="moveNode(\'down\', '.$value['id'].')" class="btnMove remixicon-arrow-down-circle-fill"></i>';
+        $move .= '<i onclick="moveNode(\'up\', '.$value['id'].')" class="btnMove-category remixicon-arrow-up-circle-fill"></i>';
+        $move .= '<i onclick="moveNode(\'down\', '.$value['id'].')" class="btnMove-category remixicon-arrow-down-circle-fill"></i>';
     }
 
     if($key == count($this->data) - 1 || $value['right'] == $this->data[0]['right'] - 1){
-        $move = '<i onclick="moveNode(\'up\', '.$value['id'].')" class="btnMove remixicon-arrow-up-circle-fill"></i>';
+        $move = '<i onclick="moveNode(\'up\', '.$value['id'].')" class="btnMove-category remixicon-arrow-up-circle-fill"></i>';
     }
     if(count($this->data) - 1 >= $key + 1 && $key > 1 && $this->data[$key - 1]['left'] == $value['left'] - 1 && ($this->data[$key + 1]['left'] > $value['left'] + 2 || $this->data[$key + 1]['left'] == $value['left'] + 1 )){
         $move = '';

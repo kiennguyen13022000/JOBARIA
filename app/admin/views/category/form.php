@@ -5,7 +5,7 @@ $valueParentId          = (isset($this->result['parent_id'])) ? $this->result['p
 $valueAvatar            = (isset($this->result['image'])) ? $this->result['image'] : '';
 
 $label = ['label' => 'Name', 'id' => 'validationName'];
-$inputName = Helper::cmsFormGroup($label, 'text', 'name', $valueUsername, 'form-control', null, true, 'form-group mb-3', $this->errors);
+$inputName = Helper::cmsFormGroup($label, 'text', 'name', $valueUsername, 'form-control', true, 'form-group mb-3', $this->errors);
 $label = ['label' => 'Parent', 'id' => 'validationParentID'];
 $arrDataParent = $this->categories;
 $arrParent = Helper::cmsSelectBox($label, 'parent_id', 'custom-select', $arrDataParent, 'form-group mb-3', $valueParentId);

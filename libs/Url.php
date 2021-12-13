@@ -2,12 +2,8 @@
 class URL
 {
 
-    public static function createLink($module, $controller, $action, $param = null, $router = null)
+    public static function createLink($module, $controller, $action, $param = null)
     {
-        if ($router != null) {
-            return ROOT_URL . $router;
-        }
-
         $link = '';
         if (!empty($param)) {
             foreach ($param as $key => $item) {

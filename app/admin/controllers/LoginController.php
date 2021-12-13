@@ -18,7 +18,7 @@ class LoginController extends Controller
         }
         $this->_view->render('login',false);
     }
-    public function  logoutAction(){
+    public function logoutAction(){
         Session::delete('userAdmin');
         header('Location: index.php?module=admin&controller=login&action=login');
     }

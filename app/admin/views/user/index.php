@@ -64,9 +64,7 @@
                 </table>
             </div>
         </div>
-
     </div>
-
 </div>
 
 <!--<li class="list-inline-item">-->

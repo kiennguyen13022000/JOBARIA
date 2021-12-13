@@ -28,9 +28,10 @@ class UserModel extends Model
              $arrParams['updated_at'] = date('Y-m-d H:i:s', time());
              $id = $arrParams['id'];
              unset($arrParams['confirm_password']);
-             $arrParams['password']   = md5($arrParams['password']);
              if (empty($arrParams['password']))
                  unset($arrParams['password']);
+             else
+                 $arrParams['password']   = md5($arrParams['password']);
 
              if (!empty($arrParams['avatar']['name'])){
                 $info = $this->info($id);

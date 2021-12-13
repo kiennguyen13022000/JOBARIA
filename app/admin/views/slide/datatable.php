@@ -12,6 +12,8 @@ foreach ($this->data as $key => $value){
         $move       .= '<i data-id="'.$value['id'].'" data-position="'.$value['position'].'" data-type="up" data-control="slide" class="btnMove remixicon-arrow-up-circle-fill"></i>';
     }
 
+    if (count($this->data) == 1)
+        $move       = '';
     $img = '';
     if($value['image'] != null){
         $img = '<img class="img__table__slide" src="'. $value['image'] .'">';

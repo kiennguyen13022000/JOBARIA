@@ -25,12 +25,12 @@ class Upload {
     public function getUrlFile($file, $folder, $width = 300, $height = 300, $option = null) {
         if ($option == null) {
             if ($file['tmp_name'] != null) {
+                if (!file_exists('public/upload/' . $folder)) {
+                    mkdir('public/upload/' .$folder, 0777, true);
+                }
                 $uploadDir = 'public/upload/' . $folder . '/';
                 $fileName = $uploadDir .time().'_'. $file['name'];
                 copy($file['tmp_name'], $fileName);
-//                $thum = PhpThumbFactory::create($fileName);
-//                $thum->adaptiveResize($width, $height);
-//                $thum->save($uploadDir . $file['name']);
                 return $fileName;
             }
         }

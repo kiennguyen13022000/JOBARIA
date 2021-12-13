@@ -112,7 +112,13 @@ class ProductController extends Controller
         echo json_encode(array(
             'msg' => 'ok',
             'html' => $html
-        ));die();
+        ));
+    }
+    public function changeStatusAction(){
+        $id = $this->_arrParam['id'];
+        $status = $this->_arrParam['status'] == 1 ? 0 : 1;
+        $affected = $this->_model->changeStatus($id, $status);
+        echo json_encode(['affected' => $affected, 'status' => $status]);
     }
     private function createLinkCss(){
         $css = array(

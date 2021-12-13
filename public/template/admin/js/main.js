@@ -60,8 +60,9 @@ function deleteItem(id, controller){
 }
 function moveNode(type, id){
     var data = {type: type, id: id};
-    $('#datatable').load('index.php?module=admin&controller=category&action=moveNode', data);
-
+    $('#datatable').load('index.php?module=admin&controller=category&action=moveNode', data, function (){
+        changeStatus();
+    });
 }
 function changeStatus(){
     $('.status__item').click(function (){
@@ -86,28 +87,8 @@ function changeStatus(){
         }, 'json');
     });
 }
+changeStatus();
 
-$('.status__item').click(function (){
-    var id = $(this).attr('data-id');
-    var status = $(this).attr('data-status');
-    var control = $(this).attr('data-control');
-    var url = 'index.php?module=admin&controller=' + control + '&action=changeStatus';
-    var dataPost = {id: id, status: status};
-    var obj = this;
-    $.post(url, dataPost, function (data){
-        if (data.affected > 0){
-            $(obj).attr('data-status', data.status);
-            if(data.status == 1){
-                $(obj).text('Active');
-                $(obj).addClass('activeStatus').removeClass('deactive');
-            }else{
-                $(obj).text('Deactive');
-                $(obj).addClass('deactive').removeClass('activeStatus');
-            }
-        }
-
-    }, 'json');
-});
 $('.is__admin__item').click(function (){
     var id          = $(this).attr('data-id');
     var isAdmin     = $(this).attr('data-admin');

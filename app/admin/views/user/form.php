@@ -12,24 +12,24 @@ $valueConfirmPassword   = (isset($this->result['confirm_password'])) ? $this->re
 
 
 $label = ['label' => 'First name', 'id' => 'validationFirstname'];
-$inputFirstname = Helper::cmsFormGroup($label, 'text', 'firstname', $valueFirstname, 'form-control', null, true, 'form-group mb-3 col-lg-6', $this->errors);
+$inputFirstname = Helper::cmsFormGroup($label, 'text', 'firstname', $valueFirstname, 'form-control', true, 'form-group mb-3 col-lg-6', $this->errors);
 $label = ['label' => 'Last name', 'id' => 'validationLastname'];
-$inputLastname = Helper::cmsFormGroup($label, 'text', 'lastname', $valueLastname, 'form-control', null, true, 'form-group mb-3 col-lg-6', $this->errors);
+$inputLastname = Helper::cmsFormGroup($label, 'text', 'lastname', $valueLastname, 'form-control', true, 'form-group mb-3 col-lg-6', $this->errors);
 $rowFirstLast = Helper::cmsRow($inputFirstname . $inputLastname);
 $label = ['label' => 'User name', 'id' => 'validationUsername'];
-$inputUsername = Helper::cmsFormGroup($label, 'text', 'username', $valueUsername, 'form-control', null, true, 'form-group mb-3', $this->errors);
+$inputUsername = Helper::cmsFormGroup($label, 'text', 'username', $valueUsername, 'form-control', true, 'form-group mb-3', $this->errors);
 $label = ['label' => 'Email', 'id' => 'validationEmail'];
-$inputEmail = Helper::cmsFormGroup($label, 'text', 'email', $valueEmail, 'form-control', null, true, 'form-group mb-3', $this->errors);
+$inputEmail = Helper::cmsFormGroup($label, 'text', 'email', $valueEmail, 'form-control', true, 'form-group mb-3', $this->errors);
 $label = ['label' => 'Phone', 'id' => 'validationPhone'];
-$inputPhone = Helper::cmsFormGroup($label, 'text', 'phone', $valuePhone, 'form-control', null, false, 'form-group mb-3', $this->errors);
+$inputPhone = Helper::cmsFormGroup($label, 'text', 'phone', $valuePhone, 'form-control',  false, 'form-group mb-3', $this->errors);
 $label = ['label' => 'Address', 'id' => 'validationAddress'];
-$inputAddress = Helper::cmsFormGroup($label, 'text', 'address', $valueAddress, 'form-control', null, false, 'form-group mb-3', $this->errors);
+$inputAddress = Helper::cmsFormGroup($label, 'text', 'address', $valueAddress, 'form-control', false, 'form-group mb-3', $this->errors);
 $label = ['label' => 'Avatar', 'id' => 'validationAvatar'];
-$inputAvatar = Helper::cmsFormGroupFile($label, 'file', 'avatar', $valueAvatar, 'custom-file-input', null, false, 'form-group mb-3', $this->errors, 'users', $this->task);
+$inputAvatar = Helper::cmsFormGroupFile($label, 'file', 'avatar', $valueAvatar, 'custom-file-input',  false, 'form-group mb-3', $this->errors, 'users', $this->task);
 $label = ['label' => 'Password', 'id' => 'validationPassword'];
-$inputPassword = Helper::cmsFormGroup($label, 'password', 'password', $valuePassword, 'form-control', null, true, 'form-group mb-3 col-lg-6', $this->errors);
+$inputPassword = Helper::cmsFormGroup($label, 'password', 'password', $valuePassword, 'form-control',  true, 'form-group mb-3 col-lg-6', $this->errors);
 $label = ['label' => 'Retype password', 'id' => 'validationRetypePassword'];
-$inputRetypePassword = Helper::cmsFormGroup($label, 'password', 'confirm_password', $valueConfirmPassword, 'form-control', null, true, 'form-group mb-3 col-lg-6', $this->errors);
+$inputRetypePassword = Helper::cmsFormGroup($label, 'password', 'confirm_password', $valueConfirmPassword, 'form-control',true, 'form-group mb-3 col-lg-6', $this->errors);
 $rowPassword = Helper::cmsRow($inputPassword . $inputRetypePassword);
 
 // create radio

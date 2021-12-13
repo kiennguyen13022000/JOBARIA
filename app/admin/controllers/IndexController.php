@@ -41,6 +41,11 @@ class IndexController extends Controller
                 'link' => 'public/template/admin/libs/jquery-vectormap/jquery-jvectormap-1.2.2.css',
                 'type' => 'text/css',
                 'rel'  => 'stylesheet'
+            ),
+            array(
+                'link' => 'public/template/admin/css/style.css',
+                'type' => 'text/css',
+                'rel'  => 'stylesheet'
             )
         );
 

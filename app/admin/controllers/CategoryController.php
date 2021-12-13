@@ -2,11 +2,6 @@
 
 class CategoryController extends Controller
 {
-    public function __construct($arrParams)
-    {
-        parent::__construct($arrParams);
-    }
-
     public function formAction(){
         $this->createLinkCss();
         $this->createLinkJs();

@@ -1,9 +1,9 @@
 <?php
 
-$valueUsername          = (isset($this->result['name'])) ? $this->result['name'] : '';
+$valueUsername         = (isset($this->result['name'])) ? $this->result['name'] : '';
 $valuePosition         = (isset($this->result['position'])) ? $this->result['position'] : '';
-$valueUrl         = (isset($this->result['url'])) ? $this->result['url'] : '';
-$valueAvatar            = (isset($this->result['image'])) ? $this->result['image'] : '';
+$valueUrl              = (isset($this->result['url'])) ? $this->result['url'] : '';
+$valueAvatar           = (isset($this->result['image'])) ? $this->result['image'] : '';
 
 $label = ['label' => 'Name', 'id' => 'validationName'];
 $inputName = Helper::cmsFormGroup($label, 'text', 'name', $valueUsername, 'form-control',true, 'form-group mb-3', $this->errors);

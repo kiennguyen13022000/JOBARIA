@@ -72,8 +72,9 @@ class Model{
     public function Insert($param, $type = 'single'){
         if($type == 'single'){
             $newQuery = $this->CreateInsert($param);
-            $sql = "insert into `$this->table`(".$newQuery['cols'] .") values(". $newQuery['vals'] .")";
+             $sql = "insert into `$this->table`(".$newQuery['cols'] .") values(". $newQuery['vals'] .")";
             $this->Query($sql);
+            return $this->LastId();
         }else if($type == 'multiple'){
             foreach ($param as $key => $value) {
                 $newQuery = $this->CreateInsert($value);
@@ -88,7 +89,6 @@ class Model{
     }
 
     public function Update($param, $where){
-
         $ud = $this->CreateUpdate($param);
         $w = $this->CreateWhere($where);
         $sql = "update `$this->table` set $ud where $w";

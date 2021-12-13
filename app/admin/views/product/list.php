@@ -6,11 +6,11 @@
                     <thead>
                     <tr>
                         <th width="15" >No</th>
+                        <th>Image</th>
                         <th>Product name</th>
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Status</th>
-
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -19,17 +19,23 @@
                     $xhtml = '';
                     $num = 0;
                     foreach ($this->data as $key => $value){
+                        $img = '';
+                        if($value['image'] != null){
+                            $img = '<img class="img__table" src="'. $value['image'] .'">';
+                        }
                         ++ $num;
-                        $status     = $value['status'] == 1 ? 'active' : 'deactive';
+                        $status         = $value['status'] == 1 ? 'active' : 'deactive';
+                        $classStatus    = $value['status'] == 1 ? 'activeStatus' : 'deactive';
                         $xhtml .= '<tr id="row-'. $value['id'] .'">
                                             <td>'. $num .'</td>
+                                            <td>'. $img .'</td>
                                             <td>
                                             <a href="index.php?module=admin&controller=product&action=edit&task=edit&id='.$value['id'].'">
                                             '. $value['product_name'] .'</a>
                                             </td>
                                             <td>'. $value['price'] .'</td>
                                             <td>'. $value['quantity'] .'</td>
-                                            <td> <span class="'. $status .'">'. ucfirst($status) .'</span></td>
+                                            <td> <span data-control="product" data-id="'.$value['id'].'" data-status="'.$value['status'].'" class="'. $classStatus .' status__item">'. ucfirst($status) .'</span></td>
                                            
                                             <td>
                                                 <ul class="list-inline table-action m-0">

@@ -29,7 +29,7 @@
                                                 <td>'. $value['name'] .'</td>
                                                 <td>'. $value['position'] .'</td>
                                                 <td>
-                                                    <span title="Change" data-control="slide" data-id="'.$value['id'].'" data-status="'.$value['status'].'" class="'. $classStatus .' status__item">'. ucfirst($status) .'</span>
+                                                    <span title="Change" data-control="banner" data-id="'.$value['id'].'" data-status="'.$value['status'].'" class="'. $classStatus .' status__item">'. ucfirst($status) .'</span>
                                                 </td> 
                                                 <td>
                                                     <ul class="list-inline table-action m-0">

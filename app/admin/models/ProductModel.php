@@ -28,11 +28,13 @@ class ProductModel extends Model
             $arrParams['updated_at'] = date('Y-m-d H:i:s');
             $id = $arrParams['id'] = $params['id'];
             $arrParams['image'] = $params['edit']['image'];
-            if (isset($arrParams['image'])){
+            if (!empty($arrParams['image']['name'])){
                 $info = $this->info($id);
                 $uploadObj = new Upload();
                 $uploadObj->removeFileName($info['image'], null);
                 $arrParams['image'] = $uploadObj->getUrlFile($arrParams['image'], 'product', 300, 300);
+            }else{
+                unset($arrParams['image']);
             }
             return $this->Update($arrParams, [['id', $id, '']]);
         }
@@ -53,7 +55,7 @@ class ProductModel extends Model
     }
     public function getListCategories($id){
         $this->setTable('categories');
-        $result = $this->ListRecord("SELECT * FROM categories WHERE status=1");
+        $result = $this->ListRecord("SELECT * FROM categories WHERE status = 1 order by `left`");
         $this->setTable('products');
         return $result;
     }
@@ -61,5 +63,11 @@ class ProductModel extends Model
         $this->setTable('product_image');
         $result = $this->Insert("SELECT * FROM product_image WHERE product_id=".$id);
         return !empty($result) ? $result : array();
+    }
+
+    public function changeStatus($id, $status){
+        $param   = array('status' => $status);
+        $where   = array(array('id', $id, ''));
+        return $this->Update($param, $where);
     }
 }
