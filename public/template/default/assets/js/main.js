@@ -648,3 +648,25 @@ $('.btnModalProduct').click(function (){
   })
 });
 
+
+$('.criterions_list .fa-star').hover(
+    function() {
+
+      var idexCurrent = $(this).index();
+
+      var i;
+      var parent = $(this).parent();
+      var len = parent.find('.fa-star').length;
+      // parent.css({ color: '#909090' });
+      for (i = 0; i < len; i++) {
+        parent.find('.fa-star').eq(i).css({ color: '#909090' }).removeAttr('data-star', idexCurrent);
+
+      }
+
+      for (i = 0; i <= idexCurrent; i++) {
+        parent.find('.fa-star').eq(i).css({ color: '#343a40' })
+      }
+
+      $(this).attr('data-star', idexCurrent);
+    }
+);

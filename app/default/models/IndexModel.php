@@ -21,27 +21,44 @@ class IndexModel extends Model
 
     public function getNewProductList(){
         $this->SetTable('products');
-        $query  = "select p.*, c.name as category_name from `$this->table` as p join `categories` as c";
-        $query .= " on p.category_id = c.id";
-        $query .= " where p.`is_new` = 1";
-
+        $query[]    = "select p.*, child.name as category_name, GROUP_CONCAT(parent.name order by parent.left) as breakcrumbs";
+        $query[]    = "from `$this->table` as p join `categories` as child, `categories` as parent";
+        $query[]    = "WHERE p.status = 1 and p.category_id = child.id";
+        $query[]    = "and child.left BETWEEN parent.left AND parent.right";
+        $query[]    = "AND parent.left > 0 AND p.is_new = 1";
+        $query[]    = "GROUP BY p.id";
+        $query[]    = "HAVING COUNT(p.id) = SUM(parent.status)";
+        $query[]    = "ORDER BY parent.left";
+        $query      = implode(' ', $query);
         return $this->ListRecord($query);
     }
 
     public function getBestsellerProductList(){
         $this->SetTable('products');
-        $query  = "select p.*, c.name as category_name from `$this->table` as p join `categories` as c";
-        $query .= " on p.category_id = c.id";
-        $query .= "";
+        $query[]    = "select p.*, child.name as category_name, GROUP_CONCAT(DISTINCT parent.name order by parent.left) as breakcrumbs";
+        $query[]    = "from `$this->table` as p join `categories` as child, `categories` as parent";
+        $query[]    = "WHERE p.status = 1 and p.category_id = child.id";
+        $query[]    = "and child.left BETWEEN parent.left AND parent.right";
+        $query[]    = "AND parent.left > 0 AND p.is_new = 1";
+        $query[]    = "GROUP BY p.id";
+        $query[]    = "HAVING COUNT(p.id) = SUM(parent.status)";
+        $query[]    = "ORDER BY parent.left";
+        $query      = implode(' ', $query);
 
         return $this->ListRecord($query);
     }
 
     public function getFeatureProductList(){
         $this->SetTable('products');
-        $query  = "select p.*, c.name as category_name from `$this->table` as p join `categories` as c";
-        $query .= " on p.category_id = c.id";
-        $query .= " where p.`feature` = 1";
+        $query[]    = "select p.*, child.name as category_name, GROUP_CONCAT(DISTINCT parent.name order by parent.left) as breakcrumbs";
+        $query[]    = "from `$this->table` as p join `categories` as child, `categories` as parent";
+        $query[]    = "WHERE p.status = 1 and p.category_id = child.id";
+        $query[]    = "and child.left BETWEEN parent.left AND parent.right";
+        $query[]    = "AND parent.left > 0 AND p.feature = 1";
+        $query[]    = "GROUP BY p.id";
+        $query[]    = "HAVING COUNT(p.id) = SUM(parent.status)";
+//        $query[]    = "ORDER BY parent.left";
+        $query      = implode(' ', $query);
 
         return $this->ListRecord($query);
     }
@@ -83,10 +100,14 @@ class IndexModel extends Model
 
     public function getDailyDealProduct(){
         $currentTime    = date('Y-m-d H:i:s');
-        $query[]        = 'select p.*, c.name as categoryName from `products` as p join `categories` as c';
-        $query[]        = 'on p.category_id = c.id';
-        $query[]        = 'where `promotion_end_date` > ' . '\'' . $currentTime. '\'';
-        $query[]        = 'and `promotion` > 0';
+        $query[]    = "select p.*, child.name as categoryName, GROUP_CONCAT(DISTINCT parent.name order by parent.left) as breakcrumbs";
+        $query[]    = "from `$this->table` as p join `categories` as child, `categories` as parent";
+        $query[]    = "WHERE p.status = 1 and p.category_id = child.id";
+        $query[]    = "and child.left BETWEEN parent.left AND parent.right";
+        $query[]    = "AND parent.left > 0 AND `promotion_end_date` > '$currentTime' and `promotion` > 0";
+        $query[]    = "GROUP BY p.id";
+        $query[]    = "HAVING COUNT(p.id) = SUM(parent.status)";
+//        $query[]    = "ORDER BY parent.left";
         $strQuery       = implode(' ', $query);
         return $this->ListRecord($strQuery);
     }
@@ -134,8 +155,15 @@ class IndexModel extends Model
     }
 
     public function info($id){
-        $query = 'select p.*, c.name as categoryName from products as p join categories as c on p.category_id = c.id where p.`id` = ' . $id;
-        $result = $this->OneRecord($query);
+        $query[]    = "select p.*, child.name as categoryName, GROUP_CONCAT(DISTINCT parent.name order by parent.left) as breakcrumbs";
+        $query[]    = "from `products` as p join `categories` as child, `categories` as parent";
+        $query[]    = "WHERE p.id = $id and p.category_id = child.id";
+        $query[]    = "and child.left BETWEEN parent.left AND parent.right";
+        $query[]    = "AND parent.left > 0 ";
+        $query[]    = "GROUP BY p.id";
+//        $query[]    = "ORDER BY parent.left";
+        $strQuery   = implode(' ', $query);
+        $result = $this->OneRecord($strQuery);
         $queryChildImage = 'select image from `product_image` where `product_id` = ' . $id;
         $result['childImage'] = $this->ListRecord($queryChildImage);
         return $result;

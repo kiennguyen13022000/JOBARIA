@@ -1,6 +1,8 @@
 <?php
     $newProductList = '';
     foreach ($this->newProductList as $key => $value){
+        $url    = $value['breakcrumbs'] . '/' . trim($value['product_name']). '_' . $value['id'];
+        $link = Url::filterURL($url) . '.html';
         $new        = $value['is_new'] == 0 ? '' : '<div class="d-inline-block px-3 py-1 rounded msg__status">New</div>';
         $promotion  = $value['promotion'] == 0 ? '' : '<div class="d-inline-block px-3 py-1 rounded msg__status">- '.$value['promotion'].'%</div>';
         if ($key % 2 == 0) {
@@ -18,12 +20,11 @@
                                         '. $new . $promotion .'
                                     </div>
                                     <div class="overflow-hidden wrapper__poduct__image">
-                                        <a href="detail.html" title=""">
+                                        <a href="'.$link.'" title=""">
                                             <img src="'. $value['image'] .'"
                                                  class="product__img " alt="">
                                         </a>
                                     </div>
-
                                     <p class="category_name">
                                         '. $value['category_name'] .'
                                     </p>
