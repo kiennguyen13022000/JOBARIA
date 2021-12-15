@@ -16,7 +16,7 @@ class UserModel extends Model
 
     public function form($arrParams, $task){
          if($task == 'add'){
-             $arrParams['user_id']    = 1;
+             $arrParams['user_id']    = $_SESSION['userAdmin']['user_id'];;
              $arrParams['created_at'] = date('Y-m-d H:i:s', time());
              $arrParams['password']   = md5($arrParams['password']);
              unset($arrParams['confirm_password']);

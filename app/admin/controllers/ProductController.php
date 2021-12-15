@@ -25,7 +25,9 @@ class ProductController extends Controller
             $this->_view->button_form = '<button class="btn btn-primary" type="submit">Update</button>';
             $task = 'edit';
             $requiredPass = false;
-            $this->_view->result = $this->_model->info($product_id);
+            $result = $this->_model->info($product_id);
+            if (empty($result)) header('Location: index.php?module=admin&controller=product&action=list');
+            $this->_view->result = $result;
             $this->_view->title     = $this->_view->result['product_name'].' | Product';
             $this->_view->id = $product_id;
             $this->_view->listImages = $this->_model->getImage($product_id);
@@ -78,8 +80,10 @@ class ProductController extends Controller
         $this->_view->render('product/list');
     }
     public function deleteAction(){
+        $table = $this->_arrParam['table'];
+        if (empty($table)) $table = 'products';
         $info = $this->_model->info($this->_arrParam['id']);
-        $affected = $this->_model->deleteItem($this->_arrParam['id']);
+        $affected = $this->_model->deleteItem($this->_arrParam['id'], $table);
         if ($affected > 0){
             $upload = new Upload();
             $upload->removeFileName($info['image'], null);

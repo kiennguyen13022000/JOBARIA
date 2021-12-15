@@ -1,7 +1,14 @@
-function delItem(id){
+function delItem(item){
     let notifier = new AWN(options);
+    control = item.getAttribute('data-control');
+    id = item.getAttribute('data-id');
+    table = item.getAttribute('data-table');
     let onOk = () => {
-        $.post('index.php?module=admin&controller=product&action=delete', {id: id}, function (data){
+        $.post('index.php?module=admin&controller='+control+'&action=delete', {id: id,table:table}, function (data){
+            if(table == 'product_image'){
+                item.closest('.nav-item').remove();
+                return false;
+            }
             if (data.affected > 0){
                 location.reload();
             }

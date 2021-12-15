@@ -16,6 +16,7 @@ class LoginModel extends Model
         $query = "SELECT username, id, password, firstname, lastname, avatar FROM users WHERE username='$username' and password='$password' and `status` = 1 and is_Admin = 1 limit 0,1";
         $result = $this->OneRecord($query);
         if (empty($result)) return false;
+
         $_SESSION['userAdmin'] = array(
             'loggedIn'  => true,
             'username'  => $username,

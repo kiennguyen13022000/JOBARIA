@@ -14,8 +14,12 @@ class ProductModel extends Model
         return  $result;
     }
     public function edit($params, $task){
+        $this->setTable('products');
         $arrParams = $params['form'];
         $arrParams['user_id'] = $_SESSION['userAdmin']['user_id'];
+        $arrParams['content'] = mysqli_real_escape_string ($arrParams['content']);
+        $arrParams['description'] = mysqli_real_escape_string ($arrParams['description']);
+        $arrParams['product_features'] = mysqli_real_escape_string ($arrParams['product_features']);
         if($task == 'add'){
             $arrParams['created_at'] = date('Y-m-d H:i:s');
             $uploadObj = new Upload();
@@ -39,10 +43,13 @@ class ProductModel extends Model
             return $this->Update($arrParams, [['id', $id, '']]);
         }
     }
-    public function deleteItem($id){
+    public function deleteItem($id, $table){
+        if (empty($table)) $table = 'products';
+        $this->setTable($table);
         return $this->Delete([$id]);
     }
     public function info($id){
+        $this->setTable('products');
         $query = 'select * from products where `id` = ' . $id;
         $result = $this->OneRecord($query);
         return $result;
@@ -50,13 +57,11 @@ class ProductModel extends Model
     public function getImage($id){
         $this->setTable('product_image');
         $result = $this->ListRecord("SELECT * FROM product_image WHERE product_id=".$id);
-        $this->setTable('products');
         return $result;
     }
     public function getListCategories($id){
         $this->setTable('categories');
         $result = $this->ListRecord("SELECT * FROM categories WHERE status = 1 order by `left`");
-        $this->setTable('products');
         return $result;
     }
     public function addImage($id){

@@ -3,6 +3,7 @@
     $bannerTwo      = '';
     $bannerThree    = '';
     $bannerFour     = '';
+    error_reporting (E_ALL ^ E_NOTICE);
     if (!empty($this->secondBanner[0]['image'])){
         $bannerOne = '<a href="'. $this->secondBanner[0]['url'] .'" class="">
                             <img class="w-100 h-100" src="'. $this->secondBanner[0]['image'] .'" alt="">

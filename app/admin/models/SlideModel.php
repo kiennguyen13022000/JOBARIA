@@ -16,7 +16,7 @@ class SlideModel extends Model
 
     public function form($arrParams, $task){
          if($task == 'add'){
-             $arrParams['user_id']      = 6;
+             $arrParams['user_id']      = $_SESSION['userAdmin']['user_id'];
              $arrParams['created_at']   = date('Y-m-d H:i:s', time());
              $arrParams['position']     = $this->lastPosition() + 1;
              if (!empty($arrParams['image'])){
