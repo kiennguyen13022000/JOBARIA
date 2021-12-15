@@ -501,7 +501,7 @@ function renderCart(){
   
   if (products.length != 0){
     total_products =products.length;
-    renderCart = `
+    renderCartHtml = `
     <ul class="nav flex-column ">
     `;
     products.forEach((product,index)=>{
@@ -531,7 +531,7 @@ function renderCart(){
       </li>
         `;
     });
-    renderCart += `
+    renderCartHtml += `
     </ul>
     <table class="table table-sm w-100 table-borderless ">
       <tr>
@@ -553,7 +553,7 @@ function renderCart(){
     </table>
     <a href="checkout.html" class="btn btn-secondary btn-block mb-3">Checkout</a>
     `;
-    $('.product_cart_header').html(renderCart);
+    $('.product_cart_header').html(renderCartHtml);
     $('.empty_cart_header').hide();
     $('.hidden__cart').removeClass('empty');
   }  
@@ -600,28 +600,7 @@ if (document.querySelector(".zoom__plus") !== null) {
     var pswpElement = document.querySelectorAll('.pswp')[0];
   
     // build items array
-    var items = [{
-            src: 'assets/images/product/large-size/1.jpg',
-            w: 600,
-            h: 600
-        },
-        {
-            src: 'assets/images/product/large-size/3.jpg',
-            w: 600,
-            h: 600
-        },
-        {
-            src: 'assets/images/product/large-size/4.jpg',
-            w: 600,
-            h: 600
-        },
-        {
-            src: 'assets/images/product/large-size/5.jpg',
-            w: 600,
-            h: 600
-        }
-  
-    ];
+
   
     // define options (if needed)
     var options = {
@@ -631,7 +610,7 @@ if (document.querySelector(".zoom__plus") !== null) {
     };
   
     // Initializes and opens PhotoSwipe
-    var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+    var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items_img_product, options);
     gallery.init();
   }
   

@@ -17,9 +17,9 @@ class ProductModel extends Model
         $this->setTable('products');
         $arrParams = $params['form'];
         $arrParams['user_id'] = $_SESSION['userAdmin']['user_id'];
-        $arrParams['content'] = mysqli_real_escape_string ($arrParams['content']);
-        $arrParams['description'] = mysqli_real_escape_string ($arrParams['description']);
-        $arrParams['product_features'] = mysqli_real_escape_string ($arrParams['product_features']);
+        $arrParams['content'] = addslashes($arrParams['content']);
+        $arrParams['description'] = addslashes($arrParams['description']);
+        $arrParams['product_features'] = addslashes($arrParams['product_features']);
         if($task == 'add'){
             $arrParams['created_at'] = date('Y-m-d H:i:s');
             $uploadObj = new Upload();

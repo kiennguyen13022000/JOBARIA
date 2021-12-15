@@ -105,6 +105,12 @@ $listCategories .= '</select>';
                                 <?php echo $listCategories; ?>
                             </div>
                             <div class="form-group mb-3">
+                                <label for="">Reference</label>
+                                <input type="text" name="form[reference]"
+                                       value="<?php echo $this->result['reference']; ?>" class="form-control"
+                                       placeholder="Reference">
+                            </div>
+                            <div class="form-group mb-3">
                                 <label for="">Promotion</label>
                                 <input type="number" name="form[promotion]" min="0" id="validationPromotion"
                                        value="<?php echo $this->result['promotion']; ?>" class="form-control"
@@ -117,19 +123,19 @@ $listCategories .= '</select>';
                                        placeholder="Promotion End date">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="">Description</label>
-                                <textarea role="textbox" aria-multiline="true" class="form-control note-codable" name="form[description]" placeholder="description" id=""
+                                <label for="">Intro</label>
+                                <textarea role="textbox" aria-multiline="true" class="form-control note-codable" name="form[description]" placeholder="Intro" id=""
                                           cols="30" rows="10"><?php echo htmlentities($this->result['description']); ?></textarea>
                             </div>
                             <div class="form-group mb-3">
-                                <label for="">Content</label>
-                                <textarea class="form-control" name="form[content]" placeholder="Content"
+                                <label for="">Description</label>
+                                <textarea class="form-control" name="form[content]" placeholder="Description"
                                           id="" cols="30" rows="10"><?php echo htmlentities($this->result['content']); ?></textarea>
                             </div>
 
                             <div class="form-group mb-3">
-                                <label for="">Product Features</label>
-                                <textarea class="form-control" name="form[product_features]" placeholder="Product Features"
+                                <label for="">Product Detail</label>
+                                <textarea class="form-control" name="form[product_features]" placeholder="Product Detail"
                                           id="" cols="30" rows="10"><?php echo htmlentities($this->result['content']); ?></textarea>
                             </div>
                             <?php echo $this->button_form; ?>
