@@ -31,7 +31,7 @@ class URL
     private function replaceSpace($value)
     {
         $value = trim($value);
-        $value = str_replace(' ', '-', $value);
+        $value = preg_replace('#\s+#', '-', $value);
         $value = preg_replace('#(-)+#', '-', $value);
         return $value;
     }
@@ -41,13 +41,13 @@ class URL
         /*a à ả ã á ạ ă ằ ẳ ẵ ắ ặ â ầ ẩ ẫ ấ ậ b c d đ e è ẻ ẽ é ẹ ê ề ể ễ ế ệ
         f g h i ì ỉ ĩ í ị j k l m n o ò ỏ õ ó ọ ô ồ ổ ỗ ố ộ ơ ờ ở ỡ ớ ợ
         p q r s t u ù ủ ũ ú ụ ư ừ ử ữ ứ ự v w x y ỳ ỷ ỹ ý ỵ z*/
-        $value = strtolower($value);
+        $value = mb_strtolower($value);
 
         $characterA = '#(a|à|ả|ã|á|ạ|ă|ằ|ẳ|ẵ|ắ|ặ|â|ầ|ẩ|ẫ|ấ|ậ)#imsU';
         $replaceA   = 'a';
         $value      = preg_replace($characterA, $replaceA, $value);
 
-        $characterD = '#(đ|Đ)#imsU';
+        $characterD = '#(đ|Đ)#ims';
         $replaceD   = 'd';
         $value      = preg_replace($characterD, $replaceD, $value);
 
@@ -71,10 +71,14 @@ class URL
         $replaceCharaterY = 'y';
         $value            = preg_replace($charaterY, $replaceCharaterY, $value);
 
-        $charaterSpecial = '#(,|$)#imsU';
-        $replaceSpecial  = '';
+
+        $charaterSpecial = '#(-&-)#imsU';
+        $replaceSpecial  = '_';
         $value           = preg_replace($charaterSpecial, $replaceSpecial, $value);
 
+        $charaterSpecial = '#(,)#imsU';
+        $replaceSpecial  = '/';
+        $value           = preg_replace($charaterSpecial, $replaceSpecial, $value);
         return $value;
 
     }

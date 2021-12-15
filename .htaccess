@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+#http://localhost/jobaria/phu-kien_dong-ho/dong-ho-thoi-trang/dong-ho-nam/g-shock-51.3-mm-nam-gba-900-1adr%7C4
+RewriteRule ^(.+)-([0-9]+)\.html$ index.php?module=default&controller=product&action=detail&id=$2
