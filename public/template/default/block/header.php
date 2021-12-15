@@ -1,117 +1,121 @@
 <?php
     $htmlCategory = '';
-    foreach ($this->categories as $key => $value){
-        $arrow = '';
-        $categoryLinkClass = '';
-        if (!empty($value['child_second'])){
-            $htmlCategory .= '<li class="nav-item shop__categories__item position-relative">';
-            $categoryLinkClass = 'categories__link';
-            $arrow = '<i class="fa fa-angle-down pl-2"></i>';
-        }else{
-            $htmlCategory .= '<li class="nav-item">';
-        }
+    // category smaller than tablet
+    $htmlCategoryTablet = '';
+    $allCategory = '';
+    if (!empty($this->categories)){
+        foreach ($this->categories as $key => $value){
+            $arrow = '';
+            $categoryLinkClass = '';
+            if (!empty($value['child_second'])){
+                $htmlCategory .= '<li class="nav-item shop__categories__item position-relative">';
+                $categoryLinkClass = 'categories__link';
+                $arrow = '<i class="fa fa-angle-down pl-2"></i>';
+            }else{
+                $htmlCategory .= '<li class="nav-item">';
+            }
 
-        $htmlCategory .= '<a href="list.html" class="nav-link text-dark border-bottom '.$categoryLinkClass.'">
+            $htmlCategory .= '<a href="list.html" class="nav-link text-dark border-bottom '.$categoryLinkClass.'">
                               '.$value['name'] . $arrow .'  
                           </a>';
 
-        if (!empty($value['child_second'])){
+            if (!empty($value['child_second'])){
 
-            $htmlCategory .= '<div class="shop__categories__item__right">
+                $htmlCategory .= '<div class="shop__categories__item__right">
                                    <div class="row mx-0">';
-            foreach ($value['child_second'] as $keyChildSecond => $valueChildSecond){
-                $htmlCategory .= '<div class="col-3 categories__item__right py-3">
+                foreach ($value['child_second'] as $keyChildSecond => $valueChildSecond){
+                    $htmlCategory .= '<div class="col-3 categories__item__right py-3">
                                       <ul class="nav flex-column">';
-                $htmlCategory .= '<li class="nav-item shop__categories__item">
+                    $htmlCategory .= '<li class="nav-item shop__categories__item">
                                         <a class="nav-link font-weight-bold categories__link" href="list.html">
                                             '.$valueChildSecond['name'].'
                                         </a>
                                   </li>';
-                if (!empty($valueChildSecond['child_third'])){
-                    foreach ($valueChildSecond['child_third'] as $keyChildThird => $valueChildThird){
-                        $htmlCategory .= '<li class="nav-item shop__categories__item">
+                    if (!empty($valueChildSecond['child_third'])){
+                        foreach ($valueChildSecond['child_third'] as $keyChildThird => $valueChildThird){
+                            $htmlCategory .= '<li class="nav-item shop__categories__item">
                                                 <a class="nav-link py-1 categories__link" href="list.html">
                                                     '.$valueChildThird['name'].'
                                                 </a>
                                           </li>';
+                        }
                     }
-                }
-                $htmlCategory .= '    </ul>
+                    $htmlCategory .= '    </ul>
                                   </div>';
-            }
+                }
 
-            $htmlCategory .= '               
+                $htmlCategory .= '               
                                    </div>
                               </div>';
+            }
+            $htmlCategory .= '</li>';
+
         }
-        $htmlCategory .= '</li>';
+        foreach ($this->categories as $key => $value){
+            $htmlCategoryTablet .= '<li class="nav-item shop__categories__item position-relative ">';
 
-    }
-
-    // category smaller than tablet
-    $htmlCategoryTablet = '';
-    foreach ($this->categories as $key => $value){
-        $htmlCategoryTablet .= '<li class="nav-item shop__categories__item position-relative ">';
-
-        $add = empty($value['child_second']) ? '' : '<i class="fa fa-plus float-right"></i>';
-        $htmlCategoryTablet .= '<a href="#category_'.$value['id'].'_tablet" data-toggle="collapse"
+            $add = empty($value['child_second']) ? '' : '<i class="fa fa-plus float-right"></i>';
+            $htmlCategoryTablet .= '<a href="#category_'.$value['id'].'_tablet" data-toggle="collapse"
                                    class="nav-link text-dark shop__categories__item__a cat_parent">
                                     '.$value['name'] . $add .'
                                 </a>';
-        if (!empty($value['child_second'])){
-            $htmlCategoryTablet .= '<ul id="category_'.$value['id'].'_tablet" class="list-unstyled collapse"
+            if (!empty($value['child_second'])){
+                $htmlCategoryTablet .= '<ul id="category_'.$value['id'].'_tablet" class="list-unstyled collapse"
                                              data-parent="#accordion__categories">';
-            foreach ($value['child_second'] as $keyChildSecond => $valueChildSecond){
-                $add = empty($valueChildSecond['child_third']) ? '' : '<i class="fa fa-plus float-right"></i>';
-                $htmlCategoryTablet .= '<li class="nav-item shop__categories__item ">
+                foreach ($value['child_second'] as $keyChildSecond => $valueChildSecond){
+                    $add = empty($valueChildSecond['child_third']) ? '' : '<i class="fa fa-plus float-right"></i>';
+                    $htmlCategoryTablet .= '<li class="nav-item shop__categories__item ">
                                                 <a data-toggle="collapse" class="nav-link shop__categories__item__a "
                                                    href="#category_'.$value['id'].'_'.$valueChildSecond['id'].'_tablet">
                                                     '.$valueChildSecond['name'] . $add .'
                                                 </a>';
-                if (!empty($valueChildSecond['child_third'])){
-                    $htmlCategoryTablet .= '<ul class="list-unstyled collapse" data-parent="#category_'.$value['id'].'_tablet"
+                    if (!empty($valueChildSecond['child_third'])){
+                        $htmlCategoryTablet .= '<ul class="list-unstyled collapse" data-parent="#category_'.$value['id'].'_tablet"
                                                 id="category_'.$value['id'].'_'.$valueChildSecond['id'].'_tablet">';
-                    foreach ($valueChildSecond['child_third'] as $keyChildThird => $valueChildThird){
-                        $htmlCategoryTablet .= '<li class="nav-item shop__categories__item ">
+                        foreach ($valueChildSecond['child_third'] as $keyChildThird => $valueChildThird){
+                            $htmlCategoryTablet .= '<li class="nav-item shop__categories__item ">
                                                     <a class="nav-link py-1 shop__categories__item__a " href="list.html">
                                                         '. $valueChildThird['name'] .'
                                                     </a>
                                                 </li>';
+                        }
+                        $htmlCategoryTablet .= '</ul>';
                     }
-                    $htmlCategoryTablet .= '</ul>';
+
+
+                    $htmlCategoryTablet .= '</li>';
                 }
 
-
-                $htmlCategoryTablet .= '</li>';
+                $htmlCategoryTablet .= '</ul>';
             }
 
-            $htmlCategoryTablet .= '</ul>';
+
+            $htmlCategoryTablet .= '</li>';
         }
-
-
-        $htmlCategoryTablet .= '</li>';
-    }
-
-    $allCategory = '';
-    foreach ($this->categories as $key => $value){
-        $allCategory .= '<option value="">
+        foreach ($this->categories as $key => $value){
+            $allCategory .= '<option value="">
                             <a href="">'. str_repeat('.', $value['level'] * 2) . ' ' . $value['name'] .'</a>
                         </option>';
-        if (!empty($value['child_second'])){
-            foreach ($value['child_second'] as $key2 => $value2){
-                $allCategory .= '<option value="">
+            if (!empty($value['child_second'])){
+                foreach ($value['child_second'] as $key2 => $value2){
+                    $allCategory .= '<option value="">
                             <a href="">'. str_repeat('.', $value2['level'] * 2) . ' ' . $value2['name'] .'</a>
                         </option>';
-                if (!empty($value2['child_third'])){
-                    foreach ($value2['child_third'] as $key3 => $value3){
-                        $allCategory .= '<option value="">
+                    if (!empty($value2['child_third'])){
+                        foreach ($value2['child_third'] as $key3 => $value3){
+                            $allCategory .= '<option value="">
                             <a href="">'. str_repeat('.', $value3['level'] * 2) . ' ' . $value3['name'] .'</a>
                         </option>';
+                        }
                     }
                 }
             }
         }
     }
+
+
+
+
 
 ?>
 <header id="header" class="header">
