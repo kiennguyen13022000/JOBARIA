@@ -60,9 +60,10 @@ function createHtml($trenning){
     return $htmlFashion;
 }
 
-$htmlFashion        = createHtml($this->trenningProductList['fashion']);
-$htmlElectronics    = createHtml($this->trenningProductList['electronics']);
-$htmlVehicel        = createHtml($this->trenningProductList['vehicel']);
+$htmlFashion        = !empty($this->trenningProductList['fashion']) ? createHtml($this->trenningProductList['fashion']) : '';
+$htmlElectronics        = !empty($this->trenningProductList['electronics']) ? createHtml($this->trenningProductList['electronics']) : '';
+$htmlVehicel        = !empty($this->trenningProductList['vehicel']) ? createHtml($this->trenningProductList['vehicel']) : '';
+
 ?>
 <section class="trending_box mt-5">
     <div class="container">

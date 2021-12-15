@@ -24,7 +24,7 @@ class BannerController extends Controller
             $validate   = new Validate($form);
             $validate->addRule('name', 'min', ['min' => 3])
                      ->addRule('position', 'default')
-                     ->addRule('url', 'max', ['max' => 255])
+                 //    ->addRule('url', 'max', ['max' => 255])
                      ->addRule('image', 'file', ['extension' => ['png', 'jpg']], false);
             $validate->run();
             if(!empty($validate->getError())){

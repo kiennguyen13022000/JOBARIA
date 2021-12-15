@@ -28,7 +28,7 @@ $img_product = !empty($image)? 'img_product' : '';
 $errors = $this->errors;
 $nav_image = '';
 $list_images_view = '
-    <div class="nav-item">
+    <div class="nav-item position-relative">
                             <img class="preview__image img_product"
                                  src="'.$image.'">
                         </div>
@@ -46,7 +46,8 @@ if($this->task == 'edit'){
    if (!empty($listImages)){
        foreach ($listImages as $k => $v){
            $list_images_view .='
-             <div class="nav-item">
+             <div class="nav-item position-relative">
+                <i class="fas fa-times remove_img" data-id="'. $v['id'] .'" data-table="product_image" data-control="product" onclick="delItem(this);"></i>
                             <img class="preview__image img_product"
                                  src="'.$v['image'].'">
                         </div>

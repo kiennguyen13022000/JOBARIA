@@ -55,6 +55,7 @@ class Model{
     public function Query($sql){
         $result = mysqli_query($this->connect, $sql);
         $this->resultQuery = $result;
+
     }
 
     // insert
