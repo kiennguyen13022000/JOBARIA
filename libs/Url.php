@@ -71,6 +71,9 @@ class URL
         $replaceCharaterY = 'y';
         $value            = preg_replace($charaterY, $replaceCharaterY, $value);
 
+        $charaterY        = '#(\.+)#imsU';
+        $replaceCharaterY = '-';
+        $value            = preg_replace($charaterY, $replaceCharaterY, $value);
 
         $charaterSpecial = '#(-&-)#imsU';
         $replaceSpecial  = '_';
