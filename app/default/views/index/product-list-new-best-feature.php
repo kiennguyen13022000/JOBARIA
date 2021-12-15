@@ -2,14 +2,19 @@
     $newProductList = '';
     foreach ($this->newProductList as $key => $value){
         $new        = $value['is_new'] == 0 ? '' : '<div class="d-inline-block px-3 py-1 rounded msg__status">New</div>';
-        $promotion  = $value['promotion'] == 0 ? '' : '<div class="d-inline-block px-3 py-1 rounded msg__status">-10</div>';
+        $promotion  = $value['promotion'] == 0 ? '' : '<div class="d-inline-block px-3 py-1 rounded msg__status">- '.$value['promotion'].'%</div>';
         if ($key % 2 == 0) {
-            $newProductList .= '<div class="slider_item">';
+            $newProductList .= '<div class="slider_item h-100 align-items-baseline">';
         }
-        $discount = (int) $value['price'] - (int) $value['promotion'] * (int) $value['price'];
-        $newProductList .= ' <div class="item position-relative wrapper_product_item text-center">
-                                <div class="product__item d-inline-block border-right" href="#">
-                                    <div class="d-flex justify-content-between">
+        $discount       = (int) $value['price'] - (int) $value['promotion'] * (int) $value['price'] / 100;
+        $price = '';
+        if ($value['promotion'] > 0){
+            $price = '<span class="text__price pr-2">'. number_format($value['price'], 0, ',', '.') .' ₫</span>';
+        }
+        $formatDiscount = number_format($discount, 0, ',', '.') . ' ₫';
+        $newProductList .= ' <div class="item h-50 position-relative wrapper_product_item text-center">
+                                <div class="product__item d-inline-block border-right position-relative" href="#">
+                                    <div class="d-flex justify-content-between position-absolute w-100 px-3" style="left: 0">
                                         '. $new . $promotion .'
                                     </div>
                                     <div class="overflow-hidden wrapper__poduct__image">
@@ -33,14 +38,14 @@
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                     </div>
 
-                                    <span class="text__price pr-2">'. $value['price'] .'</span>
-                                    <span class="price__discount">'. $discount .'</span>
+                                     '. $price .'
+                                    <span class="price__discount">'. $formatDiscount .'</span>
                                 </div>
 
                                 <div class="d-flex algin-items-center justify-content-center mt-3">
-                                    <button data-toggle="modal" data-target="#modal_product"
-                                            class="btn border btn__preview"><i class="fa fa-search"
-                                                                               aria-hidden="true"></i></button>
+                                    <button data-id="'. $value['id'] .'" class="btn btnModalProduct border btn__preview">
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                    </button>
                                     <button class="btn__favorite btn text-dark border  ">
                                         <i class="fa fa-heart" aria-hidden="true"></i>
                                     </button>

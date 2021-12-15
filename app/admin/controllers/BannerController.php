@@ -32,16 +32,19 @@ class BannerController extends Controller
                 $this->_view->result = $validate->getResult();
             }else{
                 $form = $validate->getResult();
-                $this->_model->form($form, $task);
+                $id = $this->_model->form($form, $task);
                 if($this->_model->affectedAction() == 1){
                     if ($task == 'add'){
                         Session::set('success', '\'' . 'add'.  '\'' );
-                        Url::redirect('admin', 'banner', 'form');
-                    }else{
+                        if ($this->_arrParam['submit'] == 'save')
+                            Url::redirect('admin', 'banner', 'form');
+                        Url::redirect('admin', 'banner', 'form', ['task' => 'edit', 'id' => $id]);
+
+                    }
+                    if ($task == 'edit'){
                         Session::set('success', '\'' . 'edit'.  '\'' );
                         Url::redirect('admin', 'banner', 'form', ['task' => 'edit', 'id' => $this->_arrParam['id']]);
                     }
-
                 }
             }
         }

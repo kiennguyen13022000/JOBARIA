@@ -72,7 +72,7 @@ class Model{
     public function Insert($param, $type = 'single'){
         if($type == 'single'){
             $newQuery = $this->CreateInsert($param);
-             $sql = "insert into `$this->table`(".$newQuery['cols'] .") values(". $newQuery['vals'] .")";
+            $sql = "insert into `$this->table`(".$newQuery['cols'] .") values(". $newQuery['vals'] .")";
             $this->Query($sql);
             return $this->LastId();
         }else if($type == 'multiple'){

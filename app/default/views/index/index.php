@@ -29,19 +29,31 @@
     <?php include_once 'trenning-product-list.php'; ?>
     <!--    ========================= trenning-product-list ========================================-->
 
-    <section class="sale_up mt-5">
+    <!--     ==================== banner 4 ===================================-->
+    <?php include_once 'banner-4.php'; ?>
+    <!--    ========================= end banner 4 ========================================-->
+
+    <!--     ==================== slide grid product ===================================-->
+    <?php include_once 'slide-grid-product.php'; ?>
+    <!--    =========================slide grid product ========================================-->
+
+    <!--     ==================== brand ===================================-->
+    <?php include_once 'brand.php'; ?>
+    <!--    ========================= brand ========================================-->
+
+    <section class="sale_up mt-5" style="background: url(<?php echo $this->fiveBanner[0]['image']?>)">
         <div class="container-fluid">
-            <div class="sale_up_content ">
+            <div class="sale_up_content">
                 <div class=" border_left_main">
-                    Sale up top 20% off
+                    <?php echo $this->fiveBanner[0]['title_1']; ?>
                 </div>
                 <p class="percent_off mt-2">
-                    20% off <span class="wireless_fetures font-weight-bold">
-              Wireless Fetures
+                    <?php echo $this->fiveBanner[0]['title_2']; ?> <span class="wireless_fetures font-weight-bold">
+              <?php echo $this->fiveBanner[0]['title_3']; ?>
             </span>
                 </p>
 
-                <a href="detail.html" title="Shop Now" class="shop_now_headphone">Shop
+                <a href="<?php echo $this->fiveBanner[0]['url']; ?>" title="Shop Now" class="shop_now_headphone">Shop
                     Now</a>
             </div>
         </div>

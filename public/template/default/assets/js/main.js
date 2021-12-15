@@ -274,26 +274,7 @@ if (document.querySelector("#slide__brand") !== null) {
 }
 if (document.querySelector(".splide_modal") !== null) {
   document.addEventListener("DOMContentLoaded", function () {
-    var main = new Splide(".splide_modal", {
-      type: "fade",
-      sliderSize: 350,
-      rewind: true,
-      pagination: false,
-      arrows: false,
-    });
 
-    var thumbnails = new Splide(".thumbnail_splide_modal", {
-      fixedWidth: 75,
-      rewind: true,
-      pagination: false,
-      focus: "center",
-      arrows: false,
-      isNavigation: true,
-    });
-
-    main.sync(thumbnails);
-    main.mount();
-    thumbnails.mount();
   });
 }
 if (document.querySelector(".splide_detail") !== null) {
@@ -656,3 +637,35 @@ if (document.querySelector(".zoom__plus") !== null) {
   
   document.getElementsByClassName('zoom__plus')[0].onclick = openPhoto;
 }
+
+
+// modal
+$('.btnModalProduct').click(function (){
+  var id = $(this).attr('data-id');
+  var url = 'index.php?module=default&controller=index&action=info';
+  $('.hereModal').load(url , { id: id }, function (data){
+      var main = new Splide(".splide_modal", {
+        type: "fade",
+        fixedHeight: 250,
+        padding: '1rem',
+        rewind: true,
+        pagination: false,
+        arrows: false,
+      });
+
+      var thumbnails = new Splide(".thumbnail_splide_modal", {
+        fixedWidth: 90,
+        rewind: true,
+        pagination: false,
+        focus: "center",
+        arrows: false,
+        isNavigation: true,
+      });
+
+      main.sync(thumbnails);
+      main.mount();
+      thumbnails.mount();
+      $('#modal_product').modal();
+  })
+});
+

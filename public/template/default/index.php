@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="public/template/default/assets/css/jquery-confirm.css">
     <link rel="stylesheet" href="public/template/default/assets/css/main.css">
     <script src="public/template/default/assets/js/splide.min.js" async></script>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="public/template/default/assets/js/function.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.2.0/dist/css/splide-core.min.css">
 </head>
 
 <body>
@@ -33,7 +36,8 @@
 <!-- -----------------end footer --------------------------->
 
 <!-- ----------------- modal --------------------------->
-<?php include_once 'block/modal.php'; ?>
+<div class="hereModal"></div>
+<?php //include_once 'block/modal.php'; ?>
 <!-- -----------------end modal --------------------------->
 
 <script src="public/template/default/assets/js/jquery-3.3.1.min.js"></script>
@@ -43,6 +47,7 @@
 <script src="public/template/default/assets/js/wow.min.js"></script>
 <script src="public/template/default/assets/js/select2.min.js"></script>
 <script src="public/template/default/assets/js/jquery-confirm.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.2.0/dist/js/splide.min.js"></script>
 <script src="public/template/default/assets/js/main.js"></script>
 </body>
 

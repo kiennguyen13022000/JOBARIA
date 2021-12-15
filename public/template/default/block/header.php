@@ -1,3 +1,119 @@
+<?php
+    $htmlCategory = '';
+    foreach ($this->categories as $key => $value){
+        $arrow = '';
+        $categoryLinkClass = '';
+        if (!empty($value['child_second'])){
+            $htmlCategory .= '<li class="nav-item shop__categories__item position-relative">';
+            $categoryLinkClass = 'categories__link';
+            $arrow = '<i class="fa fa-angle-down pl-2"></i>';
+        }else{
+            $htmlCategory .= '<li class="nav-item">';
+        }
+
+        $htmlCategory .= '<a href="list.html" class="nav-link text-dark border-bottom '.$categoryLinkClass.'">
+                              '.$value['name'] . $arrow .'  
+                          </a>';
+
+        if (!empty($value['child_second'])){
+
+            $htmlCategory .= '<div class="shop__categories__item__right">
+                                   <div class="row mx-0">';
+            foreach ($value['child_second'] as $keyChildSecond => $valueChildSecond){
+                $htmlCategory .= '<div class="col-3 categories__item__right py-3">
+                                      <ul class="nav flex-column">';
+                $htmlCategory .= '<li class="nav-item shop__categories__item">
+                                        <a class="nav-link font-weight-bold categories__link" href="list.html">
+                                            '.$valueChildSecond['name'].'
+                                        </a>
+                                  </li>';
+                if (!empty($valueChildSecond['child_third'])){
+                    foreach ($valueChildSecond['child_third'] as $keyChildThird => $valueChildThird){
+                        $htmlCategory .= '<li class="nav-item shop__categories__item">
+                                                <a class="nav-link py-1 categories__link" href="list.html">
+                                                    '.$valueChildThird['name'].'
+                                                </a>
+                                          </li>';
+                    }
+                }
+                $htmlCategory .= '    </ul>
+                                  </div>';
+            }
+
+            $htmlCategory .= '               
+                                   </div>
+                              </div>';
+        }
+        $htmlCategory .= '</li>';
+
+    }
+
+    // category smaller than tablet
+    $htmlCategoryTablet = '';
+    foreach ($this->categories as $key => $value){
+        $htmlCategoryTablet .= '<li class="nav-item shop__categories__item position-relative ">';
+
+        $add = empty($value['child_second']) ? '' : '<i class="fa fa-plus float-right"></i>';
+        $htmlCategoryTablet .= '<a href="#category_'.$value['id'].'_tablet" data-toggle="collapse"
+                                   class="nav-link text-dark shop__categories__item__a cat_parent">
+                                    '.$value['name'] . $add .'
+                                </a>';
+        if (!empty($value['child_second'])){
+            $htmlCategoryTablet .= '<ul id="category_'.$value['id'].'_tablet" class="list-unstyled collapse"
+                                             data-parent="#accordion__categories">';
+            foreach ($value['child_second'] as $keyChildSecond => $valueChildSecond){
+                $add = empty($valueChildSecond['child_third']) ? '' : '<i class="fa fa-plus float-right"></i>';
+                $htmlCategoryTablet .= '<li class="nav-item shop__categories__item ">
+                                                <a data-toggle="collapse" class="nav-link shop__categories__item__a "
+                                                   href="#category_'.$value['id'].'_'.$valueChildSecond['id'].'_tablet">
+                                                    '.$valueChildSecond['name'] . $add .'
+                                                </a>';
+                if (!empty($valueChildSecond['child_third'])){
+                    $htmlCategoryTablet .= '<ul class="list-unstyled collapse" data-parent="#category_'.$value['id'].'_tablet"
+                                                id="category_'.$value['id'].'_'.$valueChildSecond['id'].'_tablet">';
+                    foreach ($valueChildSecond['child_third'] as $keyChildThird => $valueChildThird){
+                        $htmlCategoryTablet .= '<li class="nav-item shop__categories__item ">
+                                                    <a class="nav-link py-1 shop__categories__item__a " href="list.html">
+                                                        '. $valueChildThird['name'] .'
+                                                    </a>
+                                                </li>';
+                    }
+                    $htmlCategoryTablet .= '</ul>';
+                }
+
+
+                $htmlCategoryTablet .= '</li>';
+            }
+
+            $htmlCategoryTablet .= '</ul>';
+        }
+
+
+        $htmlCategoryTablet .= '</li>';
+    }
+
+    $allCategory = '';
+    foreach ($this->categories as $key => $value){
+        $allCategory .= '<option value="">
+                            <a href="">'. str_repeat('.', $value['level'] * 2) . ' ' . $value['name'] .'</a>
+                        </option>';
+        if (!empty($value['child_second'])){
+            foreach ($value['child_second'] as $key2 => $value2){
+                $allCategory .= '<option value="">
+                            <a href="">'. str_repeat('.', $value2['level'] * 2) . ' ' . $value2['name'] .'</a>
+                        </option>';
+                if (!empty($value2['child_third'])){
+                    foreach ($value2['child_third'] as $key3 => $value3){
+                        $allCategory .= '<option value="">
+                            <a href="">'. str_repeat('.', $value3['level'] * 2) . ' ' . $value3['name'] .'</a>
+                        </option>';
+                    }
+                }
+            }
+        }
+    }
+
+?>
 <header id="header" class="header">
     <div class="position-absolute load_page"></div>
     <div class="header_desktop  position-relative ">
@@ -380,277 +496,7 @@
                             <div id="shop__categories__tablet"
                                  class="collapse border position-absolute bg-white w-100 font-weight-lighter accordion__categories__box">
                                 <ul class="nav flex-column" id="accordion__categories">
-                                    <li class="nav-item shop__categories__item position-relative ">
-                                        <a href="#fashion__tablet" data-toggle="collapse"
-                                           class="nav-link text-dark shop__categories__item__a cat_parent">
-                                            Fashion <i class="fa fa-plus float-right"></i>
-                                        </a>
-
-                                        <ul id="fashion__tablet" class="list-unstyled collapse"
-                                            data-parent="#accordion__categories">
-                                            <li class="nav-item shop__categories__item ">
-                                                <a data-toggle="collapse" class="nav-link shop__categories__item__a "
-                                                   href="#fashion__women__tablet">
-                                                    WOMENT <i class="fa fa-plus float-right"></i>
-                                                </a>
-                                                <ul class="list-unstyled collapse" data-parent="#fashion__tablet"
-                                                    id="fashion__women__tablet">
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Dresses
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Shirts & Blouses
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Blazers
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Lingerie
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Jeans
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="nav-item shop__categories__item ">
-                                                <a data-toggle="collapse" class="nav-link shop__categories__item__a "
-                                                   href="#fashion__Men__tablet">
-                                                    Men<i class="fa fa-plus float-right"></i>
-                                                </a>
-                                                <ul class="list-unstyled collapse" data-parent="#fashion__tablet"
-                                                    id="fashion__Men__tablet">
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Dresses
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Shirts & Blouses
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Blazers
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Lingerie
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Jeans
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-
-                                            <li class="nav-item shop__categories__item ">
-                                                <a data-toggle="collapse" class="nav-link shop__categories__item__a "
-                                                   href="#fashion__kid__tablet">
-                                                    Kids <i class="fa fa-plus float-right"></i>
-                                                </a>
-                                                <ul class="list-unstyled collapse" data-parent="#fashion__tablet"
-                                                    id="fashion__kid__tablet">
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Dresses
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Shirts & Blouses
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Blazers
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Lingerie
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Jeans
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-
-                                        </ul>
-
-                                    </li>
-
-                                    <li class="nav-item shop__categories__item position-relative ">
-                                        <a href="#electronics__tablet" data-toggle="collapse"
-                                           class="nav-link text-dark shop__categories__item__a cat_parent">
-                                            Electronic <i class="fa fa-plus float-right"></i>
-                                        </a>
-
-                                        <ul id="electronics__tablet" class="list-unstyled collapse"
-                                            data-parent="#accordion__categories">
-                                            <li class="nav-item shop__categories__item ">
-                                                <a data-toggle="collapse" class="nav-link shop__categories__item__a "
-                                                   href="#camera__tablet">
-                                                    Cameras <i class="fa fa-plus float-right"></i>
-                                                </a>
-                                                <ul class="list-unstyled collapse" data-parent="#electronics__tablet"
-                                                    id="camera__tablet">
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Camera 1
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Camera 2
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Camera 3
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Camera 4
-                                                        </a>
-                                                    </li>
-
-                                                </ul>
-                                            </li>
-                                            <li class="nav-item shop__categories__item ">
-                                                <a data-toggle="collapse" class="nav-link shop__categories__item__a "
-                                                   href="#audio__tablet">
-                                                    Audio <i class="fa fa-plus float-right"></i>
-                                                </a>
-                                                <ul class="list-unstyled collapse" data-parent="#electronics__tablet"
-                                                    id="audio__tablet">
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Audio 1
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Audio 2
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Audio 3
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Audio 4
-                                                        </a>
-                                                    </li>
-
-                                                </ul>
-                                            </li>
-                                            <li class="nav-item shop__categories__item ">
-                                                <a data-toggle="collapse" class="nav-link shop__categories__item__a "
-                                                   href="#cellphone__tablet">
-                                                    Cell Phones <i class="fa fa-plus float-right"></i>
-                                                </a>
-                                                <ul class="list-unstyled collapse" data-parent="#electronics__tablet"
-                                                    id="cellphone__tablet">
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Cell Phones 1
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Cell Phones 2
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Cell Phones 3
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            Cell Phones 4
-                                                        </a>
-                                                    </li>
-
-                                                </ul>
-                                            </li>
-                                            <li class="nav-item shop__categories__item ">
-                                                <a data-toggle="collapse" class="nav-link shop__categories__item__a "
-                                                   href="#tv_video__tablet">
-                                                    TV & Video <i class="fa fa-plus float-right"></i>
-                                                </a>
-                                                <ul class="list-unstyled collapse" data-parent="#electronics__tablet"
-                                                    id="tv_video__tablet">
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            TV & Video 1
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            TV & Video 2
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            TV & Video 3
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item shop__categories__item ">
-                                                        <a class="nav-link py-1 shop__categories__item__a " href="list.html">
-                                                            TV & Video 4
-                                                        </a>
-                                                    </li>
-
-                                                </ul>
-                                            </li>
-                                        </ul>
-
-                                    </li>
-
-                                    <li class="nav-item shop__categories__item position-relative ">
-                                        <a href="list.html" class="nav-link text-dark shop__categories__item__a cat_parent">
-                                            Toys & Hobbies
-                                        </a>
-                                    </li>
-
-                                    <li class="nav-item shop__categories__item position-relative ">
-                                        <a href="list.html" class="nav-link text-dark shop__categories__item__a cat_parent">
-                                            Sports & Outdoors
-                                        </a>
-                                    </li>
-                                    <li class="nav-item shop__categories__item position-relative ">
-                                        <a href="list.html" class="nav-link text-dark shop__categories__item__a cat_parent">
-                                            Smartphone & Tablet
-                                        </a>
-                                    </li>
-
-                                    <li class="nav-item shop__categories__item position-relative ">
-                                        <a href="list.html" class="nav-link text-dark shop__categories__item__a cat_parent">
-                                            Health & Beauty
-                                        </a>
-                                    </li>
-
+                                    <?php echo $htmlCategoryTablet; ?>
                                 </ul>
                             </div>
                         </div>
@@ -860,387 +706,7 @@
                                 </a>
                                 <div class="dropdown-menu">
                                     <ul class="nav flex-column">
-                                        <li class="nav-item shop__categories__item position-relative">
-                                            <a href="list.html" class="nav-link text-dark border-bottom categories__link">
-                                                Fashion <i class="fa fa-angle-down pl-2"></i>
-                                            </a>
-
-                                            <div class="shop__categories__item__right  ">
-                                                <div class="row mx-0">
-                                                    <div class="col-3 categories__item__right py-3">
-                                                        <ul class="nav flex-column">
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link font-weight-bold categories__link" href="list.html">
-                                                                    WOMENT
-                                                                </a>
-                                                            </li>
-
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Dresses
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Shirts & Blouses
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Blazers
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Lingerie
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Jeans
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-
-                                                    <div class="col-3 categories__item__right py-3 ">
-                                                        <ul class="nav flex-column ">
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link font-weight-bold categories__link" href="list.html">
-                                                                    WOMENT
-                                                                </a>
-                                                            </li>
-
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Dresses
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Shirts & Blouses
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Blazers
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Lingerie
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Jeans
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-3 categories__item__right py-3">
-                                                        <ul class="nav flex-column ">
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link font-weight-bold categories__link" href="list.html">
-                                                                    WOMENT
-                                                                </a>
-                                                            </li>
-
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Dresses
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Shirts & Blouses
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Blazers
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Lingerie
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Jeans
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-
-
-                                                </div>
-
-                                            </div>
-                                        </li>
-                                        <li class="nav-item shop__categories__item position-relative">
-                                            <a href="list.html" class="nav-link text-dark border-bottom categories__link">
-                                                Electronic <i class="  fa fa-angle-down pl-2"></i>
-                                            </a>
-                                            <div class="shop__categories__item__right  ">
-                                                <div class="row mx-0">
-                                                    <div class="col-3 categories__item__right py-3">
-                                                        <ul class="nav flex-column">
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link font-weight-bold categories__link" href="list.html">
-                                                                    WOMENT
-                                                                </a>
-                                                            </li>
-
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Dresses
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Shirts & Blouses
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Blazers
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Lingerie
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Jeans
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-
-                                                    <div class="col-3 categories__item__right py-3 ">
-                                                        <ul class="nav flex-column ">
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link font-weight-bold categories__link" href="list.html">
-                                                                    WOMENT
-                                                                </a>
-                                                            </li>
-
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Dresses
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Shirts & Blouses
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Blazers
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Lingerie
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Jeans
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-3 categories__item__right py-3">
-                                                        <ul class="nav flex-column ">
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link font-weight-bold categories__link" href="list.html">
-                                                                    WOMENT
-                                                                </a>
-                                                            </li>
-
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Dresses
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Shirts & Blouses
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Blazers
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Lingerie
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Jeans
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-
-
-                                                </div>
-
-                                            </div>
-                                        </li>
-                                        <li class="nav-item shop__categories__item position-relative">
-                                            <a href="list.html" class="nav-link text-dark border-bottom categories__link">
-                                                Toy & Hobbies <i class="  fa fa-angle-down pl-2"></i>
-                                            </a>
-                                            <div class="shop__categories__item__right  ">
-                                                <div class="row mx-0">
-                                                    <div class="col-3 categories__item__right py-3">
-                                                        <ul class="nav flex-column">
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link font-weight-bold categories__link" href="list.html">
-                                                                    WOMENT
-                                                                </a>
-                                                            </li>
-
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Dresses
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Shirts & Blouses
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Blazers
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Lingerie
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Jeans
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-
-                                                    <div class="col-3 categories__item__right py-3 ">
-                                                        <ul class="nav flex-column ">
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link font-weight-bold categories__link" href="list.html">
-                                                                    WOMENT
-                                                                </a>
-                                                            </li>
-
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Dresses
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Shirts & Blouses
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Blazers
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Lingerie
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Jeans
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-3 categories__item__right py-3">
-                                                        <ul class="nav flex-column ">
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link font-weight-bold categories__link" href="list.html">
-                                                                    WOMENT
-                                                                </a>
-                                                            </li>
-
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Dresses
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Shirts & Blouses
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Blazers
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Lingerie
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item shop__categories__item">
-                                                                <a class="nav-link py-1 categories__link" href="list.html">
-                                                                    Jeans
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-
-
-                                                </div>
-
-                                            </div>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="list.html" class="nav-link text-dark border-bottom">
-                                                Sports & Outdoors
-                                            </a>
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <a href="list.html" class="nav-link text-dark border-bottom">
-                                                Smartphone & Tablets
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="list.html" class="nav-link text-dark border-bottom">
-                                                Health & Beauty
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="list.html" class="nav-link text-dark border-bottom">
-                                                Cpmputer & Networking
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="list.html" class="nav-link text-dark  ">
-                                                Accessories
-                                            </a>
-                                        </li>
+                                         <?php echo $htmlCategory; ?>
                                     </ul>
                                 </div>
                             </div>
@@ -1257,21 +723,8 @@
                                     <div class="h-100 border-left">
                                         <div class="pr-0 pr-lg-3 d-flex align-items-center select_cat_box">
                                             <select name="" class="d-inline-block font-weight-lighter select_cat" id="">
-                                                <option value="">All Categories <i class="fa pl-3 fa-angle-down "></i>
-                                                </option>
-                                                <option value="">Fashion</option>
-                                                <option value="">..Women</option>
-                                                <option value="">....Dresses</option>
-                                                <option value="">....Shirts & Blouses</option>
-                                                <option value="">....Blazers</option>
-                                                <option value="">....Lingerie</option>
-                                                <option value="">....Jeans</option>
-                                                <option value="">..Men</option>
-                                                <option value="">....Jeans</option>
-                                                <option value="">....Shorts</option>
-                                                <option value="">....Jeans</option>
-                                                <option value="">....Sportswear</option>
-                                                <option value="">....Swimswear</option>
+                                               <option>All categories</option>
+                                                <?php echo $allCategory; ?>
                                             </select>
 
                                         </div>

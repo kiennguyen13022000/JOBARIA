@@ -21,7 +21,7 @@
                     foreach ($this->data as $key => $value){
                         $img = '';
                         if($value['image'] != null){
-                            $img = '<img class="img__table" src="'. $value['image'] .'">';
+                            $img = '<img class="img__table img-fluid avatar-md rounded" src="'. $value['image'] .'">';
                         }
                         ++ $num;
                         $status         = $value['status'] == 1 ? 'active' : 'deactive';

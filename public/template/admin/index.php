@@ -14,7 +14,7 @@
 
 </head>
 
-<body>
+<body class="loading" data-layout='{"sidebar": { "color": "dark"}}'>
 <!-- =============== header ====================-->
 <?php include_once 'block/header.php'?>
 <!-- =============== end header ====================-->

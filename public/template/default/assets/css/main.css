@@ -645,7 +645,17 @@ button.focus_none:focus {
 
 .splide__slide img {
   width: 100%;
+  object-fit: contain;
   height: auto;
+}
+.splide_modal .splide__slide{
+   padding: 15px;
+}
+.thumbnail_splide_modal img{
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  object-position: center;
 }
 .modal-body,
 .modal-footer {
@@ -896,9 +906,9 @@ input.number_product[type="number"] {
   background-color: var(--main-color);
   font-size: 13px;
   color: #fff;
-  top: 0;
-  left: 15px;
-  position: absolute;
+  /*top: 0;*/
+  /*left: 15px;*/
+  /*position: absolute;*/
 }
 
 .slide_discount .slide_discount__title {
@@ -943,6 +953,7 @@ input.number_product[type="number"] {
 }
 .product_style_mall .product__name {
   font-size: 16px;
+  font-weight: 600;
   font-family: "Khula", sans-serif;
 }
 .wrapper_product_item .category_name {
@@ -964,7 +975,7 @@ input.number_product[type="number"] {
   color: rgb(218, 54, 54);
 }
 .price_product .price__discount {
-  font-size: 21px;
+  font-size: 16px;
 }
 .slide_discount__description {
   -webkit-line-clamp: 3;
@@ -989,7 +1000,7 @@ input.number_product[type="number"] {
   position: relative;
   padding-bottom: 80px;
   padding-top: 80px;
-  background: url(../images/banner/1-9.jpg);
+  /*background: url(../images/banner/1-9.jpg);*/
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -1186,7 +1197,7 @@ input.number_product[type="number"] {
 .sale_up {
   padding-bottom: 70px;
   padding-top: 70px;
-  background: url("../images/banner/1-12.jpg");
+  /*background: url("../images/banner/1-12.jpg");*/
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -1206,7 +1217,6 @@ input.number_product[type="number"] {
 .subcribe_box {
   padding-bottom: 60px;
   padding-top: 55px;
-  background: url("../images/footer/bg-newletter.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   max-width: 1140px;
@@ -1288,7 +1298,7 @@ input.number_product[type="number"] {
   width: 100%;
 }
 .wrapper_product_item {
-  margin-bottom: 60px;
+  margin-bottom: 30px;
 }
 .product_style .owl-dots {
   position: absolute;
@@ -2578,6 +2588,21 @@ input.number_product[type="number"] {
 
 .wrapper__poduct__image{
   position: relative;
-  top: 30px;
-  padding: 10px;
+  top: 40px;
+  padding: 30px;
+}
+.slider_item .category_name{
+  margin-top: 30px;
+}
+
+.owl-stage{
+  display: flex;
+}
+
+.dropdown-menu {
+  padding: 0 !important;
+}
+
+.grid_product  img{
+  padding: 15px;
 }

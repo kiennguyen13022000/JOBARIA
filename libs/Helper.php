@@ -91,7 +91,7 @@ class Helper{
 
     public static function cmsFormGroupFile($arrlabel, $type, $name, $value = null, $class  = null, $required = 'required', $formGroup, $errors, $folder = null, $task = 'add'){
         $placeholder = ucfirst($name);
-        $label1 = '<label for="'. $arrlabel['id'] .'">'. $arrlabel['label'] .'</label>'  ;
+        $label1 = !empty($arrlabel['required']) ? '' : '<label for="'. $arrlabel['id'] .'">'. $arrlabel['label'] .'</label>';
         $resultInput = '';
         $resultFeedback = '';
 

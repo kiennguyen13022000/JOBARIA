@@ -1,10 +1,8 @@
-<section class="subcribe_box">
+<section class="subcribe_box" style="background: url(<?php echo $this->sevenBanner[0]['image']; ?>); background-size: cover; ">
     <div class="subscribe text-center">
-        <p class="subscribe__title_1">join out</p>
-        <p class="subscribe__title_2">Newsletter Now!</p>
-        <div class="subscribe_intro">Subcribe to the Jobaria mailing list to receive updates on
-            new arrivals,
-            offers and other discount information
+        <p class="subscribe__title_1"><?php echo $this->sevenBanner[0]['title_1']; ?></p>
+        <p class="subscribe__title_2"><?php echo $this->sevenBanner[0]['title_2']; ?></p>
+        <div class="subscribe_intro"><?php echo $this->sevenBanner[0]['title_3']; ?>
         </div>
         <form action="" method="" class="position-relative sub_form">
             <input type="text" class="input__subcribe" placeholder="Enter your email address">

@@ -31,7 +31,7 @@
                             $classStatus    = $value['status'] == 1 ? 'activeStatus' : 'deactive';
                             $classAdmin     = $value['is_Admin'] == 1 ? 'activeAdmin' : 'deactive';
                             $xhtml .= '<tr id="row-'. $value['id'] .'">
-                                            <td><img class="img__table" src="'. $value['avatar'] .'"></td>
+                                            <td><img class="img__table img-fluid avatar-md rounded" src="'. $value['avatar'] .'"></td>
                                             <td>'. $value['firstname'] .'</td>
                                             <td>'. $value['lastname'] .'</td>
                                             <td class="font-weight-bold">'. $value['username'] .'</td>

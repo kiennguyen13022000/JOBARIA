@@ -15,9 +15,11 @@ class Upload {
                 }
 
                 copy($file['tmp_name'], $fileName);
-//                $thum = PhpThumbFactory::create($fileName);
-//                $thum->adaptiveResize($width, $height);
-//                $thum->save($uploadDir . $file['name']);
+                if ($height != null && $width != null){
+                    $thum = PhpThumbFactory::create($fileName);
+                    $thum->adaptiveResize($width, $height);
+                    $thum->save($uploadDir . $file['name']);
+                }
                 return $fileName;
             }
         }
