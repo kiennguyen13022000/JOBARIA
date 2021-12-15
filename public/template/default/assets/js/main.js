@@ -509,8 +509,8 @@ function renderCart(){
         number_product = product.number_product;
         
         total_price_cart += price * number_product;
-       
-        renderCart += `
+
+      renderCartHtml += `
         <li class="py-3 border-bottom ">
         <div class="row ">
           <div class="col-3 pr-0 ">
