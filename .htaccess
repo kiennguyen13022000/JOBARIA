@@ -4,4 +4,13 @@ RewriteEngine On
 #http://localhost/jobaria/index.php?module=default&controller=product&action=detail&id=4 ([a-z0-9_-]*)_([0-9]+)
 
 RewriteRule index.html 			index.php?module=default&controller=index&action=index
+RewriteRule login.html 			index.php?module=default&controller=login&action=login
+RewriteRule logout.html 			index.php?module=default&controller=login&action=logout
+RewriteRule forgot.html 			index.php?module=default&controller=login&action=forgot
+RewriteRule sign-up.html 			index.php?module=default&controller=user&action=signup
+RewriteRule my-account.html 			index.php?module=default&controller=user&action=dashboard
+RewriteRule my-information 			index.php?module=default&controller=user&action=form
+RewriteRule order-history 			index.php?module=default&controller=user&action=order
+RewriteRule review-history 			index.php?module=default&controller=user&action=review
+RewriteRule my-wishlists 			index.php?module=default&controller=user&action=wishlist
 RewriteRule (.+)_([0-9]+)\.html  index.php?module=default&controller=product&action=detail&id=$2

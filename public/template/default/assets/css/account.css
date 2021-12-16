@@ -1,0 +1,96 @@
+.page-header h1.title, .card-block h1.title {
+    color: #333333;
+    text-align: left;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    text-transform: none;
+    border-bottom: 1px solid #d9d9d9;
+    margin-bottom: 0.8em;
+    padding-bottom: 0.5em;
+}
+.page-customer-content {
+    box-shadow: none;
+    border: 1px solid #d9d9d9;
+    font-size: 13px;
+    color: #666666;
+    padding: 1rem;
+    margin: 0 auto;
+}
+.help-block {
+    margin-top: 0.625rem;
+    display: none;
+}
+.alert-danger {
+    background-color: #f2dede;
+    border-color: #ebcccc;
+    color: #a94442;
+}
+.alert {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0;
+}
+.btn-login {
+    border-radius: 0;
+    background-color: #333;
+    color: #fff;
+    padding: 0.5rem 1.5rem;
+    border-color: #333;
+    transition: ease 0.3s;
+    text-transform: uppercase;
+}
+.form_no_border_r input{
+    border-radius: 0;
+    transition: ease .3s;
+    font-size: .9rem;
+}
+.form_no_border_r input:focus{
+    border-color: #333;
+    box-shadow: none;
+}
+.form_no_border_r .custom-control-label::after,.form_no_border_r .custom-control-label::before{
+    top: 0;
+}
+.form-control-label {
+    padding-top: 0.625rem;
+}
+.page_login_content{
+    max-width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.dashboard_content .links a i {
+    display: block;
+    font-size: 2.6rem;
+    width: 100%;
+    color: #232323;
+    padding-bottom: 1.5rem;
+}
+.dashboard_content .links a {
+    text-align: center;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #7a7a7a;
+    padding: 0 0.9375rem;
+    margin-bottom: 1.875rem;
+    transition: ease .5s;
+}
+.dashboard_content .links a:hover i{
+    color: var(--main-color);
+}
+.dashboard_content .links a span.link-item {
+    display: block;
+    height: 100%;
+    box-shadow: 2px 2px 8px 0 rgb(0 0 0 / 20%);
+    background: #fff;
+    padding: 1rem;
+}
+.dashboard_content .links a span.link-item {
+    box-shadow: none;
+    border: 1px solid #d9d9d9;
+    font-size: 14px;
+}

@@ -14,22 +14,7 @@
 
                 </li>
 
-                <li>
-                    <a href="javascript: void(0);" class="waves-effect">
-                        <i class="remixicon-user-follow-line"></i>
-                        <span> User </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul class="nav-second-level" aria-expanded="false">
-                        <li>
-                            <a href="index.php?module=admin&controller=user&action=form">Add user</a>
-                        </li>
-                        <li>
-                            <a href="index.php?module=admin&controller=user&action=index">List User</a>
-                        </li>
 
-                    </ul>
-                </li>
 
                 <li>
                     <a href="javascript: void(0);" class="waves-effect">
@@ -67,13 +52,16 @@
 
                 <li>
                     <a href="javascript: void(0);" class="waves-effect">
-                        <i class="remixicon-order-play-line"></i>
+                        <i class="remixicon-product-hunt-line"></i>
                         <span> Order </span>
-                        <!-- <span class="menu-arrow"></span> -->
+                        <span class="menu-arrow"></span>
                     </a>
                     <ul class="nav-second-level" aria-expanded="false">
+                        <li class="d-none">
+                            <a href="index.php?module=admin&controller=product&action=edit">Add Product</a>
+                        </li>
                         <li>
-                            <a href="pages-starter.html">List Order</a>
+                            <a href="index.php?module=admin&controller=order&action=list">List Orders</a>
                         </li>
 
                     </ul>
@@ -106,6 +94,22 @@
                         <li>
                             <a href="index.php?module=admin&controller=banner&action=index">List Banner</a>
                         </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="waves-effect">
+                        <i class="remixicon-user-follow-line"></i>
+                        <span> User </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li>
+                            <a href="index.php?module=admin&controller=user&action=form">Add user</a>
+                        </li>
+                        <li>
+                            <a href="index.php?module=admin&controller=user&action=index">List User</a>
+                        </li>
+
                     </ul>
                 </li>
                 <li>

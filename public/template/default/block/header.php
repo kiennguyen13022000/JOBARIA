@@ -113,10 +113,6 @@
         }
     }
 
-
-
-
-
 ?>
 <header id="header" class="header">
     <div class="position-absolute load_page"></div>
@@ -138,8 +134,8 @@
                                 </a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="#"><i class='bx bxs-user-circle'></i> Sign up</a>
-                                    <a class="dropdown-item" href="#"><i class='bx bx-log-in'></i> Sign in</a>
-
+                                    <a class="dropdown-item" href="/jobaria/login.html"><i class='bx bx-log-in'></i> Sign in</a>
+                                    <a class="dropdown-item" href="/jobaria/logout.html"><i class='bx bx-log-out'></i> Log out</a>
                                 </div>
                             </div>
                         </div>
@@ -159,14 +155,14 @@
                             <div class="dropdown show">
                                 <a class="btn " href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
                                    aria-expanded="false">
-                                    <img src="public/template/default/assets/images/menu/icon/1.jpg " alt=" "> <span>English</span> <i
+                                    <img src="/jobaria/public/template/default/assets/images/menu/icon/1.jpg " alt=" "> <span>English</span> <i
                                         class='bx bx-chevron-down'></i>
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#"><img src="public/template/default/assets/images/menu/icon/1.jpg "
+                                    <a class="dropdown-item" href="#"><img src="/jobaria/public/template/default/assets/images/menu/icon/1.jpg "
                                                                            alt=" ">
                                         English</a>
-                                    <a class="dropdown-item" href="#"><img src="public/template/default/assets/images/menu/icon/2.jpg "
+                                    <a class="dropdown-item" href="#"><img src="/jobaria/public/template/default/assets/images/menu/icon/2.jpg "
                                                                            alt=" ">
                                         French </a>
                                 </div>
@@ -183,7 +179,7 @@
                     <div class="col-6 col-md-4 col-lg-3 col_logo">
                         <div id="logo" class="d-flex align-items-center h-100">
                             <a href="index.html" class="logo nav-link pl-0 ">
-                                <img src="public/template/default/assets/images/menu/logo/1.jpg " alt=" ">
+                                <img src="/jobaria/public/template/default/assets/images/menu/logo/1.jpg " alt=" ">
                             </a>
                         </div>
                     </div>
@@ -521,75 +517,14 @@
                                         <span class="total__cart position-absolute"></span>
                                         <br>
                                         <span class="text-cart ">
-                        <span class="text-center ">My cart</span>
-                        <br>
-                        <span class="total_price_cart text-white ">$0</span>
-                      </span>
+                                        <span class="text-center ">My cart</span>
+                                        <br>
+                                        <span class="total_price_cart text-white ">$0</span>
+                                      </span>
                                     </a>
                                     <div class="hidden__cart empty position-absolute px-3 ">
                                         <div class="product_cart_header">
-                                            <!-- <ul class="nav flex-column ">
-                          <li class="py-3 border-bottom ">
-                            <div class="row ">
-                              <div class="col-auto pr-0 ">
-                                <div class="position-relative ">
-                                  <span
-                                    class="d-inline-block px-1 rounded-circle text-white position-absolute ">1x</span>
-                                  <img src="public/template/default/assets/images/product/small-size/1.jpg " alt=" ">
-                                </div>
 
-                              </div>
-                              <div class="col pl-0 text-left ">
-                                <a href="" class="font-weight-bold cart__title__product__name ">Xall
-                                  9.7"128G
-                                  Ipad
-                                  Sliver Sliver Sliver</a>
-                                <div class="text-danger py-1">$29.00</div>
-                                <span class="font-weight-light">Demension: 40cm x 60cm</span>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="py-3 border-bottom">
-                            <div class="row">
-                              <div class="col-auto pr-0">
-                                <div class="position-relative">
-                                  <span
-                                    class="d-inline-block px-1 rounded-circle text-white position-absolute">1x</span>
-                                  <img src="public/template/default/assets/images/product/small-size/2.jpg" alt="">
-                                </div>
-
-                              </div>
-                              <div class="col pl-0 text-left">
-                                <a href="" class="font-weight-bold cart__title__product__name">Xall
-                                  9.7"128G
-                                  Ipad
-                                  Sliver Sliver Sliver</a>
-                                <div class="text-danger py-1">$29.00</div>
-                                <span class="font-weight-light">Demension: 40cm x 60cm</span>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-
-                        <table class="table table-sm w-100 table-borderless ">
-                          <tr>
-                            <td class="text-left">Subtotal</td>
-                            <td class="text-right">$49.70</td>
-                          </tr>
-                          <tr>
-                            <td class="text-left">Shipping</td>
-                            <td class="text-right">$7.00</td>
-                          </tr>
-                          <tr>
-                            <td class="text-left">Taxes</td>
-                            <td class="text-right">$00.0</td>
-                          </tr>
-                          <tr>
-                            <td class="text-left">Total</td>
-                            <td class="text-right">$54.00</td>
-                          </tr>
-                        </table>
-                        <a href="checkout.html" class="btn btn-secondary btn-block mb-3">Checkout</a> -->
                                         </div>
                                         <div class="empty_cart_header">
                                             <div class="icon">
@@ -619,70 +554,7 @@
                             </a>
 
                             <div class="hidden__cart empty position-absolute px-3 ">
-                                <div class="product_cart_header">
-                                    <!-- <ul class="nav flex-column ">
-                      <li class="py-3 border-bottom ">
-                        <div class="row ">
-                          <div class="col-auto pr-0 ">
-                            <div class="position-relative ">
-                              <span
-                                class="d-inline-block px-1 rounded-circle text-white position-absolute ">1x</span>
-                              <img src="public/template/default/assets/images/product/small-size/1.jpg " alt=" ">
-                            </div>
-
-                          </div>
-                          <div class="col pl-0 text-left ">
-                            <a href="" class="font-weight-bold cart__title__product__name ">Xall
-                              9.7"128G
-                              Ipad
-                              Sliver Sliver Sliver</a>
-                            <div class="text-danger py-1">$29.00</div>
-                            <span class="font-weight-light">Demension: 40cm x 60cm</span>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="py-3 border-bottom">
-                        <div class="row">
-                          <div class="col-auto pr-0">
-                            <div class="position-relative">
-                              <span
-                                class="d-inline-block px-1 rounded-circle text-white position-absolute">1x</span>
-                              <img src="public/template/default/assets/images/product/small-size/2.jpg" alt="">
-                            </div>
-
-                          </div>
-                          <div class="col pl-0 text-left">
-                            <a href="" class="font-weight-bold cart__title__product__name">Xall
-                              9.7"128G
-                              Ipad
-                              Sliver Sliver Sliver</a>
-                            <div class="text-danger py-1">$29.00</div>
-                            <span class="font-weight-light">Demension: 40cm x 60cm</span>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-
-                    <table class="table table-sm w-100 table-borderless ">
-                      <tr>
-                        <td class="text-left">Subtotal</td>
-                        <td class="text-right">$49.70</td>
-                      </tr>
-                      <tr>
-                        <td class="text-left">Shipping</td>
-                        <td class="text-right">$7.00</td>
-                      </tr>
-                      <tr>
-                        <td class="text-left">Taxes</td>
-                        <td class="text-right">$00.0</td>
-                      </tr>
-                      <tr>
-                        <td class="text-left">Total</td>
-                        <td class="text-right">$54.00</td>
-                      </tr>
-                    </table>
-                    <a href="checkout.html" class="btn btn-secondary btn-block mb-3">Checkout</a> -->
-                                </div>
+                                <div class="product_cart_header"> </div>
                                 <div class="empty_cart_header">
                                     <div class="icon">
                                         <i class="bx bxl-shopify"></i>

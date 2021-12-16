@@ -59,6 +59,9 @@
 <?php include_once 'block/footer.php'?>
 <!-- end Footer -->
 <?php echo $this->linkJs; ?>
+
+<script src="public/template/admin/js/jquery.bootstrap.wizard.min.js"></script>
+<script src="public/template/admin/js/tinymce.min.js"></script>
 <script>
     let options = {
         position: 'top-right',

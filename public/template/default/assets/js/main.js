@@ -509,8 +509,8 @@ function renderCart(){
         number_product = product.number_product;
         
         total_price_cart += price * number_product;
-       
-        renderCart += `
+
+      renderCartHtml += `
         <li class="py-3 border-bottom ">
         <div class="row ">
           <div class="col-3 pr-0 ">
@@ -595,7 +595,7 @@ window.addEventListener('load', function() {
     }, false);
   });
 }, false);
-if (document.querySelector(".zoom__plus") !== null) {
+if (document.querySelector(".zoom__plus") !== null && items_img_product.length >0 ) {
   var openPhoto = function() {
     var pswpElement = document.querySelectorAll('.pswp')[0];
   
@@ -621,7 +621,7 @@ if (document.querySelector(".zoom__plus") !== null) {
 // modal
 $('.btnModalProduct').click(function (){
   var id = $(this).attr('data-id');
-  var url = 'index.php?module=default&controller=index&action=info';
+  var url = '/jobaria/index.php?module=default&controller=index&action=info';
   $('.hereModal').load(url , { id: id }, function (data){
       var main = new Splide(".splide_modal", {
         type: "fade",
@@ -647,30 +647,26 @@ $('.btnModalProduct').click(function (){
       $('#modal_product').modal();
   })
 });
-var star = 0;
+
 $('.criterions_list .fa-star').hover(
     function() {
-
       var idexCurrent = $(this).index();
-
       var i;
       var parent = $(this).parent();
       var len = parent.find('.fa-star').length;
       // parent.css({ color: '#909090' });
       for (i = 0; i < len; i++) {
         parent.find('.fa-star').eq(i).css({ color: '#909090' }).removeAttr('data-star', idexCurrent);
-
       }
 
       for (i = 0; i <= idexCurrent; i++) {
         parent.find('.fa-star').eq(i).css({ color: '#343a40' })
       }
-
-      star = idexCurrent + 1;
+      $('#rating').val(idexCurrent + 1);
     }
 );
-$('.btnReviewSubmit').click(function (){
-  $('#rating').val(star);
-  $('#id_new_comment_form').submit();
-});
+// $('.btnReviewSubmit').click(function (){
+//
+//   $('#id_new_comment_form').submit();
+// });
 

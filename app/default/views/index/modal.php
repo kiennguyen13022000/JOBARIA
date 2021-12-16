@@ -11,9 +11,10 @@ if (!empty($this->productInfo['childImage'])){
 $discount       = (int) $this->productInfo['price'] - (int) $this->productInfo['promotion'] * (int) $this->productInfo['price'] / 100;
 $price = '';
 if ($this->productInfo['promotion'] > 0){
-    $price = '<span class="text__price__modal">'. number_format($this->productInfo['price'], 0, ',', '.') .' ₫</span>';
+    $price = '<del class="text__price__modal">$'. number_format($this->productInfo['price'], 2, '.', ',') .'</del>';
 }
-$formatDiscount = number_format($discount, 0, ',', '.') . ' ₫';
+$numFormatDiscount = number_format($discount, 2, '.', ',');
+$formatDiscount = '$'. $numFormatDiscount;
 ?>
 
 <div class="modal fade" id="modal_product" tabindex="-1" role="dialog"
@@ -24,9 +25,9 @@ $formatDiscount = number_format($discount, 0, ',', '.') . ' ₫';
                 <form method="post" action="">
                     <input type="hidden" name="product_id" value="1">
                     <input type="hidden" name="product_name" value="Janon vista fhd 4k">
-                    <input type="hidden" name="new_price" value="19.15">
-                    <input type="hidden" name="old_price" value="29.00">
-                    <input type="hidden" name="url_image" value="./assets/images/product/large-size/1.jpg">
+                    <input type="hidden" name="new_price" value="<?php echo $numFormatDiscount ?>">
+                    <input type="hidden" name="old_price" value="<?php echo $this->productInfo['price'] ?>">
+                    <input type="hidden" name="url_image" value="/jobaria/<?php echo $this->productInfo['image'] ?>">
                     <div class="row">
                         <div class="col-12 col-lg-6">
                             <div class="border">
@@ -35,7 +36,7 @@ $formatDiscount = number_format($discount, 0, ',', '.') . ' ₫';
                                     <div class="splide__track">
                                         <ul class="splide__list">
                                             <li class="splide__slide">
-                                                <img src="<?php echo $this->productInfo['image']; ?>">
+                                                <img src="/jobaria/<?php echo $this->productInfo['image']; ?>">
                                             </li>
                                             <?php echo $slideImage; ?>
                                         </ul>
@@ -48,7 +49,7 @@ $formatDiscount = number_format($discount, 0, ',', '.') . ' ₫';
                                 <div class="splide__track">
                                     <ul class="splide__list">
                                         <li class="splide__slide">
-                                            <img src="<?php echo $this->productInfo['image']; ?>">
+                                            <img src="/jobaria/<?php echo $this->productInfo['image']; ?>">
                                         </li>
                                         <?php echo $slideImage; ?>
                                     </ul>

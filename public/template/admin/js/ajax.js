@@ -34,3 +34,24 @@ $(document).on('change','.filePhotoImage',function(){
     });
     return false;
 });
+$(document).on('click','.btn_next_step_product',function(){
+    var $_this = $(this);
+    $_this.closest("form").ajaxSubmit({
+        type: "POST",
+        url: 'index.php?module=admin&controller=product&action=nextStep',
+        dataType: "json",
+        success: function(res) {
+            if(res.msg!='ok'){
+                alert('Update error');
+                return false;
+            }
+        }
+    });
+    return false;
+});
+$(function () {
+    // wizard
+    $('#addproduct-nav-pills-wizard').bootstrapWizard({
+        'tabClass': 'nav nav-pills nav-justified'
+    });
+});

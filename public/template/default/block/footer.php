@@ -22,7 +22,7 @@
                 <div class="col-lg-4">
                     <div class="logo_footer">
                         <a href="#" title="Jobaria" class="d-block">
-                            <img src="public/template/default/assets/images/footer/logo/1.png" alt="Jobaria">
+                            <img src="/jobaria/public/template/default/assets/images/footer/logo/1.png" alt="Jobaria">
                         </a>
                     </div>
                     <div class="border_bot_main">
@@ -76,7 +76,7 @@
                 <div class="col-lg-8 mt-4 mg-lg-0">
                     <div class="banner_footer">
                         <a href="index.html" title="Jorbaria">
-                            <img class="w-100 " src="public/template/default/assets/images/footer/widgets-banner.jpg" alt="">
+                            <img class="w-100 " src="/jobaria/public/template/default/assets/images/footer/widgets-banner.jpg" alt="">
                         </a>
                     </div>
                     <div class="row">
@@ -174,7 +174,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-6 text-center text-md-right">
-                    <img class="img-fluid" src="public/template/default/assets/images/footer/payment.png" alt="">
+                    <img class="img-fluid" src="/jobaria/public/template/default/assets/images/footer/payment.png" alt="">
                 </div>
             </div>
         </div>

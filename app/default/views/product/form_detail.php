@@ -2,7 +2,6 @@
 $price = $this->result['price'];
 $new_price = $price;
 $text__price__modal = '';
-setlocale(LC_MONETARY, 'en_US');
 $promotion = $this->result['promotion'];
 if ($promotion > 0){
     $new_price = number_format($price - $price * $promotion / 100, 2, '.', ',');
@@ -22,7 +21,7 @@ $price_discount .= '</div>';
         <input type="hidden" name="new_price" value="<?php echo $new_price ?>">
         <input type="hidden" name="old_price" value="<?php echo $price ?>">
         <input type="hidden" name="url_image"
-               value="./assets/images/product/large-size/1.jpg">
+               value="/jobaria/<?php echo $this->result['image'] ?>">
         <h3 class="product_title_modal mb-3"><?php echo $this->result['product_name'] ?></h3>
         <p class="mb-3">Reference: <?php echo $this->result['reference'] ?></p>
         <div class="star_box star__modal">
