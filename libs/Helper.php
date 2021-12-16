@@ -57,7 +57,7 @@ class Helper{
         return $strMessage;
     }
 
-    public static function cmsFormGroup($arrlabel, $type, $name, $value = null, $class  = null, $required, $formGroup, $errors){
+    public static function cmsFormGroup($arrlabel, $type, $name, $value = null, $class  = null, $required = 'required', $formGroup, $errors = null){
         $star = empty($required) ? '' : '<span class="text-danger">*</span>';
         $label = '<label for="'. $arrlabel['id'] .'">'. $arrlabel['label'] .'</label>' . $star;
         $resultInput = '';
@@ -70,7 +70,7 @@ class Helper{
             }
         }
 
-        $strHtml = "<input type='$type' name='form[$name]' id='$arrlabel[id]' value='$value' class='$class' placeholder='$arrlabel[label]'>" ;
+        $strHtml = "<input $required type='$type' name='form[$name]' id='$arrlabel[id]' value='$value' class='$class' placeholder='$arrlabel[label]'>" ;
         $label_input = $label . $strHtml;
         $htmlFormGroup = '<div class="'. $formGroup .'">
                         '. $label_input . $resultFeedback .'  
@@ -78,9 +78,9 @@ class Helper{
 
         return $htmlFormGroup;
     }
-    public static function cmsTextFormGroup($arrlabel, $type, $name, $value = null, $class  = null, $size  = null, $required = 'required', $formGroup){
+    public static function cmsTextFormGroup($arrlabel, $name, $value = null, $class  = null, $required = 'required', $formGroup){
       $label = '<label for="'. $arrlabel['id'] .'">'. $arrlabel['label'] .'</label>';
-      $strHtml = "<textarea  name='form[$name]'  cols='30' rows='10' id='$arrlabel[id]' value='$value' class='$class' size='$size' placeholder='$arrlabel[label]' $required></textarea>" ;
+      $strHtml = "<textarea $required name='form[$name]'  cols='30' rows='5' id='$arrlabel[id]' value='$value' class='$class' placeholder='$arrlabel[label]' $required></textarea>" ;
       $label_input = $label . $strHtml;
       $htmlFormGroup = '<div class="'. $formGroup .'">
                       '. $label_input .'

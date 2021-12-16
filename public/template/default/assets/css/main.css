@@ -2606,3 +2606,8 @@ input.number_product[type="number"] {
 .grid_product  img{
   padding: 15px;
 }
+
+.criterions_list .fa-star{
+  color: rgb(144, 144, 144);
+}
+

@@ -54,6 +54,15 @@ if($this->task == 'edit'){
           ';
        }
    }
+
+    $tab_review = '
+        <li class="nav-item">
+        <a href="#reviews" data-toggle="tab" aria-expanded="true" class="nav-link">
+            <span class="d-inline-block d-sm-none"><i class="far fa-user"></i></span>
+            <span class="d-none d-sm-inline-block">Reviews</span>
+        </a>
+    </li>
+    ';
 }
 $listCategories = '
      <select class="form-control" name="form[category_id]" id="">
@@ -70,6 +79,59 @@ if (!empty($getListCategories)){
     }
 }
 $listCategories .= '</select>';
+$starOne = 0;
+$starTwo = 0;
+$starThree = 0;
+$starFour = 0;
+$starFive = 0;
+$reviewHtml = '';
+$ratingTotal = count($this->reviews);
+foreach ($this->reviews as $key => $value){
+    $starOne = $value['rating'] == 1 ? 1 + $starOne : $starOne;
+    $starTwo = $value['rating'] == 2 ? 1 + $starTwo : $starTwo;
+    $starThree = $value['rating'] == 3 ? 1 + $starThree : $starThree;
+    $starFour = $value['rating'] == 4 ? 1 + $starFour : $starFour;
+    $starFive = $value['rating'] == 5 ? 1 + $starFive : $starFive;
+    $avatar = $value['avatar'] != null ? $value['avatar'] : ($key % 2 == 0 ? 'public/template/admin/images/users/avatar-2.jpg' : 'public/template/admin/images/users/avatar-1.jpg');
+    $status = $value['status'] == 1 ? '<span data-control="product" data-id="'.$value['id'].'" data-status="'.$value['status'].'" class="review-status badge badge-info">Active</span>' : '<span data-control="product" data-id="'.$value['id'].'" data-status="'.$value['status'].'" class="review-status badge badge-purple">Deactive</span>';
+    $reviewHtml .= '<div class="review-item mb-3">
+                        <i onclick="reviewDelete('.$this->id.')" class="remixicon-close-circle-fill review-close text-danger"></i>
+                        '. $status .'
+                        <div class="review-header d-flex justify-content-between pb-2 border-bottom">
+                            <div class="d-flex align-items-center">
+                                <img class="img-fluid avatar-sm rounded" src="'. $avatar .'">
+                                <div class="pl-2 d-flex flex-column align-items-center">
+                                    <div class="font-weight-bolder w-100">'. $value['name'] .'</div>
+                                    <p class="font-13 m-0">'. $value['created_at'] .'</p>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex-inline text-warning d-inline-block ml-5">
+                                    '. str_repeat('<i class="fa fa-star" aria-hidden="true"></i>', $value['rating']) .'
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content pt-2">
+                            <p>
+                                '.$value['content'].'
+                            </p>
+                        </div>
+                        <div class="review-separator w-100"></div>
+                    </div>';
+}
+
+if (empty($reviewHtml)){
+    $reviewHtml = '<p class="textdanger font-20 text-center">No reviews yet.</p>';
+}
+if($ratingTotal > 0){
+    $starOnePercent = $starOne / $ratingTotal * 100;
+    $starTwoPercent = $starTwo / $ratingTotal * 100;
+    $starThreePercent = $starThree / $ratingTotal * 100;
+    $starFourPercent = $starFour / $ratingTotal * 100;
+    $starFivePercent = $starFive / $ratingTotal * 100;
+}
+
+$rantingAvg = (5 * $starFive + 4 * $starFour + 3 * $starThree + $starTwo * 2 + $starOne) / $ratingTotal;
 ?>
 <ul class="nav nav-pills navtab-bg nav-tabs-detail">
     <li class="nav-item">
@@ -79,6 +141,7 @@ $listCategories .= '</select>';
         </a>
     </li>
     <?php echo $nav_image ?>
+    <?php echo $tab_review; ?>
 </ul>
 <div class="tab-content">
     <div class="tab-pane fade active show" id="information1">
@@ -216,6 +279,105 @@ $listCategories .= '</select>';
 <!--            <img src="public/template/admin/images/file-icons/upload.png" alt="">-->
 <!--        </a>-->
     </div>
+    <div class="tab-pane fade" id="reviews">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-4  ">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="my-0"><?php echo number_format($rantingAvg, 1); ?></h1>
+                            <p class="text-muted mb-1">based on <?php echo $ratingTotal; ?> ratings</p>
+                            <div class="flex-inline text-warning d-inline-block">
+                                <?php echo str_repeat('<i class="fa fa-star" aria-hidden="true"></i>', (int) $rantingAvg); ?>
+                                <?php
+                                    if (is_float(strval($rantingAvg) + 0))
+                                        echo str_repeat(' <i class="fas fa-star-half-alt" aria-hidden="true"></i>', 1);
+                                ?>
+                                <?php echo str_repeat('<i class="far fa-star" aria-hidden="true"></i>',  floor(5 - $rantingAvg)); ?>
+                            </div>
+                                <div class="progress-count mt-2">
+                                    <div class="d-flex justify-content-between">
+                                        <span>
+                                            <span class="font-weight-bolder">5</span>
+                                            <i class="fa fa-star text-warning font-13" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="text-muted"><?php echo $starFive; ?></span>
+                                    </div>
+                                    <div class="progress" height="10">
+                                        <div class="progress-bar light-success-bg" role="progressbar" aria-valuenow="10"
+                                             aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $starFivePercent?>%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-count mt-2">
+                                <div class="d-flex justify-content-between">
+                                        <span>
+                                            <span class="font-weight-bolder">4</span>
+                                            <i class="fa fa-star text-warning font-13" aria-hidden="true"></i>
+                                        </span>
+                                    <span class="text-muted"><?php echo $starFour; ?></span>
+                                </div>
+                                <div class="progress mt-1" height="10">
+                                    <div class="progress-bar bg-info-light" role="progressbar" aria-valuenow="42"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $starFourPercent?>%">
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="progress-count mt-2">
+                                <div class="d-flex justify-content-between">
+                                        <span>
+                                            <span class="font-weight-bolder">3</span>
+                                            <i class="fa fa-star text-warning font-13" aria-hidden="true"></i>
+                                        </span>
+                                    <span class="text-muted"><?php echo $starThree; ?></span>
+                                </div>
+                                <div class="progress mt-1" height="10">
+                                    <div class="progress-bar bg-lightyellow" role="progressbar" aria-valuenow="43"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $starThreePercent?>%">
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="progress-count mt-2">
+                                <div class="d-flex justify-content-between">
+                                        <span>
+                                            <span class="font-weight-bolder">2</span>
+                                            <i class="fa fa-star text-warning font-13" aria-hidden="true"></i>
+                                        </span>
+                                    <span class="text-muted"><?php echo $starThree; ?></span>
+                                </div>
+                                <div class="progress mt-1" height="10">
+                                    <div class="progress-bar light-danger-bg" role="progressbar" aria-valuenow="20"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $starTwoPercent?>%">
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="progress-count mt-2">
+                                <div class="d-flex justify-content-between">
+                                        <span>
+                                            <span class="font-weight-bolder">1</span>
+                                            <i class="fa fa-star text-warning font-13" aria-hidden="true"></i>
+                                        </span>
+                                    <span class="text-muted"><?php echo $starOne; ?></span>
+                                </div>
+                                <div class="progress mt-1" height="10">
+                                    <div class="progress-bar bg-careys-pink" role="progressbar" aria-valuenow="40"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $starOnePercent?>%">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <?php echo $reviewHtml; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 

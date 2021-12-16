@@ -1,4 +1,33 @@
 <?php
+//<div class="form-group">
+//    <label for="comment">Your Review</label>
+//    <textarea class="form-control" rows="5" id="comment"></textarea>
+//</div>
+//<div class="form-group">
+//    <label for="email">Name *</label>
+//    <input type="text" class="form-control mt-3">
+//</div>
+//<div class="form-group">
+//    <label for="email">Email *</label>
+//    <input type="text" class="form-control mt-3">
+//</div>
+$valueReview        = (isset($this->result['content'])) ? $this->result['content'] : '';
+$valueEmail         = (isset($this->result['email'])) ? $this->result['email'] : '';
+$valueName          = (isset($this->result['name'])) ? $this->result['name'] : '';
+$userInfo = Session::get('userInfo');
+if (!empty($userInfo)){
+    $valueEmail         = (!empty($userInfo['email'])) ? $userInfo['email'] : '';
+    $valueName          = (!empty($userInfo['name'])) ? $userInfo['name'] : '';
+}
+
+$label = ['label' => 'You review', 'id' => 'validationYouReview'];
+$inputReview = Helper::cmsTextFormGroup($label, 'content', $valueReview, 'form-control', 'required', 'form-group mb-3');
+$label = ['label' => 'Name', 'id' => 'validationName'];
+$inputName = Helper::cmsFormGroup($label, 'text', 'name', $valueName, 'form-control','required', 'form-group mb-3');
+$label = ['label' => 'Email', 'id' => 'validationEmail'];
+$inputEmail = Helper::cmsFormGroup($label, 'email', 'email', $valueEmail, 'form-control','required', 'form-group mb-3');
+
+$linkReviewSubmit = Url::createLink('default', 'product', 'review', ['id' => $this->product_id]);
 ?>
 <main id="main" class="page_list">
     <nav aria-label="breadcrumb" class="nav_breadcrumb">
@@ -139,7 +168,7 @@
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content">
                                         <div class="modal-body">
-                                            <form id="id_new_comment_form" class="mb-2" action="#">
+                                            <form id="id_new_comment_form" method="post" class="mb-2" action="/jobaria/<?php echo $linkReviewSubmit; ?>">
                                                 <h2 class="title">Write your review</h2>
                                                 <div class="row mt-3">
                                                     <div class="product clearfix col-12 col-lg-6">
@@ -171,24 +200,14 @@
                                                             <i class="fa fa-star" aria-hidden="true"></i>
                                                             <i class="fa fa-star" aria-hidden="true"></i>
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label for="comment">Your Review</label>
-                                                            <textarea class="form-control" rows="5" id="comment"></textarea>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="email">Name *</label>
-                                                            <input type="text" class="form-control mt-3">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="email">Email *</label>
-                                                            <input type="text" class="form-control mt-3">
-                                                        </div>
+                                                         <?php echo $inputReview . $inputName . $inputEmail; ?>
+                                                         <input type="text" name="form[rating]" class="d-none" id="rating">
                                                         <div class="mt-3 mb-4">
 
                                                             <span>* Required fields</span>
                                                         </div>
                                                         <div class="btn_box">
-                                                            <button type="button" class="btn btn_black mr-3">Submit</button>
+                                                            <button type="button" class="btnReviewSubmit btn btn_black mr-3">Submit</button>
                                                             <button type="button" class="btn btn_black"
                                                                     data-dismiss="modal">Close</button>
                                                         </div>
@@ -497,3 +516,9 @@
         </div>
     </section>
 </main>
+
+<script>
+    var review = <?php echo Session::get('review'); Session::delete('review'); ?>;
+    if (review == 'success')
+        alert('Cảm ơn bạn đã đánh giá!');
+</script>

@@ -31,6 +31,7 @@ class ProductController extends Controller
             $this->_view->title     = $this->_view->result['product_name'].' | Product';
             $this->_view->id = $product_id;
             $this->_view->listImages = $this->_model->getImage($product_id);
+            $this->_view->reviews = $this->_model->getReviews($product_id);
 
         }
 
@@ -124,6 +125,21 @@ class ProductController extends Controller
         $affected = $this->_model->changeStatus($id, $status);
         echo json_encode(['affected' => $affected, 'status' => $status]);
     }
+    public function changeStatusReviewAction(){
+        $id = $this->_arrParam['id'];
+        $status = $this->_arrParam['status'] == 1 ? 0 : 1;
+        $affected = $this->_model->changeStatusReview($id, $status);
+        echo json_encode(['affected' => $affected, 'status' => $status]);
+    }
+    public function reviewDeleteAction(){
+        $id = $this->_arrParam['id'];
+        $affected = $this->_model->reviewDelete($id);
+        if ($affected > 0){
+            Session::set('success', '\'' . 'delete' . '\'');
+        }
+        echo json_encode(['affected' => $affected]);
+    }
+
     private function createLinkCss(){
         $css = array(
             array(

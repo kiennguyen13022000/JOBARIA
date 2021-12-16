@@ -69,10 +69,27 @@ class ProductModel extends Model
         $result = $this->Insert("SELECT * FROM product_image WHERE product_id=".$id);
         return !empty($result) ? $result : array();
     }
-
     public function changeStatus($id, $status){
         $param   = array('status' => $status);
         $where   = array(array('id', $id, ''));
         return $this->Update($param, $where);
     }
+    public function changeStatusReview($id, $status){
+        $this->SetTable('reviews');
+        $param   = array('status' => $status);
+        $where   = array(array('id', $id, ''));
+        return $this->Update($param, $where);
+    }
+    public function reviewDelete($id){
+        $this->SetTable('reviews');
+        return $this->Delete([$id]);
+    }
+
+    public function getReviews($id){
+        $query = "select rv.*, u.avatar from `reviews` as rv left join `users` as u on u.id = rv.user_id where `product_id` = $id";
+        $reviews = $this->ListRecord($query);
+
+        return $reviews;
+    }
+
 }

@@ -146,3 +146,53 @@
      display: block;
      transition:  all ease .8s;
  }
+
+ .light-success-bg {
+     background-color: #A0D9B4 !important;
+ }
+
+ .bg-info-light {
+     background-color: #9AE8FF !important;
+ }
+ .bg-lightyellow {
+     background-color: #ffe28c !important;
+ }
+
+ .light-danger-bg {
+     background-color: #F1C8DB !important;
+ }
+ .bg-careys-pink {
+     background-color: #CF9EAC !important;
+ }
+
+ .review-separator{
+     border-top: 2px dotted #d2d7e2;
+ }
+.review-item{
+    position: relative;
+}
+ .review-close{
+     left: 45%;
+     visibility: hidden;
+     opacity: 0;
+     transform: translateY(-10px);
+     top: -10px;
+     transition: all 0.5s;
+     font-size: 24px;
+     position: absolute;
+ }
+ .review-close:hover{
+     cursor: pointer;
+ }
+ .review-item:hover .review-close{
+     visibility: visible;
+     opacity: 1;
+     transform: translateY(0);
+ }
+ .review-item:hover{
+     /*background: rgba(211, 208, 210, 0.8);*/
+ }
+ .review-status{
+     position: absolute;
+     left: 75%;
+ }

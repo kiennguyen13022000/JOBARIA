@@ -647,8 +647,7 @@ $('.btnModalProduct').click(function (){
       $('#modal_product').modal();
   })
 });
-
-
+var star = 0;
 $('.criterions_list .fa-star').hover(
     function() {
 
@@ -667,6 +666,11 @@ $('.criterions_list .fa-star').hover(
         parent.find('.fa-star').eq(i).css({ color: '#343a40' })
       }
 
-      $(this).attr('data-star', idexCurrent);
+      star = idexCurrent + 1;
     }
 );
+$('.btnReviewSubmit').click(function (){
+  $('#rating').val(star);
+  $('#id_new_comment_form').submit();
+});
+

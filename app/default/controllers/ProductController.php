@@ -43,6 +43,20 @@ class ProductController extends Controller
         $this->_view->script_img = $script_img;
         $this->_view->render('product/detail');
     }
+
+    public function reviewAction(){
+        $id = $this->_model->review($this->_arrParam['form'], $this->_arrParam['id']);
+        if ($id > 0){
+            Session::set('review', '\'' . 'success' . '\'');
+            $value = $this->_model->productInfo($this->_arrParam['id']);
+            $url    = $value['breakcrumbs'] . '/' . trim($value['product_name']). '_' . $value['id'];
+            $url = Url::filterURL($url) . '.html';
+            Url::redirect(null,  null, null, null, $url);
+        }
+    }
+
+
+
     private function createLinkCss(){
         $css = array(
             array(
