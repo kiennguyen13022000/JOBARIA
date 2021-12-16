@@ -595,7 +595,7 @@ window.addEventListener('load', function() {
     }, false);
   });
 }, false);
-if (document.querySelector(".zoom__plus") !== null) {
+if (document.querySelector(".zoom__plus") !== null && items_img_product.length >0 ) {
   var openPhoto = function() {
     var pswpElement = document.querySelectorAll('.pswp')[0];
   
@@ -621,7 +621,7 @@ if (document.querySelector(".zoom__plus") !== null) {
 // modal
 $('.btnModalProduct').click(function (){
   var id = $(this).attr('data-id');
-  var url = 'index.php?module=default&controller=index&action=info';
+  var url = '/jobaria/index.php?module=default&controller=index&action=info';
   $('.hereModal').load(url , { id: id }, function (data){
       var main = new Splide(".splide_modal", {
         type: "fade",

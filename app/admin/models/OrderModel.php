@@ -1,15 +1,15 @@
 <?php
 
-class ProductModel extends Model
+class OrderModel extends Model
 {
     public function __construct($param = null)
     {
         parent::__construct($param);
-        $this->setTable('products');
+        $this->setTable('orders');
     }
 
     public function list(){
-        $query = 'select * from products';
+        $query = 'select * from orders';
         $result = $this->ListRecord($query);
         return  $result;
     }
@@ -49,31 +49,10 @@ class ProductModel extends Model
         return $this->Delete([$id]);
     }
     public function info($id){
-        $this->setTable('products');
-        $query = 'select * from products where `id` = ' . $id;
+        $this->setTable('orders');
+        $query = 'select * from orders where `id` = ' . $id;
         $result = $this->OneRecord($query);
         return $result;
-    }
-    public function getImage($id){
-        $this->setTable('product_image');
-        $result = $this->ListRecord("SELECT * FROM product_image WHERE product_id=".$id);
-        return $result;
-    }
-    public function getListCategories($id){
-        $this->setTable('categories');
-        $result = $this->ListRecord("SELECT * FROM categories WHERE status = 1 order by `left`");
-        return $result;
-    }
-    public function addImage($id){
-        $this->setTable('product_image');
-        $result = $this->Insert("SELECT * FROM product_image WHERE product_id=".$id);
-        return !empty($result) ? $result : array();
-    }
-    public function getCategoryName($category_id){
-        $this->SetTable('categories');
-        $query = 'SELECT name FROM categories WHERE id='.$category_id;
-        $result = $this->OneRecord($query);
-        return  $result;
     }
     public function changeStatus($id, $status){
         $param   = array('status' => $status);

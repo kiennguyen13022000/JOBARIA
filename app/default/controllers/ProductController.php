@@ -1,19 +1,11 @@
 <?php
 class ProductController extends Controller
 {
-    public function __construct($arrParams)
-    {
-        parent::__construct($arrParams);
-    }
     public function detailAction(){
        // error_reporting (E_ALL ^ E_NOTICE);
-
         $product_id = $this->_arrParam['id'];
-        //$this->createLinkCss();
-        //$this->createLinkJs();
-        //$this->_model->detail($product_id);
         $result = $this->_model->info($product_id);
-        if (empty($result)) header('Location: index.php');
+        if (empty($result) || $result['status'] == 0) header('Location: index.php');
         $this->_view->product_id = $product_id;
         $this->_view->result = $result;
         $listImages = $this->_model->getImage($product_id);
@@ -22,7 +14,7 @@ class ProductController extends Controller
         if (!empty($this->_arrParam['image'])) {
             $script_img .= '
                 {
-                    src: "' . $this->_arrParam['image'] . '",
+                    src: "/jobaria/'.$this->_arrParam['image'].'",
                     w: 600,
                     h: 600
                 },
@@ -32,7 +24,7 @@ class ProductController extends Controller
             foreach ($listImages as $k=>$v){
                 $script_img .= '
                 {
-                    src: "'.$v['image'].'",
+                    src: "/jobaria/'.$v['image'].'",
                     w: 600,
                     h: 600
                 },
@@ -41,6 +33,8 @@ class ProductController extends Controller
         }
         $script_img .=']';
         $this->_view->script_img = $script_img;
+       // $this->_view->newProductList        = $this->_model->getNewProductList();
+        $this->_view->other_products = $this->_model->other_products($product_id, $result['category_id']);
         $this->_view->render('product/detail');
     }
     private function createLinkCss(){

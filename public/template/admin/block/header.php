@@ -169,7 +169,7 @@
 
         <!-- LOGO -->
         <div class="logo-box">
-            <a href="index.html" class="logo text-center">
+            <a href="/jobaria/index.php?module=admin&controller=index&action=index" class="logo text-center">
                     <span class="logo-lg">
                     <img src="public/template/admin/images/custom/logo/1.png" alt="" height="40">
                         <!-- <span class="logo-lg-text-light">Xeria</span> -->

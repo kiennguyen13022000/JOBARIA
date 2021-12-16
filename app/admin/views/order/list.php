@@ -2,15 +2,24 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                <div class="row mb-1 d-none">
+                    <div class="col-lg-4 ml-auto text-right">
+                        <div class="text-lg-end">
+                            <a href="index.php?module=admin&controller=order&action=edit" class="btn btn-danger mb-2 me-2"><i class="mdi mdi-basket me-1"></i> Add New Order</a>
+                            <button type="button" class="btn btn-light mb-2">Export</button>
+                        </div>
+                    </div><!-- end col-->
+                </div>
                 <table id="scroll-horizontal-datatable" class="table w-100 nowrap table-striped table-data">
                     <thead>
                     <tr>
                         <th width="15" >No</th>
-                        <th>Image</th>
-                        <th>Product name</th>
-                        <th>Rating</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
+                        <th>Code</th>
+                        <th>Billing Name</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Payment Status</th>
+                        <th>Payment Method</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -20,33 +29,30 @@
                     $xhtml = '';
                     $num = 0;
                     foreach ($this->data as $key => $value){
-                        $img = '';
-                        if($value['image'] != null){
-                            $img = '<img class="img__table img-fluid avatar-md rounded" src="'. $value['image'] .'">';
-                        }
                         ++ $num;
                         //$category_name = $this->_model->getCategoryName($value['category_id']);
                         if ($num % 2 == 0){
-                            $rating = '
-                                <span class="badge bg-success"><i class="mdi mdi-star"></i> 4.9</span>
+                            $payment_status = '
+                                <div><span class="badge badge-soft-success">Paid</span>
+                                                            </div>
                             ';
                         }else{
-                            $rating = '
-                                <span class="badge bg-warning"><i class="mdi mdi-star"></i> 3.1</span>
+                            $payment_status = '
+                                <div><span class="badge badge-soft-warning">Awaiting Authorization</span></div>
                             ';
                         }
-                        $status         = $value['status'] == 1 ? 'active' : 'deactive';
+                        $status         = $value['status'] == 1 ? 'Shipped' : 'Delivered';
                         $classStatus    = $value['status'] == 1 ? 'activeStatus' : 'deactive';
                         $xhtml .= '<tr id="row-'. $value['id'] .'">
                                             <td>'. $num .'</td>
-                                            <td>'. $img .'</td>
+                                            <td>'. $value['code'] .'</td>
                                             <td>
-                                            <a href="index.php?module=admin&controller=product&action=edit&task=edit&id='.$value['id'].'">
-                                            '. $value['product_name'] .'</a>
+                                            James Modlin	</a>
                                             </td>
-                                            <td>'. $rating .'</td>
-                                            <td>$'. $value['price'] .'</td>
-                                            <td>'. $value['quantity'] .'</td>
+                                            <td>'. $value['created_at'] .'</td>
+                                            <td>$'. $value['total'] .'</td>
+                                            <td>'.$payment_status.'</td>
+                                            <td>Mastercard</td>
                                             <td> <span data-control="product" data-id="'.$value['id'].'" data-status="'.$value['status'].'" class="'. $classStatus .' status__item">'. ucfirst($status) .'</span></td>
                                            
                                             <td>

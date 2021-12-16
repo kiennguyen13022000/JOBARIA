@@ -1,6 +1,6 @@
 <?php
 
-class ProductController extends Controller
+class OrderController extends Controller
 {
     public function __construct($arrParams)
     {
@@ -15,7 +15,7 @@ class ProductController extends Controller
         $this->_view->errors = null;
         if(!empty($_FILES['image'])) $this->_arrParam['edit']['image'] = $_FILES['image'];
         $task = 'add';
-        $this->_view->button_form = '<button class="btn btn-primary" type="submit">Submit</button>';
+        $this->_view->button_form = '<button class="btn btn-primary" type="submit">Save</button>';
         $requiredPass = true;
         $this->_view->result= array();
         $product_id = $this->_arrParam['id'];
@@ -70,35 +70,6 @@ class ProductController extends Controller
         }
         $this->_view->render('product/edit');
     }
-    public function nextStepAction(){
-        pre($_POST);
-        die();
-        $form = $this->_arrParam['form'];
-        $form['image'] = $_FILES['image'];
-        $validate   = new Validate($form);
-        $validate->addRule('product_name', 'min', ['min' => 1])
-            ->addRule('price', 'int_min', ['min' => 0])
-            ->addRule('quantity', 'int_min', ['min' => 0])
-            ->addRule('image', 'file', ['extension' => ['png', 'jpg', 'gif']], false);
-        $validate->run();
-
-        if(!empty($validate->getError())){
-            $this->_view->errors = $validate->getError();
-            $this->_view->result = $validate->getResult();
-        }else{
-            $form['id']=$this->_model->edit($this->_arrParam, $task);
-            if($this->_model->affectedAction() == 1){
-                if ($task == 'add'){
-                    Session::set('success', '\'' . 'edit'.  '\'' );
-                    Url::redirect('admin', 'product', 'edit',['task' => 'edit', 'id' => $form['id']]);
-                }else{
-                    $id = $this->_arrParam['id'];
-                    Session::set('success', '\'' . 'edit'.  '\'' );
-                    Url::redirect('admin', 'product', 'edit',['task' => 'edit', 'id' => $id]);
-                }
-            }
-        }
-    }
     public function listAction(){
         $this->_view->title = 'List product';
         $this->createLinkCss();
@@ -106,11 +77,11 @@ class ProductController extends Controller
 
         $this->_view->data = $this->_model->list();
 
-        $this->_view->render('product/list');
+        $this->_view->render('order/list');
     }
     public function deleteAction(){
         $table = $this->_arrParam['table'];
-        if (empty($table)) $table = 'products';
+        if (empty($table)) $table = 'orders';
         $info = $this->_model->info($this->_arrParam['id']);
         $affected = $this->_model->deleteItem($this->_arrParam['id'], $table);
         if ($affected > 0){
@@ -119,33 +90,6 @@ class ProductController extends Controller
             Session::set('success', '\'' . 'delete' . '\'');
         }
         echo json_encode(['affected' => 1]);
-    }
-    public function addImageAction(){
-
-        $product_id = $_POST['product_id'];
-
-        $img_product = !empty($_FILES['img_product']) ? $_FILES['img_product'] : array();
-        $uploadObj = new Upload();
-        $arrParams['product_id'] = $product_id;
-        $arrParams['position']= 1;
-        $sql = "UPDATE product_image SET position = position + 1";
-        $this->_model->setTable('product_image');
-        $this->_model->Query($sql);
-        $image = $uploadObj->getUrlFile($img_product, 'product', 300, 300);
-        $arrParams['image'] = $image;
-
-        $this->_model->Insert($arrParams);
-        //$listImages = $this->_model->getImage($product_id);
-        $html = '
-            <div class="nav-item">
-                <img class="preview__image img_product"
-                     src="'.$image.'">
-            </div>
-        ';
-        echo json_encode(array(
-            'msg' => 'ok',
-            'html' => $html
-        ));
     }
     public function changeStatusAction(){
         $id = $this->_arrParam['id'];

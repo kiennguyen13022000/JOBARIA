@@ -13,11 +13,11 @@ class LoginModel extends Model
         $password = $form['password'];
         $password =  md5($password);
 
-        $query = "SELECT username, id, password, firstname, lastname, avatar FROM users WHERE username='$username' and password='$password' and `status` = 1 and is_Admin = 1 limit 0,1";
+        $query = "SELECT username, id, password, firstname, lastname, avatar FROM users WHERE username='$username' and password='$password' and `status` = 1 and is_Admin = 0";
         $result = $this->OneRecord($query);
         if (empty($result)) return false;
 
-        $_SESSION['userAdmin'] = array(
+        $_SESSION['user'] = array(
             'loggedIn'  => true,
             'username'  => $username,
             'user_id'   => $result['id'],
@@ -29,12 +29,12 @@ class LoginModel extends Model
     public function forgot($params){
 //        echo getcwd();die();
         $email = $params['form']['email'];
-        $result=$this->ListRecord("SELECT id,username,firstname,lastname,email,password FROM users WHERE email='$email'");
+        $result=$this->OneRecord("SELECT id,username,firstname,lastname,email,password FROM users WHERE is_Admin = 0 and email='$email'");
         if (empty($result)) return false;
-        $from_name = $result[0]['firstname'].' '. $result[0]['lastname'];
-        if (empty($result[0]['firstname']) && empty($result[0]['lastname'])) $from_name = $result[0]['username'];
+        $from_name = $result['firstname'].' '. $result['lastname'];
+        if (empty($result['firstname']) && empty($result['lastname'])) $from_name = $result['username'];
         $new_password = substr(md5(rand(0,9999)),0,6);
-        $user_id = $result[0]['id'];
+        $user_id = $result['id'];
         $sql = "UPDATE users SET password = '".md5($new_password)."' WHERE id=".$user_id;
         $this->Query($sql);
 

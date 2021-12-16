@@ -15,14 +15,18 @@
     <link rel="stylesheet" href="/jobaria/public/template/default/assets/css/select2.min.css">
     <link rel="stylesheet" href="/jobaria/public/template/default/assets/css/splide-core.min.css">
     <link rel="stylesheet" href="/jobaria/public/template/default/assets/css/jquery-confirm.css">
+    <link rel="stylesheet" href="/jobaria/public/template/default/assets/css/splide-core.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.3/photoswipe.css" integrity="sha512-/lf2y2d7SFJau+G4TGgXCWJOAUxyDmJD+Tb35CdqoMZAQ8eNX0sgDKISlcxCtGpEAuyb1Q5vGPfB1XMettf0FA==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.3/default-skin/default-skin.min.css" integrity="sha512-Rck8F2HFBjAQpszOB9Qy+NVLeIy4vUOMB7xrp46edxB3KXs2RxXRguHfrJqNK+vJ+CkfvcGqAKMJTyWYBiBsGA==" crossorigin="anonymous"
+          referrerpolicy="no-referrer">
     <link rel="stylesheet" href="/jobaria/public/template/default/assets/css/main.css">
-    <script src="/jobaria/public/template/default/assets/js/splide.min.js" async></script>
+    <link rel="stylesheet" href="/jobaria/public/template/default/assets/css/account.css">
     <script src="https://momentjs.com/downloads/moment.js"></script>
     <script src="/jobaria/public/template/default/assets/js/function.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.2.0/dist/css/splide-core.min.css">
 </head>
-
 <body>
+
 <!-- -----------------header --------------------------->
     <?php include_once 'block/header.php'; ?>
 <!-- -----------------end header --------------------------->
@@ -47,7 +51,10 @@
 <script src="/jobaria/public/template/default/assets/js/wow.min.js"></script>
 <script src="/jobaria/public/template/default/assets/js/select2.min.js"></script>
 <script src="/jobaria/public/template/default/assets/js/jquery-confirm.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.2.0/dist/js/splide.min.js"></script>
+<script src="/jobaria/public/template/default/assets/js/splide.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.3/photoswipe.min.js" integrity="sha512-2R4VJGamBudpzC1NTaSkusXP7QkiUYvEKhpJAxeVCqLDsgW4OqtzorZGpulE3eEA7p++U0ZYmqBwO3m+R2hRjA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.3/photoswipe-ui-default.min.js" integrity="sha512-SxO0cwfxj/QhgX1SgpmUr0U2l5304ezGVhc0AO2YwOQ/C8O67ynyTorMKGjVv1fJnPQgjdxRz6x70MY9r0sKtQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="/jobaria/public/template/default/assets/js/main.js"></script>
 </body>
 
