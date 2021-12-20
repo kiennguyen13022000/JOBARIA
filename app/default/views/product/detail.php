@@ -42,7 +42,7 @@
                             <?php echo $this->result['content'] ?>
                         </div>
                         <div id="product_detail_tab" class="tab-pane">
-                            <?php echo $this->result['product_features'] ?>
+                            <?php echo $this->result['product_detail'] ?>
                         </div>
                         <div id="reviews_tab" class="tab-pane">
                             <!--     ==================== review ===================================-->

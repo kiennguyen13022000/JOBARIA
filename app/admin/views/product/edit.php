@@ -106,10 +106,10 @@ $listCategories .= '</select>';
                                         <div class="form-group col-lg-5">
                                             <label for="validationAvatar">Image</label>
                                             <div class="custom-file cursor_label">
-                                                <input type="file" name="image" id="validationImage" value="<?php echo  $image; ?>"
+                                                <input type="file" name="image" id="validationImg" value="<?php echo  $image; ?>"
                                                        class="input__image custom-file-input cursor"
                                                        size="" placeholder="Image">
-                                                <label class="custom-file-label" for="validationImage"><?php echo $choose_file; ?></label>
+                                                <label class="custom-file-label" for="validationImg"><?php echo $choose_file; ?></label>
 
                                             </div>
                                             <img class="mt-3 preview__image <?php echo $img_product; ?>"
@@ -151,19 +151,12 @@ $listCategories .= '</select>';
                                     <label for="">Category</label>
                                     <?php echo $listCategories; ?>
                                 </div>
-
-                                <div class="form-group col-lg-6 mb-3">
-                                    <label for="">Promotion</label>
-                                    <input type="number" name="form[promotion]" min="0" id="validationPromotion"
-                                           value="<?php echo $this->result['promotion']; ?>" class="form-control"
-                                           placeholder="Promotion">
-                                </div>
-                                <div class="form-group col-lg-6 mb-3">
-                                    <label for="">Promotion End date</label>
-                                    <input type="datetime-local" name="form[promotion_end_date]" id="validationPromotionEnddate"
-                                           value="<?php echo $this->result['promotion_end_date']; ?>" class="form-control"
-                                           placeholder="Promotion End date">
-                                </div>
+<!--                                <div class="form-group col-lg-6 mb-3">-->
+<!--                                    <label for="">Promotion End date</label>-->
+<!--                                    <input type="datetime-local" name="form[promotion_end_date]" id="validationPromotionEnddate"-->
+<!--                                           value="--><?php //echo $this->result['promotion_end_date']; ?><!--" class="form-control"-->
+<!--                                           placeholder="Promotion End date">-->
+<!--                                </div>-->
                                 <div class="form-group col-lg-12 mb-3">
                                     <div class="row">
                                         <div class="form-group col-lg-6 ">
@@ -171,12 +164,21 @@ $listCategories .= '</select>';
                                             <textarea role="textbox" aria-multiline="true" class="form-control note-codable textarea" name="form[description]" placeholder="Intro" id=""
                                                       cols="30" rows="10"><?php echo htmlentities($this->result['description']); ?></textarea>
                                         </div>
-                                        <div class="form-group col-lg-6 ">
-                                            <label for="">Reference</label>
-                                            <input type="text" name="form[reference]"
-                                                   value="<?php echo $this->result['reference']; ?>" class="form-control"
-                                                   placeholder="Reference">
+                                        <div class="form-group col-lg-6">
+                                            <div class="form-group mb-3">
+                                                <label for="">Promotion</label>
+                                                <input type="number" name="form[promotion]" min="0" id="validationPromotion"
+                                                       value="<?php echo $this->result['promotion']; ?>" class="form-control"
+                                                       placeholder="Promotion">
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for="">Reference</label>
+                                                <input type="text" name="form[reference]"
+                                                       value="<?php echo $this->result['reference']; ?>" class="form-control"
+                                                       placeholder="Reference">
+                                            </div>
                                         </div>
+
                                     </div>
                                 </div>
 
@@ -187,8 +189,8 @@ $listCategories .= '</select>';
                                 </div>
                                 <div class="form-group col-lg-12 mb-3">
                                     <label for="">Product Detail</label>
-                                    <textarea class="form-control textarea" name="form[product_features]" placeholder="Product Detail"
-                                              id="" cols="30" rows="10"><?php echo htmlentities($this->result['content']); ?></textarea>
+                                    <textarea class="form-control textarea" name="form[product_detail]" placeholder="Product Detail"
+                                              id="" cols="30" rows="10"><?php echo htmlentities($this->result['product_detail']); ?></textarea>
                                 </div>
 
                             </div>

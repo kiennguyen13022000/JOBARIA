@@ -134,8 +134,8 @@
                                 </a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="#"><i class='bx bxs-user-circle'></i> Sign up</a>
-                                    <a class="dropdown-item" href="/jobaria/login.html"><i class='bx bx-log-in'></i> Sign in</a>
-                                    <a class="dropdown-item" href="/jobaria/logout.html"><i class='bx bx-log-out'></i> Log out</a>
+                                    <a class="dropdown-item" href="/login.html"><i class='bx bx-log-in'></i> Sign in</a>
+                                    <a class="dropdown-item" href="/logout.html"><i class='bx bx-log-out'></i> Log out</a>
                                 </div>
                             </div>
                         </div>
@@ -155,14 +155,14 @@
                             <div class="dropdown show">
                                 <a class="btn " href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
                                    aria-expanded="false">
-                                    <img src="/jobaria/public/template/default/assets/images/menu/icon/1.jpg " alt=" "> <span>English</span> <i
+                                    <img src="/public/template/default/assets/images/menu/icon/1.jpg " alt=" "> <span>English</span> <i
                                         class='bx bx-chevron-down'></i>
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#"><img src="/jobaria/public/template/default/assets/images/menu/icon/1.jpg "
+                                    <a class="dropdown-item" href="#"><img src="/public/template/default/assets/images/menu/icon/1.jpg "
                                                                            alt=" ">
                                         English</a>
-                                    <a class="dropdown-item" href="#"><img src="/jobaria/public/template/default/assets/images/menu/icon/2.jpg "
+                                    <a class="dropdown-item" href="#"><img src="/public/template/default/assets/images/menu/icon/2.jpg "
                                                                            alt=" ">
                                         French </a>
                                 </div>
@@ -178,8 +178,8 @@
                 <div class="row justify-content-between">
                     <div class="col-6 col-md-4 col-lg-3 col_logo">
                         <div id="logo" class="d-flex align-items-center h-100">
-                            <a href="index.html" class="logo nav-link pl-0 ">
-                                <img src="/jobaria/public/template/default/assets/images/menu/logo/1.jpg " alt=" ">
+                            <a href="/" class="logo nav-link pl-0 ">
+                                <img src="/public/template/default/assets/images/menu/logo/1.jpg " alt=" ">
                             </a>
                         </div>
                     </div>
@@ -514,7 +514,7 @@
                                     <a href="cart.html"
                                        class="  text-center text-white d-inline-block  position-relative cart_box ">
                                         <i class="fa fa-shopping-cart " aria-hidden="true "></i>
-                                        <span class="total__cart position-absolute"></span>
+                                        <span class="total__cart position-absolute">0</span>
                                         <br>
                                         <span class="text-cart ">
                                         <span class="text-center ">My cart</span>
@@ -544,13 +544,13 @@
                             <a href="cart.html"
                                class=" text-center text-white d-inline-block  position-relative cart_box ">
                                 <i class="fa fa-shopping-cart " aria-hidden="true "></i>
-                                <span class="total__cart position-absolute"></span>
+                                <span class="total__cart position-absolute">0</span>
                                 <br>
                                 <span class="text-cart ">
-                    <span class="text-center ">My cart</span>
-                    <br>
-                    <span class="total_price_cart text-white ">$0</span>
-                  </span>
+                                    <span class="text-center ">My cart</span>
+                                    <br>
+                                    <span class="total_price_cart text-white ">$0</span>
+                                  </span>
                             </a>
 
                             <div class="hidden__cart empty position-absolute px-3 ">

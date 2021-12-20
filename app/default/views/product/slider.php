@@ -5,14 +5,14 @@
     $splide__list = '
                 <ul class="splide__list">
                     <li class="splide__slide">
-                        <img src="/jobaria/'.$this->result['image'].'">
+                        <img src="'.$this->result['image'].'">
                     </li>
                 ';
     if (!empty($listImages)){
         foreach ($listImages as $k => $v){
             $splide__list .='
                 <li class="splide__slide">
-                    <img '.$v['id'].' src="/jobaria/'.$v['image'].'">
+                    <img '.$v['id'].' src="'.$v['image'].'">
                 </li>
               ';
         }

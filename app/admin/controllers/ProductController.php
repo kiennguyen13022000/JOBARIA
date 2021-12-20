@@ -13,7 +13,8 @@ class ProductController extends Controller
         $this->createLinkJs();
         $this->_view->title     = 'Add product';
         $this->_view->errors = null;
-        if(!empty($_FILES['image'])) $this->_arrParam['edit']['image'] = $_FILES['image'];
+
+        if(!empty($_FILES['image'])) $this->_arrParam['form']['image'] = $_FILES['image'];
         $task = 'add';
         $this->_view->button_form = '<button class="btn btn-primary" type="submit">Submit</button>';
         $requiredPass = true;
@@ -55,6 +56,7 @@ class ProductController extends Controller
                 $this->_view->errors = $validate->getError();
                 $this->_view->result = $validate->getResult();
             }else{
+                $this->_arrParam['slug'] = makeSlug($form['product_name']);
                 $form['id']=$this->_model->edit($this->_arrParam, $task);
                 if($this->_model->affectedAction() == 1){
                     if ($task == 'add'){
@@ -103,7 +105,12 @@ class ProductController extends Controller
         $this->_view->title = 'List product';
         $this->createLinkCss();
         $this->createLinkJs();
-
+//        $data = $this->_model->list();
+//        foreach ($data as $k=>$v){
+//            $slug = makeSlug($v['product_name']);
+//            $sql = "UPDATE products SET slug = '".$slug."' WHERE id=".$v['id'];
+//            $this->_model->Query($sql);
+//        }
         $this->_view->data = $this->_model->list();
 
         $this->_view->render('product/list');
@@ -134,11 +141,12 @@ class ProductController extends Controller
         $image = $uploadObj->getUrlFile($img_product, 'product', 300, 300);
         $arrParams['image'] = $image;
 
-        $this->_model->Insert($arrParams);
+        $product_image_id = $this->_model->Insert($arrParams);
         //$listImages = $this->_model->getImage($product_id);
         $html = '
-            <div class="nav-item">
-                <img class="preview__image img_product"
+            <div class="nav-item position-relative">
+             <i class="fas fa-times remove_img" data-id="'. $product_image_id .'" data-table="product_image" data-control="product" onclick="delItem(this);"></i>
+                <img class="preview__image img_product "
                      src="'.$image.'">
             </div>
         ';

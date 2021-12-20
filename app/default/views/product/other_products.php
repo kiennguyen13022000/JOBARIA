@@ -12,6 +12,7 @@
         ';
         foreach ($other_products as $k=>$v){
             $price = $v['price'];
+            $product_id = $v['id'];
             $new_price = $price;
             $text__price__modal = '';
             $promotion = $v['promotion'];
@@ -20,9 +21,10 @@
                 $new_price = number_format($price - $price * $promotion / 100, 2, '.', ',');
                 $text__price__modal = '<del class="price__discount">$'.$price.'</del>';
             }
-            $url    = $v['breakcrumbs'] . '/' . trim($v['product_name']). '_' . $v['id'];
-            $link = Url::filterURL($url) . '.html';
+//            $url    = $v['breakcrumbs'] . '/' . trim($v['product_name']). '_' . $v['id'];
+//            $link = Url::filterURL($url) . '.html';
 
+            $link = '/product/'.$v['slug'].'-'.$product_id.'.html';
             $price_discount = '
             <div>
                 <span class="text__price pr-2">$'.$new_price.'</span>
@@ -41,8 +43,8 @@
                             '.$promotion.'
                         </div>
                         <div class="overflow-hidden">
-                            <a href="/jobaria/'.$link.'" title="">
-                                <img src="/jobaria/'.$v['image'].'"
+                            <a href="'.$link.'" title="">
+                                <img src="'.$v['image'].'"
                                      class="product__img" alt="">
                             </a>
                         </div>
@@ -51,7 +53,7 @@
                             Studio Design
                         </p>
                         <h3 class="product__name limit_line_1">
-                            <a href="/jobaria/'.$link.'" title="'.$v['product_name'].'">'.$v['product_name'].'</a>
+                            <a href="'.$link.'" title="'.$v['product_name'].'">'.$v['product_name'].'</a>
                         </h3>
                         <div class="star_box">
                             <i class="fa fa-star" aria-hidden="true"></i>

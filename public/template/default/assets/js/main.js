@@ -6,7 +6,7 @@ $(function () {
     renderProduct();
   }
   if ($(".billing_order_form").length > 0) {
-    renderPriceCheckout();
+    renderPriceCheckout(0);
   }
   //owl-carousel
   $(".select_country").select2({ dropdownCssClass: "select_country", width: "100%" });
@@ -123,33 +123,45 @@ $(function () {
   });
 
   //change number
-  $(".quantity-up").click(function () {
+  $(document).on("click", ".quantity-up", function () {
     $(this).prev().val(+$(this).prev().val() + 1);
   });
-  $(".quantity-down").click(function () {
+  $(document).on("click", ".quantity-down", function () {
     if ($(this).next().val() > 1)
       $(this).next().val(+$(this).next().val() - 1);
   });
   //change number cart page
-  $(".quantity_up_cart").click(function () {
+  $(document).on("click", ".quantity_up_cart", function () {
     $(this).prev().val(+$(this).prev().val() + 1);
+    var index = $(this).data("index");
+    number_product = $(".number_product[data-index=" + index + "]").val();
+    unit_price_product = $(".unit_price_product_val[data-index=" + index + "]").val();
+    let products = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
+    products.forEach((product,key)=>{
+      if (index == key){
+        product.number_product = $('.number_product[data-index='+key+']').val();
+      }
+    });
+    localStorage.setItem("products", JSON.stringify(products));
 
-    var product_id = $(this).data("product-id");
-    number_product = $(".number_product[data-product-id=" + product_id + "]").val();
-    unit_price_product = $(".unit_price_product_val[data-product-id=" + product_id + "]").val();
-
-    pricingProduct(product_id, number_product, unit_price_product);
+    pricingProduct(index, number_product, unit_price_product);
   });
-  $(".quantity_down_cart").click(function () {
+  $(document).on("click", ".quantity_down_cart", function () {
     if ($(this).next().val() > 1)
       $(this)
         .next()
         .val(+$(this).next().val() - 1);
-    var product_id = $(this).data("product-id");
-    number_product = $(".number_product[data-product-id=" + product_id + "]").val();
-    unit_price_product = $(".unit_price_product_val[data-product-id=" + product_id + "]").val();
-
-    pricingProduct(product_id, number_product, unit_price_product);
+    var index = $(this).data("index");
+    number_product = $(".number_product[data-index=" + index + "]").val();
+    unit_price_product = $(".unit_price_product_val[data-index=" + index + "]").val();
+    let products = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
+    products.forEach((product,key)=>{
+      if (index == key){
+        product.number_product = $('.number_product[data-index='+key+']').val();
+      }
+    });
+    localStorage.setItem("products", JSON.stringify(products));
+    pricingProduct(index, number_product, unit_price_product);
   });
   $(document).on("keydown", ":input:not(textarea)", function (event) {
     return event.key != "Enter";
@@ -174,12 +186,12 @@ $(function () {
     var $this = $(this);
     $form = $this.closest("form");
    
-    // let checkout = localStorage.getItem("checkout") ? JSON.parse(localStorage.getItem("checkout")) : [];
+     let checkout = localStorage.getItem("checkout") ? JSON.parse(localStorage.getItem("checkout")) : [];
     // let data_form = getFormData($form);
     // checkout.push(data_form);
     let data_form =  [getFormData($form)];
     localStorage.setItem("checkout", JSON.stringify(data_form));
-    window.location.href = 'checkout.html';
+    window.location.href = 'checkout';
   });
   $(document).on("click", ".btn_add_cart", function () {
     var $this = $(this);
@@ -187,7 +199,6 @@ $(function () {
     let products = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
     let data_form = getFormData($form);
     products.push(data_form);
-   
     localStorage.setItem("products", JSON.stringify(products));
     renderCart();
     $.confirm({
@@ -197,13 +208,11 @@ $(function () {
       buttons: {
           confirm: function () {
               $.alert('Confirmed!');
-              
-              window.location.href = 'cart.html';
+              window.location.href = '/cart.html';
           },
           cancel: function () {
               
           }
-          
       }
     });
    
@@ -216,32 +225,27 @@ $(function () {
       $(".notification_promotion").html("<i class='fas fa-times text-danger'></i> Please enter coupon code");
       $(".promotion_text").text("");
       $(".promotion").val(0);
-      $(".remaining_totals_box").hide();
+     // $(".remaining_totals_box").hide();
+      $(".cart_promotion").hide();
       if($form.hasClass('checkout_form')){
         pricingTotalProducts();
         return false;
       }
-      
-      
     }
-    if (coupon_code == "MUACUCDA") {
-      if($this.hasClass('btn_check_coupon_checkout')) renderPriceCheckout();
-      $(".notification_promotion").html("<i class='fas fa-check text-success'></i> Coupon codes available");
-      $(".remaining_totals_box").slideDown();
-      $(".promotion_text").text("-20%");
-      $(".promotion").val(20);
-      if($this.hasClass('btn_check_coupon_checkout')) return false;
-      
-    } else {
-      if($this.hasClass('btn_check_coupon_checkout')) renderPriceCheckout();
-      $(".promotion_text").text("");
-      $(".promotion").val(0);
-      $(".remaining_totals_box").hide();
-      $(".notification_promotion").html("<i class='fas fa-times text-danger'></i> Coupon code is invalid");
-      if($this.hasClass('btn_check_coupon_checkout')) return false;
-    }
+    checkCoupon(coupon_code);
     if($form.hasClass('checkout_form'))  pricingTotalProducts();
     
+  });
+  $(".btn_place_order ").click(function () {
+      var loggedIn = $('input[name="loggedIn"]').val();
+      if (loggedIn != 1){
+        $('.log_in_form h6').addClass('text-danger');
+        $('html, body').animate({
+          scrollTop: $(".log_in_form").offset().top
+        }, 1200);
+        return false;
+      }
+
   });
 });
 //splide
@@ -315,16 +319,33 @@ function format2(n, currency = "") {
   }
   return currency + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
 }
-// function cho đơn vị tiền ra sau
-// function format3(n, currency = "") {
-//   if (currency === "" || currency === null || currency === undefined) {
-//     return addCommas(n);
-//   }
-//   return new Intl.NumberFormat("ru", {
-//     style: "currency",
-//     currency: currency,
-//   }).format(n);
-// }
+function checkCoupon(coupon_code) {
+  $.ajax({
+    type: "POST",
+    url: 'index.php?module=default&controller=order&action=checkCoupon',
+    data: {coupon_code:coupon_code},
+    dataType: 'json',
+    async:false,
+    success: function(data) {
+      var $this = $('.btn_check_coupon');
+      if (data.msg == "ok") {
+        if($this.hasClass('btn_check_coupon_checkout')) renderPriceCheckout(1);
+        $(".notification_promotion").html("<i class='fas fa-check text-success'></i> Coupon codes available");
+        $(".cart_promotion").slideDown();
+        $(".promotion_text").text(data.percent_text);
+        $(".promotion").val(data.percent);
+        if($this.hasClass('btn_check_coupon_checkout')) return false;
+      } else {
+        if($this.hasClass('btn_check_coupon_checkout')) renderPriceCheckout(1);
+        $(".promotion_text").text("");
+        $(".promotion").val(0);
+        $(".cart_promotion").hide();
+        $(".notification_promotion").html("<i class='fas fa-times text-danger'></i> Coupon code is invalid");
+        if($this.hasClass('btn_check_coupon_checkout')) return false;
+      }
+    }
+  });
+}
 function renderProduct() {
   let getlocalStorage = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
   if(getlocalStorage.length === 0){
@@ -332,144 +353,81 @@ function renderProduct() {
     return false;
   }
   $("#empty_product").hide();
-  let productsContent = `<thead>
-  <tr>
-    <th class=" th_remove">Remove</th>
-    <th class="th_image">Images</th>
-    <th class="th_name">Product</th>
-    <th class="th_price">Unit Price</th>
-    <th class="th_quantity">Quantity</th>
-    <th class="th_total">Total</th>
-  </tr>
-</thead>`;
-  productsContent += `<tbody>`;
-  
-  let  number_type = 0;
-  getlocalStorage.forEach((product, index) => {
-    key = index;
-    index ++;
-    number_type ++;
-    price_product_by_num = format2(product.new_price *  product.number_product);
-    productsContent += `
-    <tr class="product_cart" data-product-id="${index}">
-    <td>
-      <a href="javascript:void(0)" onclick="delProduct(${key})" data-product-id="${index}" class="_remove_product"><i
-          class="fas fa-trash" aria-hidden="true"></i></a>
-    </td>
-    <td>
-      <a href="">
-        <img class="img_product" src="${product.url_image}" alt="">
-        <input name="img_product_${index}" type="hidden" value="${product.url_image}">
-      </a>
-    </td>
-    <td class="product_name_td">
-        <a href="detail.html" class="product_name">${product.product_name}</a>
-        <input name="product_name_${index}" type="hidden" value="${product.product_name}">
-    </td>
-    <td class="text-bold">
-      <span class="unit_price_product_text">$${product.new_price}</span>
-      <input type="hidden" data-product-id="${index}" value="${product.new_price}"
-        class="unit_price_product_val">
-    </td>
-    <td class="">
-      <p class="mb-0 font_size_15">Quantity</p>
-      <div class="d-flex  justify-content-center">
-        <div class="quantity border-right position-relative">
-          <button type="button" data-product-id="${index}"
-            class="quantity-button down  quantity_down_cart"><i
-              class="fas fa-angle-down"></i></button>
-          <input type="number" data-product-id="${index}" min="1" max="99" value="${product.number_product}"
-            class="number_product" name="number_product_${index}">
-          <button type="button" data-product-id="${index}"
-            class="quantity-button up quantity_up_cart"><i
-              class="fas fa-angle-up"></i></button>
-        </div>
-      </div>
-    </td>
-    <td class="text-bold">
-      <span class="total_price_product_text" data-product-id="${index}">$${price_product_by_num}</span>
-      <input name="price_product_by_num_${index}" type="hidden" class="total_price_product" data-product-id="${index}"
-        value="${price_product_by_num}">
-    </td>
-  </tr>
-    `; 
-  });
-  productsContent += `</tbody>`;
-  $('input[name="number_type"]').val(number_type);
-  $('#cart_table').html(productsContent);
-  pricingTotalProducts();
-}
-function renderPriceCheckout() {
-  var getlocalStorage = localStorage.getItem("checkout") ? JSON.parse(localStorage.getItem("checkout")) : [];
-  if (getlocalStorage.length === 0)  window.location.href = 'index.html';
-
-  let checkOutContent = ` <tr class="text-center text-uppercase">
-  <td class="w-50">Product</td>
-  <td class="w-50">Total</td>
-</tr>`;
-  number_type = getlocalStorage[0]['number_type'];
-  promotion = getlocalStorage[0]['promotion'] ? getlocalStorage[0]['promotion'] : 0;
-  coupon_input = getlocalStorage[0]["coupon_input"] ? getlocalStorage[0]["coupon_input"] : 0;
-  getlocalStorage.forEach((product,index)=>{
-    index ++;
-   
-    for (let i = 1; i <= number_type; i++) {
-      // console.log(product.product_name_+i);
-      checkOutContent +=`
-        <tr>
-            <td><span class="product_name">${product['product_name_' + i]} </span> <span
-                class="text-bold number_product"> x${product['number_product_' + i]}</span></td>
-            <td> <span class="unit_price_product_text">$${product['price_product_by_num_' + i]} </span></td>
-      </tr>
-    `;
+  $.ajax({
+    type: "POST",
+    url: 'index.php?module=default&controller=order&action=renderProduct',
+    data: {getlocalStorage:getlocalStorage},
+    dataType: 'json',
+    success: function(data) {
+      if (data.msg == 'ok'){
+        $('#cart_table').html(data.productsContent);
+        $('input[name="number_type"]').val(data.number_type);
+       // checkCoupon($('input[name="coupon_input"]').val());
+        pricingTotalProducts();
+      }
     }
-   
   });
-  checkOutContent += `
-    <tr class="text-bold d-none ">
-      <td><span class="text-bold">Card subtotal</span></td>
-      <td><span class="sub_total_products_text">$${getlocalStorage[0].sub_total_products}</span> </td>
-  </tr>
-  <tr>
-    <td><span class="text-bold order_total ">Order
-        total</span></td>
-    <td><span class="price_total_products_text">$${getlocalStorage[0].sub_total_products}</span></td>
-  </tr>
-  <tr class="remaining_totals_box text-danger">
-    <td><span class="text-bold  ">Promotion</span></td>
-    <td>
-    <span class="text-bold promotion_text">-${promotion}%</span>
-    <input type="hidden" name="promotion" value="${promotion}" class="promotion">
-    </td>
-  </tr>
-  <tr class="remaining_totals_box">
-    <td><span class="text-bold  font_size_20">Remaining total</span></td>
-    <td><span class="remaining_totals_text">$${getlocalStorage[0].remaining_totals}</span></td>
-  </tr>
-  `;
-  $('#checkout_table').html(checkOutContent);
-  if(parseInt(promotion) > 0 ){
-    $('.remaining_totals_box').show();
+
+}
+function renderPriceCheckout(num) {
+  var checkOutStorage = localStorage.getItem("checkout") ? JSON.parse(localStorage.getItem("checkout")) : [];
+  var productsCart = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
+  if (checkOutStorage.length === 0)  window.location.href = 'index.html';
+
+  number_type = checkOutStorage[0]['number_type'];
+  if(num != 1){
+    coupon_input = checkOutStorage[0]['coupon_input'];
+  }else{
+    coupon_input = $(".coupon_input").val();
   }
-  if(coupon_input) $(".coupon_input").val(coupon_input);
+
+
+
+  $.ajax({
+    type: "POST",
+    url: 'index.php?module=default&controller=order&action=renderPriceCheckout',
+    data: {
+      checkOutStorage:checkOutStorage,
+      productsCart:productsCart,
+      coupon_input: coupon_input
+    },
+    dataType: 'json',
+    async:false,
+    success: function(data) {
+      if (data.msg == 'ok'){
+        $('#checkout_table').html(data.checkOutContent);
+        if(parseInt(data.promotion_cart) > 0 ){
+          $('.cart_promotion').show();
+        }
+        $(".coupon_input").val(coupon_input);
+
+
+
+      }
+    }
+  });
+
+
+
 
 
 
 }
-function delProduct(id){
+function delProduct(item){
   if(!confirm("The data is non-refundable. Are you sure you want to delete ?")) return false;
   let products = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
-  
-  products.splice(id, 1);
+
+  index = item.getAttribute('data-index');
+  products.splice(index, 1);
   localStorage.setItem("products", JSON.stringify(products));
   renderProduct();
   if(products.length === 0)  window.location.reload();
 }
-function pricingProduct(product_id, number_product, unit_price_product) {
+function pricingProduct(index, number_product, unit_price_product) {
   price_product = format2(unit_price_product * number_product, "$");
   price_product_val = format2(unit_price_product * number_product, "");
-  $(".total_price_product_text[data-product-id=" + product_id + "]").text(price_product);
-  $(".total_price_product[data-product-id=" + product_id + "]").val(price_product_val);
+  $(".total_price_product_text[data-index=" + index + "]").text(price_product);
+  $(".total_price_product[data-index=" + index + "]").val(price_product_val);
   pricingTotalProducts();
 }
 function pricingTotalProducts() {
@@ -482,84 +440,37 @@ function pricingTotalProducts() {
       calculated_total_sum += parseFloat(get_textbox_value);
     }
   });
-  $("#price_total_products").text(format2(calculated_total_sum, "$"));
+
   $("#sub_total_products_text").text(format2(calculated_total_sum, "$"));
-  $('input[name="price_total_products"]').val(format2(calculated_total_sum, ""));
   $('input[name="sub_total_products"]').val(format2(calculated_total_sum, ""));
   if (promotion > 0) {
     calculated_total_sum = calculated_total_sum - (calculated_total_sum * promotion) / 100;
   }
-
-  $("#remaining_totals_text").text(format2(calculated_total_sum, "$"));
-  $('input[name="remaining_totals"]').val(format2(calculated_total_sum, ""));
+  $("#price_total_products").text(format2(calculated_total_sum, "$"));
+  $('input[name="price_total_products"]').val(format2(calculated_total_sum, ""));
 }
 
 function renderCart(){
-  var products = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
-  total_products= 0 ;
-  total_price_cart = 0 ;
-  
-  if (products.length != 0){
-    total_products =products.length;
-    renderCartHtml = `
-    <ul class="nav flex-column ">
-    `;
-    products.forEach((product,index)=>{
-        price = product.new_price;
-        number_product = product.number_product;
-        
-        total_price_cart += price * number_product;
-
-      renderCartHtml += `
-        <li class="py-3 border-bottom ">
-        <div class="row ">
-          <div class="col-3 pr-0 ">
-            <div class="position-relative ">
-              <span
-                class="d-inline-block px-1 rounded-circle text-white position-absolute ">1x</span>
-              <img src="${product.url_image}" alt=" ">
-            </div>
-  
-          </div>
-          <div class="col-9 text-left ">
-            <a href="" class="font-weight-bold cart__title__product__name ">Xall
-            ${product.product_name}</a>
-            <div class="text-danger py-1">$${price}</div>
-            <span class="font-weight-light">Demension: 40cm x 60cm</span>
-          </div>
-        </div>
-      </li>
-        `;
+  var dataCart = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
+  if (dataCart.length >0){
+    $.ajax({
+      type: "POST",
+      url: 'index.php?module=default&controller=order&action=renderCart',
+      data: {dataCart:dataCart},
+      dataType: 'json',
+      success: function(data) {
+        if (data.msg == 'ok'){
+          $('.product_cart_header').html(data.renderCartHtml);
+          $('.empty_cart_header').hide();
+          $('.hidden__cart').removeClass('empty');
+          $('.total__cart').text(data.total_products);
+          $('.total_price_cart').text(data.total_price_cart);
+        }
+      }
     });
-    renderCartHtml += `
-    </ul>
-    <table class="table table-sm w-100 table-borderless ">
-      <tr>
-        <td class="text-left">Subtotal</td>
-        <td class="text-right">$${total_price_cart}</td>
-      </tr>
-      <tr>
-        <td class="text-left">Shipping</td>
-        <td class="text-right">$0.00</td>
-      </tr>
-      <tr>
-        <td class="text-left">Taxes</td>
-        <td class="text-right">$00.0</td>
-      </tr>
-      <tr>
-        <td class="text-left">Total</td>
-        <td class="text-right">$${total_price_cart}</td>
-      </tr>
-    </table>
-    <a href="checkout.html" class="btn btn-secondary btn-block mb-3">Checkout</a>
-    `;
-    $('.product_cart_header').html(renderCartHtml);
-    $('.empty_cart_header').hide();
-    $('.hidden__cart').removeClass('empty');
-  }  
- 
-  $('.total__cart').text(total_products);
-  $('.total_price_cart').text('$'+format2(total_price_cart));
+  }else{
+    $('.empty_cart_header').show();
+  }
 }
 renderCart();
 function getFormData($form) {

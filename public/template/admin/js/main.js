@@ -17,6 +17,13 @@ $('#validationImage').change(function(){
     img.height = 130;
     $('.preview__avatar').addClass('border rounded mt-2');
 });
+$('#validationImg').change(function(){
+    let img = $('.preview__avatar')[0];
+    img.src = URL.createObjectURL(this.files[0]);
+    img.width = 100;
+    img.height = 130;
+    $('.preview__image').addClass('border rounded mt-2');
+});
 $(function () {
     $(window).keydown(function(event){
         if(event.keyCode == 13) {

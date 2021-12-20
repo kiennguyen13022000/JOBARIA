@@ -2096,7 +2096,7 @@ input.number_product[type="number"] {
 .intro_promotion div {
   max-width: 500px;
 }
-.remaining_totals_box {
+.remaining_totals_box, .cart_promotion {
   display: none;
 }
 .title_block {
@@ -2606,4 +2606,9 @@ input.number_product[type="number"] {
 
 .grid_product  img{
   padding: 15px;
+}
+.product_cart_header > ul {
+  max-height: 340px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

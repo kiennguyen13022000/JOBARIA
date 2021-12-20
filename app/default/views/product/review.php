@@ -37,7 +37,7 @@
                     <h2 class="title">Write your review</h2>
                     <div class="row mt-3">
                         <div class="product clearfix col-12 col-lg-6">
-                            <img class="w-100" src="/jobaria/public/template/default/assets/images/product/medium-size/1-1.jpg"
+                            <img class="w-100" src="public/template/default/assets/images/product/medium-size/1-1.jpg"
                                  alt="">
                             <div class="product_desc mt-3">
                                 <p class="product_name"><strong>HD Video Recording PJ Handycam
