@@ -53,6 +53,7 @@ class Model{
     }
 
     public function Query($sql){
+
         $result = mysqli_query($this->connect, $sql);
         $this->resultQuery = $result;
 
@@ -92,7 +93,7 @@ class Model{
     public function Update($param, $where){
         $ud = $this->CreateUpdate($param);
         $w = $this->CreateWhere($where);
-        $sql = "update `$this->table` set $ud where $w";
+         $sql = "update `$this->table` set $ud where $w";
         $this->Query($sql);
         return mysqli_affected_rows($this->connect);
     }

@@ -2,17 +2,16 @@
     $listImages =  $this->listImages;
     $d_none='';
     if(empty($listImages) && empty($this->result['image'])) $d_none = 'd-none';
-    $splide__list = '
-                <ul class="splide__list">
+    $splide__list = '<ul class="splide__list">
                     <li class="splide__slide">
-                        <img src="'.$this->result['image'].'">
+                        <img src="/jobaria/'. $this->result['image'].'">
                     </li>
                 ';
     if (!empty($listImages)){
         foreach ($listImages as $k => $v){
             $splide__list .='
                 <li class="splide__slide">
-                    <img '.$v['id'].' src="'.$v['image'].'">
+                    <img '.$v['id'].' src="/jobaria/'.$v['image'].'">
                 </li>
               ';
         }

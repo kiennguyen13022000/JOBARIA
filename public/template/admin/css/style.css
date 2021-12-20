@@ -146,7 +146,63 @@
      display: block;
      transition:  all ease .8s;
  }
+
+ .light-success-bg {
+     background-color: #A0D9B4 !important;
+ }
+
+ .bg-info-light {
+     background-color: #9AE8FF !important;
+ }
+ .bg-lightyellow {
+     background-color: #ffe28c !important;
+ }
+
+ .light-danger-bg {
+     background-color: #F1C8DB !important;
+ }
+ .bg-careys-pink {
+     background-color: #CF9EAC !important;
+ }
+
+ .review-separator{
+     border-top: 2px dotted #d2d7e2;
+ }
+.review-item{
+    position: relative;
+}
+ .review-close{
+     left: 45%;
+     visibility: hidden;
+     opacity: 0;
+     transform: translateY(-10px);
+     top: -10px;
+     transition: all 0.5s;
+     font-size: 24px;
+     position: absolute;
+ }
+ .review-close:hover{
+     cursor: pointer;
+ }
+ .review-item:hover .review-close{
+     visibility: visible;
+     opacity: 1;
+     transform: translateY(0);
+ }
+ .review-item:hover{
+     /*background: rgba(211, 208, 210, 0.8);*/
+ }
+ .review-status{
+     position: absolute;
+     left: 75%;
+ }
  .badge.rounded-pill{padding-right:.6em;padding-left:.6em}.badge-soft-primary{color:#3bafda;background-color:rgba(59,175,218,.18);box-shadow:none}.badge-soft-secondary{color:#6c757d;background-color:rgba(108,117,125,.18);box-shadow:none}.badge-soft-success{color:#1abc9c;background-color:rgba(26,188,156,.18);box-shadow:none}.badge-soft-info{color:#37cde6;background-color:rgba(55,205,230,.18);box-shadow:none}.badge-soft-warning{color:#f7b84b;background-color:rgba(247,184,75,.18);box-shadow:none}.badge-soft-danger{color:#f1556c;background-color:rgba(241,85,108,.18);box-shadow:none}.badge-soft-light{color:#f1f5f7;background-color:rgba(241,245,247,.18);box-shadow:none}.badge-soft-dark{color:#323a46;background-color:rgba(50,58,70,.18);box-shadow:none}.badge-soft-pink{color:#f672a7;background-color:rgba(246,114,167,.18);box-shadow:none}.badge-soft-purple{color:#6559cc;background-color:rgba(101,89,204,.18);box-shadow:none}.badge-outline-primary{color:#3bafda;border:1px solid #3bafda;background-color:transparent;box-shadow:none}.badge-outline-secondary{color:#6c757d;border:1px solid #6c757d;background-color:transparent;box-shadow:none}.badge-outline-success{color:#1abc9c;border:1px solid #1abc9c;background-color:transparent;box-shadow:none}.badge-outline-info{color:#37cde6;border:1px solid #37cde6;background-color:transparent;box-shadow:none}.badge-outline-warning{color:#f7b84b;border:1px solid #f7b84b;background-color:transparent;box-shadow:none}.badge-outline-danger{color:#f1556c;border:1px solid #f1556c;background-color:transparent;box-shadow:none}.badge-outline-light{color:#f1f5f7;border:1px solid #f1f5f7;background-color:transparent;box-shadow:none}.badge-outline-dark{color:#323a46;border:1px solid #323a46;background-color:transparent;box-shadow:none}.badge-outline-pink{color:#f672a7;border:1px solid #f672a7;background-color:transparent;box-shadow:none}.badge-outline-purple{color:#6559cc;border:1px solid #6559cc;background-color:transparent;box-shadow:none}.badge-outline-light,.badge-soft-light{color:#323a46}.bg-soft-primary{background-color:rgba(59,175,218,.25)!important}.bg-soft-secondary{background-color:rgba(108,117,125,.25)!important}.bg-soft-success{background-color:rgba(26,188,156,.25)!important}.bg-soft-info{background-color:rgba(55,205,230,.25)!important}.bg-soft-warning{background-color:rgba(247,184,75,.25)!important}.bg-soft-danger{background-color:rgba(241,85,108,.25)!important}.bg-soft-light{background-color:rgba(241,245,247,.25)!important}.bg-soft-dark{background-color:rgba(50,58,70,.25)!important}.bg-soft-pink{background-color:rgba(246,114,167,.25)!important}.bg-soft-purple{background-color:rgba(101,89,204,.25)!important}.bg-ghost{opacity:.4}
  .form-wizard-header .nav-item {
      max-width: 400px;
+ }
+
+ .settings .preview__avatar {
+     width: 100px;
+     height: auto;
+     border: none !important;
  }

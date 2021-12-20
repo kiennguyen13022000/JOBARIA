@@ -47,7 +47,7 @@
                                     <button data-id="'. $value['id'] .'" class="btn btnModalProduct border btn__preview">
                                         <i class="fa fa-search" aria-hidden="true"></i>
                                     </button>
-                                    <button class="btn__favorite btn text-dark border  ">
+                                    <button data-id="'. $value['id'] .'" class="btn__favorite btn text-dark border  ">
                                         <i class="fa fa-heart" aria-hidden="true"></i>
                                     </button>
                                     <button class="btn btn__addtocart border mx-1">Add to cart</button>
@@ -58,6 +58,10 @@
                             </div>';
 
         if ($key % 2 != 0){
+            $newProductList .= '</div>';
+        }
+
+        if (count($this->newProductList) - 1 == $key){
             $newProductList .= '</div>';
         }
     }

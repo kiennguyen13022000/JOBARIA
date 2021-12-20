@@ -1,4 +1,9 @@
 <?php
+$html = '';
+foreach ($this->reviews as $value){
+
+}
+
 ?>
 <main id="main" class="page_list">
     <nav aria-label="breadcrumb" class="nav_breadcrumb">

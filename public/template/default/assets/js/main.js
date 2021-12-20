@@ -559,25 +559,48 @@ $('.btnModalProduct').click(function (){
   })
 });
 
-
-$('.criterions_list .fa-star').hover(
-    function() {
-
+$('.criterions_list .fa-star').hover(function() {
       var idexCurrent = $(this).index();
-
       var i;
       var parent = $(this).parent();
       var len = parent.find('.fa-star').length;
       // parent.css({ color: '#909090' });
       for (i = 0; i < len; i++) {
         parent.find('.fa-star').eq(i).css({ color: '#909090' }).removeAttr('data-star', idexCurrent);
-
       }
 
       for (i = 0; i <= idexCurrent; i++) {
         parent.find('.fa-star').eq(i).css({ color: '#343a40' })
       }
+      $('#rating').val(idexCurrent + 1);
+});
+// $('.btnReviewSubmit').click(function (){
+//
+//   $('#id_new_comment_form').submit();
+// });
 
-      $(this).attr('data-star', idexCurrent);
-    }
-);
+$('.input__search').keyup(function (){
+  var val   = $(this).val();
+  var url   = '/jobaria/index.php?module=default&controller=header&action=productSearch';
+  var data  = {keyword: val};
+  setTimeout(function (){
+      $('.search-product-list').load(url, data);
+  }, 500);
+});
+$('.btn__favorite').click(function (){
+  var url   = '/jobaria/index.php?module=default&controller=user&action=addToFavorites';
+  var id    = $(this).attr('data-id');
+  var data  = {id: id};
+  $.post(url, data, function (data, status){
+      if (data == 'error')
+        alert('Bạn chưa đăng nhập');
+      else {
+        let options = {
+          position: 'top-right',
+          animationDuration: 300
+        };
+        new AWN(options).modal('<b>Bạn đã thêm thành công.</b>');
+      }
+  });
+});
+

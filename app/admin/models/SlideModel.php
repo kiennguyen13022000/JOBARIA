@@ -25,7 +25,7 @@ class SlideModel extends Model
              }else{
                  unset($arrParams['image']);
              }
-             $this->Insert($arrParams);
+             return $this->Insert($arrParams);
 
          }else{
              $arrParams['updated_at'] = date('Y-m-d H:i:s', time());

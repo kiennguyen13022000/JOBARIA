@@ -23,6 +23,7 @@
                         $xhtml = '';
 
                         foreach ($this->data as $key => $value){
+                            $urlProfile = Url::createLink('admin', 'user', 'profile', ['id' => $value['id']]);
                             if($value['avatar'] == null){
                                 $value['avatar'] = 'public/upload/users/avatar-1.jpg';
                             }
@@ -34,7 +35,11 @@
                                             <td><img class="img__table img-fluid avatar-md rounded" src="'. $value['avatar'] .'"></td>
                                             <td>'. $value['firstname'] .'</td>
                                             <td>'. $value['lastname'] .'</td>
-                                            <td class="font-weight-bold">'. $value['username'] .'</td>
+                                            <td class="font-weight-bold">
+                                                 <a href="'.$urlProfile.'">
+                                                    '. $value['username'] .'
+                                                  </a> 
+                                            </td>
                                             <td>'. $value['email'] .'</td>
                                             <td>'. $value['phone'] .'</td>
                                             <td>'. $value['address'] .'</td>

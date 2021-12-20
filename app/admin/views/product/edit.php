@@ -48,18 +48,18 @@ if($this->task == 'edit'){
             </a>
         </li>
     ';
-    $listImages =  $this->listImages;
-    if (!empty($listImages)){
-        foreach ($listImages as $k => $v){
-            $list_images_view .='
+   $listImages =  $this->listImages;
+   if (!empty($listImages)){
+       foreach ($listImages as $k => $v){
+           $list_images_view .='
              <div class="nav-item position-relative">
                 <i class="fas fa-times remove_img" data-id="'. $v['id'] .'" data-table="product_image" data-control="product" onclick="delItem(this);"></i>
                             <img class="preview__image img_product"
                                  src="'.$v['image'].'">
                         </div>
           ';
-        }
-    }
+       }
+   }
 
     $tab_review = ' <li class="nav-item">
                         <a href="#reviews" class="nav-link" data-bs-toggle="tab" data-toggle="tab">
@@ -139,7 +139,7 @@ if($ratingTotal > 0){
 
 }
 
-?>
+ ?>
 <div class="container-fluid">
     <div id="addproduct-nav-pills-wizard" class="twitter-bs-wizard form-wizard-header">
         <ul class="twitter-bs-wizard-nav mb-2 nav nav-pills nav-justified">

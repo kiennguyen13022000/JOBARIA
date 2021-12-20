@@ -22,7 +22,7 @@ class UserModel extends Model
              unset($arrParams['confirm_password']);
              $uploadObj = new Upload();
              $arrParams['avatar'] = $uploadObj->uploadFile($arrParams['avatar'], 'users', 100, 130);
-             $this->Insert($arrParams);
+             return $this->Insert($arrParams);
 
          }else{
              $arrParams['updated_at'] = date('Y-m-d H:i:s', time());

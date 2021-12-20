@@ -148,4 +148,81 @@ function changeOrder(){
 }
 
 changeOrder();
+//
+// $('.review-close').click(function (){
+//     var id = $(this).attr('data-id');
+//     let options = {
+//         position: 'top-right',
+//         animationDuration: 300
+//     };
+//     options.labels = {
+//         confirm: 'Remove notifications'
+//     }
+//     let notifier = new AWN(options);
+//     let onOk = () => {
+//         $.post('index.php?module=admin&controller=product&action=reviewDelete', {id: id}, function (data){
+//             if (data.affected > 0){
+//                 location.reload();
+//             }else{
+//                 options.labels = {
+//                     warning: 'Error',
+//                 }
+//                 let notifier = new AWN(options);
+//                 notifier.warning('An error occurred!', {durations: {warning: 2000}})
+//             }
+//         }, 'json');
+//     };
+//     notifier.confirm('Ban co chac muon xoa khong?', onOk);
+// });
+
+function changeStatusReview(){
+    $('.review-status').click(function (){
+        var id = $(this).attr('data-id');
+        var status = $(this).attr('data-status');
+        var control = $(this).attr('data-control');
+        var url = 'index.php?module=admin&controller=' + control + '&action=changeStatusReview';
+        var dataPost = {id: id, status: status};
+        var obj = this;
+        $.post(url, dataPost, function (data){
+            if (data.affected > 0){
+                $(obj).attr('data-status', data.status);
+                if(data.status == 1){
+                    $(obj).text('Active');
+                    $(obj).addClass('badge-info').removeClass('badge-purple');
+                }else{
+                    $(obj).text('Deactive');
+                    $(obj).addClass('badge-purple').removeClass('badge-info');
+                }
+            }
+
+        }, 'json');
+    });
+}
+changeStatusReview();
+
+function reviewDelete(id){
+    let option2 = {
+        position: 'top-right',
+        animationDuration: 300
+    };
+    option2.labels = {
+        confirm: 'Remove notifications'
+    }
+    let notifier = new AWN(option2);
+    let onOk = () => {
+        $.post('index.php?module=admin&controller=product&action=reviewDelete', {id: id}, function (data){
+            if (data.affected > 0){
+                location.reload();
+                console.log('vaof')
+            }else{
+                options.labels = {
+                    warning: 'Error',
+                }
+                let notifier = new AWN(options);
+                notifier.warning('An error occurred!', {durations: {warning: 2000}})
+            }
+        }, 'json');
+    };
+    notifier.confirm('Ban co chac muon xoa khong?', onOk);
+}
 

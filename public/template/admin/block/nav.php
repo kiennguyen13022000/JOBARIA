@@ -13,9 +13,6 @@
                     </a>
 
                 </li>
-
-
-
                 <li>
                     <a href="javascript: void(0);" class="waves-effect">
                         <i class="remixicon-list-check"></i>
@@ -113,10 +110,9 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="javascript: void(0);" class="waves-effect">
+                    <a href="index.php?module=admin&controller=setting&action=index" class="waves-effect">
                         <i class="remixicon-settings-4-line"></i>
                         <span> Settings </span>
-
                     </a>
                 </li>
             </ul>

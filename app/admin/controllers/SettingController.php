@@ -1,83 +1,42 @@
 <?php
 
-class BannerController extends Controller
+class SettingController extends Controller
 {
+    public function indexAction(){
 
-    public function formAction(){
         $this->createLinkCss();
         $this->createLinkJs();
-        $this->_view->title     = 'Add banner';
-        $task = 'add';
+        $this->_view->title     = 'General';
         $this->_view->errors    = null;
-        if(!empty($_FILES['image'])) $this->_arrParam['form']['image'] = $_FILES['image'];
-        if (isset($this->_arrParam['id'])){
-            $this->_view->result = $this->_model->info($this->_arrParam['id']);
-            $task = 'edit';
-            $this->_view->title     = 'Edit banner';
-            $this->_view->id = $this->_arrParam['id'];
-        }
+
+        if(!empty($_FILES['header_logo'])) $this->_arrParam['form']['header_logo'] = $_FILES['header_logo'];
+        if(!empty($_FILES['footer_logo'])) $this->_arrParam['form']['footer_logo'] = $_FILES['footer_logo'];
+
         if(isset($this->_arrParam['form'])){
             $form = $this->_arrParam['form'];
-            if (isset($this->_arrParam['id'])){
-                $form['id'] = $this->_arrParam['id'];
-            }
             $validate   = new Validate($form);
-            $validate->addRule('name', 'min', ['min' => 3])
-                     ->addRule('position', 'default')
-                     ->addRule('url', 'max', ['max' => 255])
-                     ->addRule('image', 'file', ['extension' => ['png', 'jpg']], false);
+            $validate->addRule('header_logo', 'file', ['extension' => ['png', 'jpg']], false)
+                ->addRule('address', 'min', ['min' => 3])
+                ->addRule('email', 'email')
+                ->addRule('phone', 'phone')
+                ->addRule('footer_logo', 'file', ['extension' => ['png', 'jpg']], false);
             $validate->run();
             if(!empty($validate->getError())){
                 $this->_view->errors = $validate->getError();
                 $this->_view->result = $validate->getResult();
             }else{
                 $form = $validate->getResult();
-                $this->_model->form($form, $task);
-                if($this->_model->affectedAction() == 1){
-                    if ($task == 'add'){
-                        Session::set('success', '\'' . 'add'.  '\'' );
-                        Url::redirect('admin', 'banner', 'form');
-                    }else{
-                        Session::set('success', '\'' . 'edit'.  '\'' );
-                        Url::redirect('admin', 'banner', 'form', ['task' => 'edit', 'id' => $this->_arrParam['id']]);
-                    }
+                $ud = $this->_model->form($form);
 
+                if($ud >= 1){
+                    Session::set('success', '\'' . 'edit'.  '\'' );
+                    Url::redirect('admin', 'setting', 'index');
                 }
             }
         }
-        $this->_view->task = $task;
-        $this->_view->render('banner/form');
-    }
-
-    public function indexAction(){
-        $this->_view->title = 'List banner';
-        $this->createLinkCss();
-        $this->createLinkJs();
-
-        $this->_view->data = $this->_model->list();
-        $this->_view->render('banner/index');
-    }
-
-    public function deleteAction(){
-        $info = $this->_model->info($this->_arrParam['id']);
-        $affected = $this->_model->deleteItem($this->_arrParam['id']);
-        if ($affected > 0){
-            if(!empty($info['image'])){
-                $upload = new Upload();
-                $upload->removeFile('banner', null, $info['image']);
-
-            }
-            Session::set('success', '\'' . 'delete' . '\'');
-        }
-        echo json_encode(['affected' => $affected]);
-    }
-
-
-    public function changeStatusAction(){
-        $id = $this->_arrParam['id'];
-        $status = $this->_arrParam['status'] == 1 ? 0 : 1;
-        $affected = $this->_model->changeStatus($id, $status);
-        echo json_encode(['affected' => $affected, 'status' => $status]);
+        $this->_view->control = $this->_arrParam['controller'];
+        $this->_view->result = $this->_model->getConfig();
+        $this->_view->render('settings/index');
     }
 
     private function createLinkCss(){

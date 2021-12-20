@@ -82,17 +82,29 @@ class ProductModel extends Model
         $where   = array(array('id', $id, ''));
         return $this->Update($param, $where);
     }
+    public function changeStatusReview($id, $status){
+        $this->SetTable('reviews');
+        $param   = array('status' => $status);
+        $where   = array(array('id', $id, ''));
+        return $this->Update($param, $where);
+    }
+    public function reviewDelete($id){
+        $this->SetTable('reviews');
+        return $this->Delete([$id]);
+    }
+
+    public function getReviews($id){
+        $query = "select rv.*, u.avatar from `reviews` as rv left join `users` as u on u.id = rv.user_id where `product_id` = $id";
+        $reviews = $this->ListRecord($query);
+
+        return $reviews;
+    }
+
     public function getLink($id){
         $this->setTable('products');
         $query = 'SELECT slug FROM products WHERE `id` = ' . $id;
         $result = $this->OneRecord($query);
         $slug = '/product/'.$result['slug'].'-'.$id.'.html';
         return $slug;
-    }
-    public function getReviews($id){
-        $query = "select rv.*, u.avatar from `reviews` as rv left join `users` as u on u.id = rv.user_id where `product_id` = $id";
-        $reviews = $this->ListRecord($query);
-
-        return $reviews;
     }
 }
