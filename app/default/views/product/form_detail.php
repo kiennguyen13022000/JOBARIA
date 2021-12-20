@@ -17,11 +17,6 @@ $price_discount .= '</div>';
 <div class="mt-4 mt-lg-0 details_product_content">
     <form action="" method="" class="details_product_form">
         <input type="hidden" name="product_id" value="<?php echo $this->product_id ?>">
-        <input type="hidden" name="product_name" value="Janon vista fhd 4k">
-        <input type="hidden" name="new_price" value="<?php echo $new_price ?>">
-        <input type="hidden" name="old_price" value="<?php echo $price ?>">
-        <input type="hidden" name="url_image"
-               value="/jobaria/<?php echo $this->result['image'] ?>">
         <h3 class="product_title_modal mb-3"><?php echo $this->result['product_name'] ?></h3>
         <p class="mb-3">Reference: <?php echo $this->result['reference'] ?></p>
         <div class="star_box star__modal">

@@ -1,11 +1,9 @@
 <?php
 class LoginController extends Controller
 {
-    public  $username = '';
-    public  $password = '';
-
     public function __construct($arrParams)
     {
+//        error_reporting (E_ALL ^ E_NOTICE);
         parent::__construct($arrParams);
         if (!empty($_SESSION['user']['loggedIn'])){
             $user_id = $_SESSION['user']['user_id'];
@@ -13,22 +11,29 @@ class LoginController extends Controller
             $info_user = $this->_model->OneRecord($query);
             if (empty($info_user)){
                 Session::delete('user');
-                header('Location: /jobaria/');
+                header('Location: /jobaria/');die();
             }
-
+            header('Location: /jobaria/');
         }
     }
     public function loginAction()
     {
-        $this->_view->sevenBanner           = $this->_model->getTopBanners(7);
-        $this->_view->settings              = $this->_model->getSettings();
-        $this->_view->categories            = $this->_model->getCategory();
+        $redirect = !empty($this->_arrParam['redirect']) ? $this->_arrParam['redirect'] : '';
+        $this->_view->block_errors = '';
+        $this->_view->message_errors = '';
         if(isset($this->_arrParam['form'])){
             $login = $this->_model->login($this->_arrParam);
-            if (!empty($login)) header('Location: /jobaria/my-account.html');
+            if (!empty($login)){
+//                if (!empty($redirect)){
+//                    header('Location: /jobaria/'.$redirect);die();
+//                }
+                header('Location: /jobaria/my-account.html');die();
+            }
             $this->_view->block_errors = 'd-block';
             $this->_view->message_errors = 'Incorrect account or password';
         }
+        $this->_view->_redirect = !empty($redirect) ? 1 : 0;
+        $this->_view->REQUEST_URI = $_SERVER['REQUEST_URI'];
         $this->_view->_module = $this->_arrParam['module'];
         $this->_view->_controller = $this->_arrParam['controller'];
         $this->_view->_action = $this->_arrParam['action'];
@@ -39,9 +44,6 @@ class LoginController extends Controller
         header('Location: /jobaria/');
     }
     public function forgotAction(){
-        $this->_view->sevenBanner           = $this->_model->getTopBanners(7);
-        $this->_view->settings              = $this->_model->getSettings();
-        $this->_view->categories            = $this->_model->getCategory();
         $this->_view->errors = '';
         if(isset($this->_arrParam['form'])){
             $forgot = $this->_model->forgot($this->_arrParam);

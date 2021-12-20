@@ -20,20 +20,30 @@ class Upload {
                     $thum->adaptiveResize($width, $height);
                     $thum->save($uploadDir . $file['name']);
                 }
-                return $fileName;
+                return '/'.$fileName;
             }
         }
     }
     public function getUrlFile($file, $folder, $width = 300, $height = 300, $option = null) {
         if ($option == null) {
             if ($file['tmp_name'] != null) {
+                $uploadDir = 'public/upload/' . $folder . '/';
                 if (!file_exists('public/upload/' . $folder)) {
                     mkdir('public/upload/' .$folder, 0777, true);
                 }
-                $uploadDir = 'public/upload/' . $folder . '/';
-                $fileName = $uploadDir .time().'_'. $file['name'];
+                try {
+                    $fileName = $uploadDir . bin2hex(random_bytes(10)) . '.' .pathinfo(basename($file["name"]), PATHINFO_EXTENSION);
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                }
+
                 copy($file['tmp_name'], $fileName);
-                return $fileName;
+//                if ($height != null && $width != null){
+//                    $thum = PhpThumbFactory::create($fileName);
+//                    $thum->adaptiveResize($width, $height);
+//                    $thum->save($uploadDir . $file['name']);
+//                }
+                return '/'.$fileName;
             }
         }
     }

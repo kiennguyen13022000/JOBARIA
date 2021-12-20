@@ -13,26 +13,26 @@
                         </div>
                     </aside>
                     <div class="row links">
-                        <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="identity-link" href="/jobaria/my-information">
+                        <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="identity-link" href="my-information">
                                  <span class="link-item">
                                  <i class="fas fa-user-circle"></i>
                                  Information
                                  </span>
                         </a>
-                        <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="history-link" href="/jobaria/order-history">
+                        <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="history-link" href="order-history">
                                  <span class="link-item">
                                  <i class="fas fa-calendar-alt"></i>
                                  Order history
                                  </span>
                         </a>
-                        <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="order-slips-link" href="/jobaria/review-history">
+                        <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="order-slips-link" href="review-history">
                                  <span class="link-item">
                                <i class="fas fa-star"></i>
                                 Review history
                                  </span>
                         </a>
                         <!-- MODULE WishList -->
-                        <a class="lnk_wishlist col-lg-4 col-md-6 col-sm-6 col-xs-12" href="/jobaria/my-wishlists" title="My wishlists">
+                        <a class="lnk_wishlist col-lg-4 col-md-6 col-sm-6 col-xs-12" href="my-wishlists" title="My wishlists">
                                  <span class="link-item">
                                  <i class="far fa-heart"></i>
                                  My wishlists

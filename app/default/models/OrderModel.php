@@ -1,23 +1,27 @@
 <?php
-
-class LoginModel extends Model
+class OrderModel extends Model
 {
     public function __construct($param = null)
     {
         parent::__construct($param);
-        $this->setTable('users');
+    }
+    public function cart($param)
+    {
+
+    }
+    public function checkout($param)
+    {
+
     }
     public function login($params){
         $this->setTable('users');
-        $form = $params['form'];
+        $form = $params['login'];
         $username = $form['username'];
         $password = $form['password'];
         $password =  md5($password);
-
         $query = "SELECT username, id, password, firstname, lastname, avatar FROM users WHERE username='$username' and password='$password' and `status` = 1 and is_Admin = 0";
         $result = $this->OneRecord($query);
         if (empty($result)) return false;
-
         $_SESSION['user'] = array(
             'loggedIn'  => true,
             'username'  => $username,
@@ -25,20 +29,12 @@ class LoginModel extends Model
             'userInfo'  => $result
         );
         return true;
-
     }
-    public function forgot($params){
-//        echo getcwd();die();
-        $email = $params['form']['email'];
-        $result=$this->OneRecord("SELECT id,username,firstname,lastname,email,password FROM users WHERE is_Admin = 0 and email='$email'");
-        if (empty($result)) return false;
-        $from_name = $result['firstname'].' '. $result['lastname'];
-        if (empty($result['firstname']) && empty($result['lastname'])) $from_name = $result['username'];
-        $new_password = substr(md5(rand(0,9999)),0,6);
-        $user_id = $result['id'];
-        $sql = "UPDATE users SET password = '".md5($new_password)."' WHERE id=".$user_id;
-        $this->Query($sql);
-
+    public function add($params,$table){
+        $this->setTable($table);
+        $this->Insert($params);
+    }
+    public function sendMail($params){
         require "public/PHPMailer-master/src/PHPMailer.php";  //nhúng thư viện vào để dùng, sửa lại đường dẫn cho đúng nếu bạn lưu vào chỗ khác
         require "public/PHPMailer-master/src/SMTP.php"; //nhúng thư viện vào để dùng
         require 'public/PHPMailer-master/src/Exception.php'; //nhúng thư viện vào để dùng
@@ -57,13 +53,18 @@ class LoginModel extends Model
             $mail->SMTPSecure = 'ssl';  // encryption TLS/SSL
             $mail->Port = 465;  // port to connect to
             $mail->setFrom($from, $name_to );
-            $to = $email;
+            $to = $params['email'];
+            $from_name = $params['first_name'].' '.$params['last_name'];
             $mail->addAddress($to, $from_name); //mail và tên người nhận
             $mail->isHTML(true);  // Set email format to HTML
-            $mail->Subject = 'Reset password';
+            $mail->Subject = 'Order successfully';
             $message = "
                     <b>Hello ".$from_name."</b><br>
-                    Your new password is  ".$new_password."
+                    Chúc mừng bạn đã order thành công.
+                    <br>
+                    Mã order: ".$params['code']."<br>
+                    Sub Total: $".$params['sub_total']."<br>
+                    Total: $".$params['total']."<br>
                   " ;
             $mail->Body = $message;
             $mail->smtpConnect( array(
@@ -77,8 +78,31 @@ class LoginModel extends Model
             //echo 'Đã gửi mail xong';
             return true;
         } catch (Exception $e) {
-           // echo 'Mail không gửi được. Lỗi: ', $mail->ErrorInfo;
+            // echo 'Mail không gửi được. Lỗi: ', $mail->ErrorInfo;
             return false;
         }
+    }
+    public function getLastId($table){
+        $this->setTable($table);
+        $this->LastId();
+    }
+    public function info($id){
+        $this->setTable('products');
+        $query = 'SELECT * FROM products WHERE `id` = ' . $id;
+        $result = $this->OneRecord($query);
+        return $result;
+    }
+    public function infoDetail($id,$field){
+        $this->setTable('products');
+        $query = 'SELECT '.$field.' FROM products WHERE `id` = ' . $id;
+        $result = $this->OneRecord($query);
+        return $result;
+    }
+    public function getLink($id){
+        $this->setTable('products');
+        $query = 'SELECT slug FROM products WHERE `id` = ' . $id;
+        $result = $this->OneRecord($query);
+        $slug = '/product/'.$result['slug'].'-'.$id.'.html';
+        return $slug;
     }
 }

@@ -15,8 +15,8 @@
                         <li class="alert alert-danger"> <?php echo $this->message_errors ?></li>
                     </ul>
                 </div>
-                <form class="form_no_border_r" action="<?php echo $link; ?>" method="post">
-
+                <form class="form_no_border_r" action="<?php echo $this->REQUEST_URI ?>" method="post">
+                    <input type="hidden" value="<?php echo $this->_redirect ?>" name="">
                     <div class="form-group row mb-3">
                         <label class="col-12 col-lg-3 form-control-label pl-4" for="username">User name</label>
                         <input class="form-control col-12 col-lg-6" type="text" name="form[username]" id="username" required="" placeholder="Enter user name">
@@ -35,18 +35,17 @@
                         </div>
                     </div>
                     <div class="form-group mb-0 text-center">
-                        <input type="hidden" name="submitLogin" value="1">
                         <button class="btn btn-primary btn-login" type="submit"> Log In </button>
                     </div>
 
                 </form>
                 <hr>
                 <div class="no-account text-center">
-                    <a href="/jobaria/forgot.html" rel="nofollow">
+                    <a href="forgot.html" rel="nofollow">
                         Forgot your password?
                     </a>
                     <span class="ml-3 mr-3">|</span>
-                    <a href="/jobaria/sign-up.html" data-link-action="display-register-form">
+                    <a href="sign-up.html" data-link-action="display-register-form">
                         No account? Create one here
                     </a>
                 </div>

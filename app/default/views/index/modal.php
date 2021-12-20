@@ -23,11 +23,11 @@ $formatDiscount = '$'. $numFormatDiscount;
         <div class="modal-content">
             <div class="modal-body">
                 <form method="post" action="">
-                    <input type="hidden" name="product_id" value="1">
-                    <input type="hidden" name="product_name" value="Janon vista fhd 4k">
-                    <input type="hidden" name="new_price" value="<?php echo $numFormatDiscount ?>">
-                    <input type="hidden" name="old_price" value="<?php echo $this->productInfo['price'] ?>">
-                    <input type="hidden" name="url_image" value="/jobaria/<?php echo $this->productInfo['image'] ?>">
+                    <input type="hidden" name="product_id" value="<?php echo $this->productInfo['id']; ?>">
+<!--                    <input type="hidden" name="product_name" value="Janon vista fhd 4k">-->
+<!--                    <input type="hidden" name="new_price" value="--><?php //echo $numFormatDiscount ?><!--">-->
+<!--                    <input type="hidden" name="old_price" value="--><?php //echo $this->productInfo['price'] ?><!--">-->
+<!--                    <input type="hidden" name="url_image" value="--><?php //echo $this->productInfo['image'] ?><!--">-->
                     <div class="row">
                         <div class="col-12 col-lg-6">
                             <div class="border">
@@ -36,7 +36,7 @@ $formatDiscount = '$'. $numFormatDiscount;
                                     <div class="splide__track">
                                         <ul class="splide__list">
                                             <li class="splide__slide">
-                                                <img src="/jobaria/<?php echo $this->productInfo['image']; ?>">
+                                                <img src="<?php echo $this->productInfo['image']; ?>">
                                             </li>
                                             <?php echo $slideImage; ?>
                                         </ul>
@@ -49,7 +49,7 @@ $formatDiscount = '$'. $numFormatDiscount;
                                 <div class="splide__track">
                                     <ul class="splide__list">
                                         <li class="splide__slide">
-                                            <img src="/jobaria/<?php echo $this->productInfo['image']; ?>">
+                                            <img src="<?php echo $this->productInfo['image']; ?>">
                                         </li>
                                         <?php echo $slideImage; ?>
                                     </ul>

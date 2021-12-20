@@ -19,11 +19,11 @@ class ProductModel extends Model
         $arrParams['user_id'] = $_SESSION['userAdmin']['user_id'];
         $arrParams['content'] = addslashes($arrParams['content']);
         $arrParams['description'] = addslashes($arrParams['description']);
-        $arrParams['product_features'] = addslashes($arrParams['product_features']);
+        $arrParams['product_detail'] = addslashes($arrParams['product_detail']);
         if($task == 'add'){
             $arrParams['created_at'] = date('Y-m-d H:i:s');
             $uploadObj = new Upload();
-            $arrParams['image'] = $uploadObj->getUrlFile($params['edit']['image'], 'product', 300, 300);
+            $arrParams['image'] = $uploadObj->getUrlFile($params['form']['image'], 'product', 300, 300);
             $arrParams['position']= 1;
             $sql = "UPDATE products SET position = position + 1";
             $this->Query($sql);
@@ -31,12 +31,14 @@ class ProductModel extends Model
         }else{
             $arrParams['updated_at'] = date('Y-m-d H:i:s');
             $id = $arrParams['id'] = $params['id'];
-            $arrParams['image'] = $params['edit']['image'];
+            $arrParams['image'] = $params['form']['image'];
+
             if (!empty($arrParams['image']['name'])){
                 $info = $this->info($id);
                 $uploadObj = new Upload();
                 $uploadObj->removeFileName($info['image'], null);
                 $arrParams['image'] = $uploadObj->getUrlFile($arrParams['image'], 'product', 300, 300);
+
             }else{
                 unset($arrParams['image']);
             }
@@ -50,7 +52,7 @@ class ProductModel extends Model
     }
     public function info($id){
         $this->setTable('products');
-        $query = 'select * from products where `id` = ' . $id;
+        $query = 'SELECT * FROM products WHERE `id` = ' . $id;
         $result = $this->OneRecord($query);
         return $result;
     }
@@ -98,4 +100,11 @@ class ProductModel extends Model
         return $reviews;
     }
 
+    public function getLink($id){
+        $this->setTable('products');
+        $query = 'SELECT slug FROM products WHERE `id` = ' . $id;
+        $result = $this->OneRecord($query);
+        $slug = '/product/'.$result['slug'].'-'.$id.'.html';
+        return $slug;
+    }
 }

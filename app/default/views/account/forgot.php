@@ -42,7 +42,7 @@ $link =Url::createLink($this->_module, $this->_controller, $this->_action);
                     </div>
                     <div class="row mt-3">
                         <div class="col-12 text-center">
-                            <p class="text-muted">Back to <a href="/jobaria/login.html" class=" font-weight-medium ml-1">Log in</a></p>
+                            <p class="text-muted">Back to <a href="login.html" class=" font-weight-medium ml-1">Log in</a></p>
                         </div>
                     </div>
                 </div>

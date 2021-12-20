@@ -2607,6 +2607,11 @@ input.number_product[type="number"] {
 .grid_product  img{
   padding: 15px;
 }
+.product_cart_header > ul {
+  max-height: 340px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 
 .criterions_list .fa-star{
   color: rgb(144, 144, 144);
