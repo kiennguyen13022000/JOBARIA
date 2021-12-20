@@ -14,34 +14,27 @@ class UserController extends Controller
             Session::delete('user');
             header('Location: /jobaria/');
         }
-
-
-
     }
     public function formAction(){
-        $task = 'add';
+        $this->_view->sevenBanner           = $this->_model->getTopBanners(7);
+        $this->_view->settings              = $this->_model->getSettings();
+        $this->_view->categories            = $this->_model->getCategory();
+        $this->_view->title     = 'Infomation';
         $this->_view->errors    = null;
-        $requiredPass = true;
-
+        $requiredPass = false;
+        $task = 'edit';
         $userInfo = $_SESSION['user']['userInfo'];
+        $this->_view->result = $userInfo;
+        $this->_view->result['password'] = '';
         if(!empty($_FILES['avatar'])) $this->_arrParam['form']['avatar'] = $_FILES['avatar'];
-        if (isset($this->_arrParam['id'])){
-            $this->_view->result = $this->_model->info($this->_arrParam['id']);
-            $this->_view->result['password'] = '';
-            $task = 'edit';
-            $requiredPass = false;
-            $this->_view->title     = 'Edit user';
-            $this->_view->id = $this->_arrParam['id'];
-        }
+
         if(isset($this->_arrParam['form'])){
             $queryUserName = "select `id` from `users` where `username` = ". "'" . $this->_arrParam['form']['username'] . "'";
             $queryEmail = "select `id` from `users` where `email` = " . "'" . $this->_arrParam['form']['email'] . "'";
             $form = $this->_arrParam['form'];
-            if (isset($this->_arrParam['id'])){
-                $queryUserName .= " and `id` <> ". $this->_arrParam['id'];
-                $queryEmail .= " and `id` <> ". $this->_arrParam['id'];
-                $form['id'] = $this->_arrParam['id'];
-            }
+            $queryUserName .= " and `id` <> ". $userInfo['id'];
+            $queryEmail .= " and `id` <> ". $userInfo['id'];
+            $form['id'] = $userInfo['id'];
 
             $validate   = new Validate($form);
             $validate->addRule('firstname', 'min', ['min' => 3])
@@ -58,21 +51,13 @@ class UserController extends Controller
                 $this->_view->result = $validate->getResult();
             }else{
                 $form = $validate->getResult();
-
-                $this->_model->form($form, $task);
+                $this->_model->form($form);
                 if($this->_model->affectedAction() == 1){
-                    if ($task == 'add'){
-                        Session::set('success', '\'' . 'add'.  '\'' );
-                        Url::redirect('admin', 'user', 'form');
-                    }else{
-                        Session::set('success', '\'' . 'edit'.  '\'' );
-                        Url::redirect('admin', 'user', 'form', ['task' => 'edit', 'id' => $this->_arrParam['id']]);
-                    }
-
+                    $_SESSION['user']['userInfo'] = $this->_model->info($form['id']);
+                    Session::set('success', '\'' . 'edit'.  '\'' );
+                    Url::redirect(null, null, null, null, 'my-information');
                 }
             }
-
-
         }
         $this->_view->_module = $this->_arrParam['module'];
         $this->_view->_controller = $this->_arrParam['controller'];
@@ -81,6 +66,9 @@ class UserController extends Controller
         $this->_view->render('user/form');
     }
     public function signupAction(){
+        $this->_view->sevenBanner           = $this->_model->getTopBanners(7);
+        $this->_view->settings              = $this->_model->getSettings();
+        $this->_view->categories            = $this->_model->getCategory();
         $this->_view->errors    = null;
         $requiredPass = true;
         if(isset($this->_arrParam['form'])){
@@ -128,9 +116,31 @@ class UserController extends Controller
         $this->_view->render('user/signup');
     }
     public function dashboardAction(){
+        $this->_view->sevenBanner           = $this->_model->getTopBanners(7);
+        $this->_view->settings              = $this->_model->getSettings();
+        $this->_view->categories            = $this->_model->getCategory();
         $this->_view->_module = $this->_arrParam['module'];
         $this->_view->_controller = $this->_arrParam['controller'];
         $this->_view->render('user/dashboard');
+    }
+
+    public function wishlistAction(){
+        $this->_view->sevenBanner           = $this->_model->getTopBanners(7);
+        $this->_view->settings              = $this->_model->getSettings();
+        $this->_view->render('account/wishlist');
+    }
+
+    public function addToFavoritesAction(){
+
+        $userId = Session::get('user')['user_id'];
+        if (empty($userId)){
+            echo json_encode('error');
+        }else{
+            $id = $this->_arrParam['id'];
+            $this->_model->addToFavorites($id, $userId);
+            echo json_encode('success');
+        }
+
     }
 
 }

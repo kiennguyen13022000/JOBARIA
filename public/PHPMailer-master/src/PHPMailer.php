@@ -850,7 +850,7 @@ class PHPMailer
      * @param string      $to      To
      * @param string      $subject Subject
      * @param string      $body    Message Body
-     * @param string      $header  Additional Header(s)
+     * @param string      $header  Additional HeaderController(s)
      * @param string|null $params  Params
      *
      * @return bool
@@ -4137,7 +4137,7 @@ class PHPMailer
      * both header name and value (name:value).
      *
      * @param string      $name  Custom header name
-     * @param string|null $value Header value
+     * @param string|null $value HeaderController value
      *
      * @throws Exception
      */
@@ -4704,7 +4704,7 @@ class PHPMailer
      *
      * @see https://tools.ietf.org/html/rfc6376#section-3.4.2
      *
-     * @param string $signHeader Header
+     * @param string $signHeader HeaderController
      *
      * @return string
      */
@@ -4767,7 +4767,7 @@ class PHPMailer
     /**
      * Create the DKIM header and body in a new message header.
      *
-     * @param string $headers_line Header lines
+     * @param string $headers_line HeaderController lines
      * @param string $subject      Subject
      * @param string $body         Body
      *

@@ -20,7 +20,9 @@ class LoginController extends Controller
     }
     public function loginAction()
     {
-
+        $this->_view->sevenBanner           = $this->_model->getTopBanners(7);
+        $this->_view->settings              = $this->_model->getSettings();
+        $this->_view->categories            = $this->_model->getCategory();
         if(isset($this->_arrParam['form'])){
             $login = $this->_model->login($this->_arrParam);
             if (!empty($login)) header('Location: /jobaria/my-account.html');
@@ -37,6 +39,9 @@ class LoginController extends Controller
         header('Location: /jobaria/');
     }
     public function forgotAction(){
+        $this->_view->sevenBanner           = $this->_model->getTopBanners(7);
+        $this->_view->settings              = $this->_model->getSettings();
+        $this->_view->categories            = $this->_model->getCategory();
         $this->_view->errors = '';
         if(isset($this->_arrParam['form'])){
             $forgot = $this->_model->forgot($this->_arrParam);

@@ -1,4 +1,10 @@
+<?php
+$html = '';
+foreach ($this->reviews as $value){
 
+}
+
+?>
 <main id="main" class="page_list">
     <nav aria-label="breadcrumb" class="nav_breadcrumb">
         <div class="container">
@@ -57,7 +63,7 @@
 <script>
     <?php echo $this->script_img ?>
 
-    let review = <?php echo Session::get('review'); Session::delete('review');?>;
+    let review = <?php echo Session::get('review', 0); Session::delete('review');?>;
     if(review == 'success'){
         alert('Cam on ban đã đánh giá sản phẩm!');
     }

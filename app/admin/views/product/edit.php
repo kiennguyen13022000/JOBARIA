@@ -1,6 +1,6 @@
 <?php
 
-
+error_reporting(E_ERROR | E_PARSE);
 // create radio
 $valueStatus          = (isset($this->result['status'])) ? $this->result['status'] : '';
 $valueIsNew        = (isset($this->result['is_new'])) ? $this->result['is_new'] : '';
@@ -100,7 +100,7 @@ foreach ($this->reviews as $key => $value){
     $avatar = $value['avatar'] != null ? $value['avatar'] : ($key % 2 == 0 ? 'public/template/admin/images/users/avatar-2.jpg' : 'public/template/admin/images/users/avatar-1.jpg');
     $status = $value['status'] == 1 ? '<span data-control="product" data-id="'.$value['id'].'" data-status="'.$value['status'].'" class="review-status badge badge-info">Active</span>' : '<span data-control="product" data-id="'.$value['id'].'" data-status="'.$value['status'].'" class="review-status badge badge-purple">Deactive</span>';
     $reviewHtml .= '<div class="review-item mb-3">
-                        <i onclick="reviewDelete('.$this->id.')" class="remixicon-close-circle-fill review-close text-danger"></i>
+                        <i onclick="reviewDelete('.$value['id'].')" class="remixicon-close-circle-fill review-close text-danger"></i>
                         '. $status .'
                         <div class="review-header d-flex justify-content-between pb-2 border-bottom">
                             <div class="d-flex align-items-center">
@@ -128,16 +128,18 @@ foreach ($this->reviews as $key => $value){
 if (empty($reviewHtml)){
     $reviewHtml = '<p class="textdanger font-20 text-center">No reviews yet.</p>';
 }
+$rantingAvg = 0;
 if($ratingTotal > 0){
     $starOnePercent = $starOne / $ratingTotal * 100;
     $starTwoPercent = $starTwo / $ratingTotal * 100;
     $starThreePercent = $starThree / $ratingTotal * 100;
     $starFourPercent = $starFour / $ratingTotal * 100;
     $starFivePercent = $starFive / $ratingTotal * 100;
+    $rantingAvg = (5 * $starFive + 4 * $starFour + 3 * $starThree + $starTwo * 2 + $starOne) / $ratingTotal;
+
 }
 
-$rantingAvg = (5 * $starFive + 4 * $starFour + 3 * $starThree + $starTwo * 2 + $starOne) / $ratingTotal;
-?>
+ ?>
 <div class="container-fluid">
     <div id="addproduct-nav-pills-wizard" class="twitter-bs-wizard form-wizard-header">
         <ul class="twitter-bs-wizard-nav mb-2 nav nav-pills nav-justified">
@@ -340,7 +342,7 @@ $rantingAvg = (5 * $starFive + 4 * $starFour + 3 * $starThree + $starTwo * 2 + $
                         <div class="col-lg-4  ">
                             <div class="card">
                                 <div class="card-body">
-                                    <h1 class="my-0"><?php echo number_format($rantingAvg, 1); ?></h1>
+                                    <h1 class="my-0"><?php if($rantingAvg > 0) echo number_format($rantingAvg, 1); else echo '0'; ?></h1>
                                     <p class="text-muted mb-1">based on <?php echo $ratingTotal; ?> ratings</p>
                                     <div class="flex-inline text-warning d-inline-block">
                                         <?php echo str_repeat('<i class="fa fa-star" aria-hidden="true"></i>', (int) $rantingAvg); ?>
@@ -398,7 +400,7 @@ $rantingAvg = (5 * $starFive + 4 * $starFour + 3 * $starThree + $starTwo * 2 + $
                                             <span class="font-weight-bolder">2</span>
                                             <i class="fa fa-star text-warning font-13" aria-hidden="true"></i>
                                         </span>
-                                            <span class="text-muted"><?php echo $starThree; ?></span>
+                                            <span class="text-muted"><?php echo $starTwo; ?></span>
                                         </div>
                                         <div class="progress mt-1" height="10">
                                             <div class="progress-bar light-danger-bg" role="progressbar" aria-valuenow="20"

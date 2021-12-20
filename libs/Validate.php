@@ -45,6 +45,7 @@ class Validate{
 
     // Run
     public function run(){
+
         foreach($this->rules as $element => $value){
             if(isset($this->getError()[$element]))
                 unset($this->source[$element]);
@@ -79,6 +80,9 @@ class Validate{
                             break;
                         case 'password':
                             $this->validatePassword($element, $value['options']);
+                            break;
+                        case 'phone':
+                            $this->validatePhone($element, $value['options']);
                             break;
                         case 'confirm_password':
                             $this->validateConfirmPassword($element);
@@ -179,6 +183,12 @@ class Validate{
             if(!preg_match($pattern, $this->source[$element])){
                 $this->errors[$element] = $element. " is an invalid password";
             }
+        }
+    }
+    private function validatePhone($element, $option){
+        $pattern = "#^[0-9]{10,10}$#";
+        if(!preg_match($pattern, $this->source[$element])){
+            $this->errors[$element] = $element. " is an invalid phone";
         }
     }
     private function validateConfirmPassword($element){

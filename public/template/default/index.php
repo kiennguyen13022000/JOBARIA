@@ -56,6 +56,20 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.3/photoswipe-ui-default.min.js" integrity="sha512-SxO0cwfxj/QhgX1SgpmUr0U2l5304ezGVhc0AO2YwOQ/C8O67ynyTorMKGjVv1fJnPQgjdxRz6x70MY9r0sKtQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="/jobaria/public/template/default/assets/js/main.js"></script>
+
+<script>
+    let options = {
+    position: 'top-right',
+    animationDuration: 300
+};
+    let success = <?php echo Session::get("success", '\'' . 'default' . '\'' ); Session::delete('success');?>;
+    let msg = '';
+    if (success == 'edit'){
+        msg = 'Update successful';
+        let notifier = new AWN(options);
+        notifier.success(msg, {durations: {success: 2000}});
+    }
+</script>
 </body>
 
 </html>

@@ -53,12 +53,16 @@ class UserController extends Controller
             }else{
                 $form = $validate->getResult();
 
-                $this->_model->form($form, $task);
+                $id = $this->_model->form($form, $task);
                 if($this->_model->affectedAction() == 1){
                     if ($task == 'add'){
                         Session::set('success', '\'' . 'add'.  '\'' );
-                        Url::redirect('admin', 'user', 'form');
-                    }else{
+                        if ($this->_arrParam['submit'] == 'save')
+                            Url::redirect('admin', 'user', 'form');
+                        Url::redirect('admin', 'user', 'form', ['task' => 'edit', 'id' => $id]);
+
+                    }
+                    if ($task == 'edit'){
                         Session::set('success', '\'' . 'edit'.  '\'' );
                         Url::redirect('admin', 'user', 'form', ['task' => 'edit', 'id' => $this->_arrParam['id']]);
                     }
@@ -68,6 +72,7 @@ class UserController extends Controller
 
 
         }
+        $this->_view->control = $this->_arrParam['controller'];
         $this->_view->task = $task;
         $this->_view->render('user/form');
     }
@@ -76,7 +81,7 @@ class UserController extends Controller
         $this->_view->title = 'List user';
         $this->createLinkCss();
         $this->createLinkJs();
-
+        $this->_view->control = $this->_arrParam['controller'];
         $this->_view->data = $this->_model->list();
         $this->_view->render('user/index');
     }
@@ -112,6 +117,14 @@ class UserController extends Controller
         $isAdmin = $this->_arrParam['isAdmin'] == 1 ? 0 : 1;
         $affected = $this->_model->changeIsAdmin($id, $isAdmin);
         echo json_encode(['affected' => $affected, 'isAdmin' => $isAdmin]);
+    }
+
+    public function profileAction(){
+        $this->_view->title = 'Profile';
+        $this->createLinkCss();
+        $this->createLinkJs();
+        $this->_view->info = $this->_model->info($this->_arrParam['id']);
+        $this->_view->render('user/profile');
     }
 
     private function createLinkCss(){

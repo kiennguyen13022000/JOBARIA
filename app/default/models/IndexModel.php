@@ -113,47 +113,32 @@ class IndexModel extends Model
     }
 
     public function getTrenningProductList(){
-        $queryBetween = 'select `left`, `right` from `categories`  where `name` = \'Fashion\'';
-        $fashion = $this->OneRecord($queryBetween);
+        $queryBetween = 'select `id`, `name`, `left`, `right` from `categories`  where `trending` = 1';
+        $trendings = $this->ListRecord($queryBetween);
         $trenningProductList = array();
-        if (!empty($fashion)){
-            $queryFashion[] = 'select p.*, c.name as category_name from `products` as p JOIN `categories` as c';
-            $queryFashion[] = 'ON p.category_id = c.id';
-            $queryFashion[] = 'where `category_id` in (select id from `categories` WHERE';
-            $queryFashion[] = '`left` between '. $fashion['left'] .' and '. $fashion['right'] .')';
-            $queryFashion   = implode(' ', $queryFashion);
-            $trenningProductList['fashion'] =  $this->ListRecord($queryFashion);
+
+        foreach ($trendings as $key => $value){
+            $query = [];
+            $query[] = 'select p.*, c.name as category_name from `products` as p JOIN `categories` as c';
+            $query[] = 'ON p.category_id = c.id';
+            $query[] = 'where `category_id` in (select id from `categories` WHERE';
+            $query[] = '`left` between '. $value['left'] .' and '. $value['right'] .')';
+            $query   = implode(' ', $query);
+            $trenningProductList[$value['name']] =  $this->ListRecord($query);
         }
-
-
-        // electronics
-        $queryBetween = 'select `left`, `right` from `categories`  where `name` = \'Electronics\'';
-        $fashion = $this->OneRecord($queryBetween);
-        if (!empty($fashion)){
-            $queryElectronics[] = 'select p.*, c.name as category_name from `products` as p JOIN `categories` as c';
-            $queryElectronics[] = 'ON p.category_id = c.id';
-            $queryElectronics[] = 'where `category_id` in (select id from `categories` WHERE';
-            $queryElectronics[] = '`left` between '. $fashion['left'] .' and '. $fashion['right'] .')';
-            $queryElectronics   = implode(' ', $queryElectronics);
-            $trenningProductList['electronics'] =  $this->ListRecord($queryElectronics);
-        }
-
-
-        // vehicel
-        $queryBetween = 'select `left`, `right` from `categories`  where `name` = \'Vehicel\'';
-        $fashion = $this->OneRecord($queryBetween);
-        if (!empty($fashion)){
-            $queryVehicel[] = 'select p.*, c.name as category_name from `products` as p JOIN `categories` as c';
-            $queryVehicel[] = 'ON p.category_id = c.id';
-            $queryVehicel[] = 'where `category_id` in (select id from `categories` WHERE';
-            $queryVehicel[] = '`left` between '. $fashion['left'] .' and '. $fashion['right'] .')';
-            $queryVehicel   = implode(' ', $queryVehicel);
-            $trenningProductList['vehicel'] =  $this->ListRecord($queryVehicel);
-        }
-
         return $trenningProductList;
+
     }
 
+    public function getSettings(){
+        $query = 'select * from `configs`';
+        $result =  $this->ListRecord($query);
+        $newResult = array();
+        foreach ($result as $key => $value){
+            $newResult[$value['config_name']] = $value['config_value'];
+        }
+        return $newResult;
+    }
     public function info($id){
         $query[]    = "select p.*, child.name as categoryName, GROUP_CONCAT(DISTINCT parent.name order by parent.left) as breakcrumbs";
         $query[]    = "from `products` as p join `categories` as child, `categories` as parent";

@@ -69,6 +69,7 @@ class ProductController extends Controller
                 }
             }
         }
+        $this->_view->control = $this->_arrParam['controller'];
         $this->_view->render('product/edit');
     }
     public function nextStepAction(){
@@ -106,7 +107,7 @@ class ProductController extends Controller
         $this->createLinkJs();
 
         $this->_view->data = $this->_model->list();
-
+        $this->_view->control = $this->_arrParam['controller'];
         $this->_view->render('product/list');
     }
     public function deleteAction(){

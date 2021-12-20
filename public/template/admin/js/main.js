@@ -141,32 +141,32 @@ function changeOrder(){
 }
 
 changeOrder();
-
-$('.review-close').click(function (){
-    var id = $(this).attr('data-id');
-    let options = {
-        position: 'top-right',
-        animationDuration: 300
-    };
-    options.labels = {
-        confirm: 'Remove notifications'
-    }
-    let notifier = new AWN(options);
-    let onOk = () => {
-        $.post('index.php?module=admin&controller=product&action=reviewDelete', {id: id}, function (data){
-            if (data.affected > 0){
-                location.reload();
-            }else{
-                options.labels = {
-                    warning: 'Error',
-                }
-                let notifier = new AWN(options);
-                notifier.warning('An error occurred!', {durations: {warning: 2000}})
-            }
-        }, 'json');
-    };
-    notifier.confirm('Ban co chac muon xoa khong?', onOk);
-});
+//
+// $('.review-close').click(function (){
+//     var id = $(this).attr('data-id');
+//     let options = {
+//         position: 'top-right',
+//         animationDuration: 300
+//     };
+//     options.labels = {
+//         confirm: 'Remove notifications'
+//     }
+//     let notifier = new AWN(options);
+//     let onOk = () => {
+//         $.post('index.php?module=admin&controller=product&action=reviewDelete', {id: id}, function (data){
+//             if (data.affected > 0){
+//                 location.reload();
+//             }else{
+//                 options.labels = {
+//                     warning: 'Error',
+//                 }
+//                 let notifier = new AWN(options);
+//                 notifier.warning('An error occurred!', {durations: {warning: 2000}})
+//             }
+//         }, 'json');
+//     };
+//     notifier.confirm('Ban co chac muon xoa khong?', onOk);
+// });
 
 function changeStatusReview(){
     $('.review-status').click(function (){
@@ -202,18 +202,19 @@ function reviewDelete(id){
         confirm: 'Remove notifications'
     }
     let notifier = new AWN(option2);
-    // let onOk = () => {
-    //     $.post('index.php?module=admin&controller=product&action=reviewDelete', {id: id}, function (data){
-    //         if (data.affected > 0){
-    //             location.reload();
-    //         }else{
-    //             options.labels = {
-    //                 warning: 'Error',
-    //             }
-    //             let notifier = new AWN(options);
-    //             notifier.warning('An error occurred!', {durations: {warning: 2000}})
-    //         }
-    //     }, 'json');
-    // };
+    let onOk = () => {
+        $.post('index.php?module=admin&controller=product&action=reviewDelete', {id: id}, function (data){
+            if (data.affected > 0){
+                location.reload();
+                console.log('vaof')
+            }else{
+                options.labels = {
+                    warning: 'Error',
+                }
+                let notifier = new AWN(options);
+                notifier.warning('An error occurred!', {durations: {warning: 2000}})
+            }
+        }, 'json');
+    };
     notifier.confirm('Ban co chac muon xoa khong?', onOk);
 }

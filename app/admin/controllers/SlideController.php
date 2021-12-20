@@ -38,13 +38,17 @@ class SlideController extends Controller
                 $this->_view->errors = $validate->getError();
                 $this->_view->result = $validate->getResult();
             }else{
-                $form = $validate->getResult();
+                $id = $form = $validate->getResult();
                 $this->_model->form($form, $task);
                 if($this->_model->affectedAction() == 1){
                     if ($task == 'add'){
                         Session::set('success', '\'' . 'add'.  '\'' );
-                        Url::redirect('admin', 'slide', 'form');
-                    }else{
+                        if ($this->_arrParam['submit'] == 'save')
+                            Url::redirect('admin', 'slide', 'form');
+                        Url::redirect('admin', 'slide', 'form', ['task' => 'edit', 'id' => $id]);
+
+                    }
+                    if ($task == 'edit'){
                         Session::set('success', '\'' . 'edit'.  '\'' );
                         Url::redirect('admin', 'slide', 'form', ['task' => 'edit', 'id' => $this->_arrParam['id']]);
                     }
@@ -52,6 +56,7 @@ class SlideController extends Controller
                 }
             }
         }
+        $this->_view->control = $this->_arrParam['controller'];
         $this->_view->task = $task;
         $this->_view->render('slide/form');
     }
@@ -60,7 +65,7 @@ class SlideController extends Controller
         $this->_view->title = 'List slide';
         $this->createLinkCss();
         $this->createLinkJs();
-
+        $this->_view->control = $this->_arrParam['controller'];
         $this->_view->data = $this->_model->list();
         $this->_view->render('slide/index');
     }

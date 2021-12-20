@@ -22,21 +22,19 @@
                 <div class="col-lg-4">
                     <div class="logo_footer">
                         <a href="#" title="Jobaria" class="d-block">
-                            <img src="/jobaria/public/template/default/assets/images/footer/logo/1.png" alt="Jobaria">
+                            <img src="/jobaria/<?php echo $this->settings['footer_logo']?>" alt="Jobaria">
                         </a>
                     </div>
                     <div class="border_bot_main">
                         There are many variations of passages of Lorem, ipsum dolor sit amet consectetur
                         adipisicing elit
                     </div>
-                    <p><span class="text-white">Address</span>: <span>169-C, Technohub,
-                Dubai Silicon
-                Oasis</span>
+                    <p><span class="text-white">Address</span>: <span><?php echo $this->settings['address']?></span>
                     </p>
-                    <p><span class="text-white">Mail us</span>: <a href="mailto:Support@posthemes.com"
-                                                                   title="Support@posthemes.com">Support@posthemes.com</a></p>
-                    <p><span class="text-white">Phone</span>: <a href="tel:123 321 345"
-                                                                 title="+123 321 345">+123 321 345</a>
+                    <p><span class="text-white">Mail us</span>: <a href="mailto:<?php echo $this->settings['email']?>"
+                                                                   title="<?php echo $this->settings['email']?>"><?php echo $this->settings['email']?></a></p>
+                    <p><span class="text-white">Phone</span>: <a href="tel:<?php echo $this->settings['phone']?>"
+                                                                 title="+<?php echo $this->settings['phone']?>"><?php echo $this->settings['phone']?></a>
                     </p>
                     <ul class="list_social d-flex list_style_none">
                         <li>

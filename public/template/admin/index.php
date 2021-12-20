@@ -34,11 +34,11 @@
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
-<!--                                <li class="breadcrumb-item"><a href="javascript: void(0);">user</a></li>-->
-<!--                                <li class="breadcrumb-item active">adduser</li>-->
+                                <li class="breadcrumb-item"><a href="javascript: void(0);"><?php echo ucfirst($this->control); ?></a></li>
+                                <li class="breadcrumb-item active"><?php echo $this->title; ?></li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Add user</h4>
+                        <h4 class="page-title"><?php echo $this->title; ?></h4>
                     </div>
                 </div>
             </div>
@@ -86,9 +86,6 @@
         let notifier = new AWN(options);
         notifier.success(msg, {durations: {success: 2000}});
     }
-
-
-
 </script>
 </body>
 

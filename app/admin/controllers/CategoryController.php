@@ -34,12 +34,16 @@ class CategoryController extends Controller
             }else{
                 $form = $validate->getResult();
 
-                $this->_model->form($form, $task);
+                $id =  $this->_model->form($form, $task);
                 if($this->_model->affectedAction() == 1){
                     if ($task == 'add'){
                         Session::set('success', '\'' . 'add'.  '\'' );
-                        Url::redirect('admin', 'category', 'form');
-                    }else{
+                        if ($this->_arrParam['submit'] == 'save')
+                            Url::redirect('admin', 'category', 'form');
+                        Url::redirect('admin', 'category', 'form', ['task' => 'edit', 'id' => $id]);
+
+                    }
+                    if ($task == 'edit'){
                         Session::set('success', '\'' . 'edit'.  '\'' );
                         Url::redirect('admin', 'category', 'form', ['task' => 'edit', 'id' => $this->_arrParam['id']]);
                     }
@@ -49,6 +53,7 @@ class CategoryController extends Controller
         }
         $this->_view->categories = $this->_model->getCategory();
         $this->_view->task = $task;
+        $this->_view->control = $this->_arrParam['controller'];
         $this->_view->render('category/form');
     }
 
@@ -56,7 +61,7 @@ class CategoryController extends Controller
         $this->_view->title = 'List category';
         $this->createLinkCss();
         $this->createLinkJs();
-
+        $this->_view->control = $this->_arrParam['controller'];
         $this->_view->data = $this->_model->list();
         $this->_view->render('category/index');
     }

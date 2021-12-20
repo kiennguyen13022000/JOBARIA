@@ -3,6 +3,7 @@
 class IndexController extends Controller
 {
     public function indexAction(){
+        $this->_view->settings              = $this->_model->getSettings();
         $this->_view->categories            = $this->_model->getCategory();
         $this->_view->sliders               = $this->_model->listSlider();
         $this->_view->topBanners            = $this->_model->getTopBanners(1);

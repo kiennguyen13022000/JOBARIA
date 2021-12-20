@@ -123,7 +123,13 @@
             <div class="container">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="left_top">
-                        Default welcome msg!
+                        <?php
+                            $user = Session::get('user');
+                            if (!empty($user)){
+                                $user = $user['userInfo'];
+                                echo 'Welcome '. $user['firstname'] . ' ' . $user['lastname'];
+                            }
+                        ?>
                     </div>
                     <div class="right_top d-flex">
                         <div class="account">
@@ -178,8 +184,8 @@
                 <div class="row justify-content-between">
                     <div class="col-6 col-md-4 col-lg-3 col_logo">
                         <div id="logo" class="d-flex align-items-center h-100">
-                            <a href="index.html" class="logo nav-link pl-0 ">
-                                <img src="/jobaria/public/template/default/assets/images/menu/logo/1.jpg " alt=" ">
+                            <a href="/jobaria/index.html" class="logo nav-link pl-0 ">
+                                <img src="/jobaria/<?php echo $this->settings['header_logo']?>" alt=" ">
                             </a>
                         </div>
                     </div>
@@ -590,7 +596,7 @@
                     </div>
                     <div class="col-xl-7 col-6 pb-1 pt-1">
                         <form action="" method="" class="h-100 search_form">
-                            <div class="row mx-0 h-100 bg-white rounded">
+                            <div class="row position-relative mx-0 h-100 bg-white rounded">
                                 <div class="col-xl-8 col-md-7 pr-0">
                                     <input type="text" placeholder="Enter your search key..."
                                            class="w-100 h-100 input__search ">
@@ -607,9 +613,11 @@
                                         <button class="btn btn__search"><i class="fa fa-search"></i></button>
                                     </div>
                                 </div>
+                                <div class="search-product-list rounded w-100">
+
+                                </div>
                             </div>
                         </form>
-
                     </div>
                     <div class="col-xl-2 col-3 pl-2">
                         <div class="d-flex align-items-center h-100 justify-content-end">

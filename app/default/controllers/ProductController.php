@@ -2,6 +2,9 @@
 class ProductController extends Controller
 {
     public function detailAction(){
+        $this->_view->sevenBanner           = $this->_model->getTopBanners(7);
+        $this->_view->settings              = $this->_model->getSettings();
+        $this->_view->categories            = $this->_model->getCategory();
        // error_reporting (E_ALL ^ E_NOTICE);
         $product_id = $this->_arrParam['id'];
         $result = $this->_model->info($product_id);
@@ -35,10 +38,12 @@ class ProductController extends Controller
         $this->_view->script_img = $script_img;
        // $this->_view->newProductList        = $this->_model->getNewProductList();
         $this->_view->other_products = $this->_model->other_products($product_id, $result['category_id']);
+        $this->_view->reviews = $this->_model->getReviews($product_id);
         $this->_view->render('product/detail');
     }
 
     public function reviewAction(){
+        $this->_view->categories            = $this->_model->getCategory();
         $id = $this->_model->review($this->_arrParam['form'], $this->_arrParam['id']);
         if ($id > 0){
             Session::set('review', '\'' . 'success' . '\'');

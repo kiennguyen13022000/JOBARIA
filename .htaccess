@@ -1,8 +1,5 @@
 RewriteEngine On
 
-#http://localhost/jobaria/phu-kien_dong-ho/dong-ho-thoi-trang/dong-ho-nam/g-shock-51.3-mm-nam-gba-900-1adr%7C4
-#http://localhost/jobaria/index.php?module=default&controller=product&action=detail&id=4 ([a-z0-9_-]*)_([0-9]+)
-
 RewriteRule index.html 			index.php?module=default&controller=index&action=index
 RewriteRule login.html 			index.php?module=default&controller=login&action=login
 RewriteRule logout.html 			index.php?module=default&controller=login&action=logout

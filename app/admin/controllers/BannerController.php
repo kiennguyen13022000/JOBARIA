@@ -49,6 +49,7 @@ class BannerController extends Controller
             }
         }
         $this->_view->task = $task;
+        $this->_view->control = $this->_arrParam['controller'];
         $this->_view->render('banner/form');
     }
 
@@ -56,7 +57,7 @@ class BannerController extends Controller
         $this->_view->title = 'List banner';
         $this->createLinkCss();
         $this->createLinkJs();
-
+        $this->_view->control = $this->_arrParam['controller'];
         $this->_view->data = $this->_model->list();
         $this->_view->render('banner/index');
     }

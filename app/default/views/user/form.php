@@ -10,7 +10,6 @@ $valueAvatar            = (isset($this->result['avatar'])) ? $this->result['avat
 $valuePassword          = (isset($this->result['password'])) ? $this->result['password'] : '';
 $valueConfirmPassword   = (isset($this->result['confirm_password'])) ? $this->result['confirm_password'] : '';
 
-
 $label = ['label' => 'First name', 'id' => 'validationFirstname'];
 $inputFirstname = Helper::cmsFormGroup($label, 'text', 'firstname', $valueFirstname, 'form-control', true, 'form-group mb-3 col-lg-6', $this->errors);
 $label = ['label' => 'Last name', 'id' => 'validationLastname'];
@@ -25,23 +24,13 @@ $inputPhone = Helper::cmsFormGroup($label, 'text', 'phone', $valuePhone, 'form-c
 $label = ['label' => 'Address', 'id' => 'validationAddress'];
 $inputAddress = Helper::cmsFormGroup($label, 'text', 'address', $valueAddress, 'form-control', false, 'form-group mb-3', $this->errors);
 $label = ['label' => 'Avatar', 'id' => 'validationAvatar'];
-$inputAvatar = Helper::cmsFormGroupFile($label, 'file', 'avatar', $valueAvatar, 'custom-file-input',  false, 'form-group mb-3', $this->errors, 'users', $this->task);
+$inputAvatar = Helper::cmsFormGroupFile($label, 'file', 'avatar', $valueAvatar, 'custom-file-input',  false, 'form-group mb-3', $this->errors, $this->task);
 $label = ['label' => 'Password', 'id' => 'validationPassword'];
 $inputPassword = Helper::cmsFormGroup($label, 'password', 'password', $valuePassword, 'form-control',  true, 'form-group mb-3 col-lg-6', $this->errors);
 $label = ['label' => 'Retype password', 'id' => 'validationRetypePassword'];
 $inputRetypePassword = Helper::cmsFormGroup($label, 'password', 'confirm_password', $valueConfirmPassword, 'form-control',true, 'form-group mb-3 col-lg-6', $this->errors);
 $rowPassword = Helper::cmsRow($inputPassword . $inputRetypePassword);
 
-// create radio
-$valueStatus          = (isset($this->result['status'])) ? $this->result['status'] : '';
-$valueAdmin         = (isset($this->result['status'])) ? $this->result['is_Admin'] : '';
-
-$raidoStatusActive = Helper::cmsRadio('status', 'Active', 1, $valueStatus);
-$raidoStatusNotActive = Helper::cmsRadio('status','Not active',0, $valueStatus);
-$raidoAdminActive = Helper::cmsRadio('is_Admin', 'Active', 1, $valueAdmin);
-$raidoAdminNotActive = Helper::cmsRadio('is_Admin','Not active', 0, $valueAdmin);
-
-$link =Url::createLink($this->_module, $this->_controller, $this->_action);
 
 ?>
 <main id="main" class="account_page mt-5">
@@ -53,7 +42,7 @@ $link =Url::createLink($this->_module, $this->_controller, $this->_action);
                 </h1>
             </header>
             <div class="info_content">
-                <form method="post" enctype="multipart/form-data" class="w-100" action="<?php echo $link; ?>">
+                <form method="post" enctype="multipart/form-data" class="w-100" action="my-information">
                     <div class="card">
                         <div class="card-body">
                             <?php echo $rowFirstLast . $inputUsername . $inputEmail . $inputPhone . $inputAddress . $inputAvatar . $rowPassword; ?>

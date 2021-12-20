@@ -2,10 +2,9 @@
     $listImages =  $this->listImages;
     $d_none='';
     if(empty($listImages) && empty($this->result['image'])) $d_none = 'd-none';
-    $splide__list = '
-                <ul class="splide__list">
+    $splide__list = '<ul class="splide__list">
                     <li class="splide__slide">
-                        <img src="/jobaria/'.$this->result['image'].'">
+                        <img src="/jobaria/'. $this->result['image'].'">
                     </li>
                 ';
     if (!empty($listImages)){

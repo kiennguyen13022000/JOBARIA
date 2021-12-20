@@ -89,7 +89,7 @@ class Helper{
       return $htmlFormGroup;
   }
 
-    public static function cmsFormGroupFile($arrlabel, $type, $name, $value = null, $class  = null, $required = 'required', $formGroup, $errors, $folder = null, $task = 'add'){
+    public static function cmsFormGroupFile($arrlabel, $type, $name, $value = null, $class  = null, $required = 'required', $formGroup, $errors, $task = 'add'){
         $placeholder = ucfirst($name);
         $label1 = !empty($arrlabel['required']) ? '' : '<label for="'. $arrlabel['id'] .'">'. $arrlabel['label'] .'</label>';
         $resultInput = '';
@@ -106,11 +106,8 @@ class Helper{
 
         $img = '<img src="'. $value .'" class="preview__avatar ">';
         if($task == 'edit' && !empty($value)){
-
             $img = '<img src="'. $value .'" class="preview__avatar border rounded mt-2" width="100" height="130">';
-
         }
-
         $groupFile = '<div class="custom-file">
                            '. $strHtml .' 
                            <label class="custom-file-label" for="'.$arrlabel['id'].'">Choose file</label>
