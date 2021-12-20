@@ -89,4 +89,10 @@ class ProductModel extends Model
         $slug = '/product/'.$result['slug'].'-'.$id.'.html';
         return $slug;
     }
+    public function getReviews($id){
+        $query = "select rv.*, u.avatar from `reviews` as rv left join `users` as u on u.id = rv.user_id where `product_id` = $id";
+        $reviews = $this->ListRecord($query);
+
+        return $reviews;
+    }
 }

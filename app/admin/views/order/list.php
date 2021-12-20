@@ -30,15 +30,24 @@
                     $num = 0;
                     foreach ($this->data as $key => $value){
                         ++ $num;
+                        $payment_status = $value['status'];
                         //$category_name = $this->_model->getCategoryName($value['category_id']);
-                        if ($num % 2 == 0){
-                            $payment_status = '
+                        if ($payment_status == 2){
+                            $payment_status_html = '
                                 <div><span class="badge badge-soft-success">Paid</span>
                                                             </div>
                             ';
+                        }elseif ($payment_status == 1){
+                            $payment_status_html = '
+                                <div><span class="badge bg-warning">Unpaid</span></div>
+                            ';
+                        }elseif ($payment_status == 4){
+                            $payment_status_html = '
+                            <div><span class="badge badge-soft-danger">Cancelled</span></div>
+                        ';
                         }else{
-                            $payment_status = '
-                                <div><span class="badge badge-soft-warning">Awaiting Authorization</span></div>
+                            $payment_status_html = '
+                                <div><span class="badge badge-soft-warning">Awaiting Confirm</span></div>
                             ';
                         }
                         $status         = $value['status'] == 1 ? 'Shipped' : 'Delivered';
@@ -51,7 +60,7 @@
                                             </td>
                                             <td>'. $value['created_at'] .'</td>
                                             <td>$'. $value['total'] .'</td>
-                                            <td>'.$payment_status.'</td>
+                                            <td>'.$payment_status_html.'</td>
                                             <td>Mastercard</td>
                                             <td> <span data-control="product" data-id="'.$value['id'].'" data-status="'.$value['status'].'" class="'. $classStatus .' status__item">'. ucfirst($status) .'</span></td>
                                            
