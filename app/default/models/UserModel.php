@@ -9,6 +9,7 @@ class UserModel extends Model
     }
 
     public function form($arrParams){
+        $this->SetTable('users');
          $arrParams['updated_at'] = date('Y-m-d H:i:s', time());
          $id = $arrParams['id'];
          unset($arrParams['confirm_password']);

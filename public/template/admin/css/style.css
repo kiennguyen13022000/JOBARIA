@@ -200,7 +200,9 @@
  .form-wizard-header .nav-item {
      max-width: 400px;
  }
-
+ .preview__avatar {
+    max-width: 150px;
+ }
  .settings .preview__avatar {
      width: 100px;
      height: auto;

@@ -1,14 +1,16 @@
 <?php
     $htmlDailyDeal = '';
     foreach ($this->dailyDealProduct as $key => $value){
+        $url    ='/product/' . trim($value['product_name']). '-' . $value['id'];
+        $link = Url::filterURL($url) . '.html';
         $discount       = (int) $value['price'] - (int) $value['promotion'] * (int) $value['price'] / 100;
-        $formatDiscount = number_format($discount, 0, ',', '.') . ' ₫';
+        $formatDiscount = '$'.number_format($discount, 0, ',', '.') ;
         $new = $value['is_new'] == 0 ? '' : '<div class="new__product__msg px-3 py-1 btn ">New</div>';
         $htmlDailyDeal .= '<div class="slide_discount_item slide_discount_item_'. $value['id'] .'">
                                 <div class="row slide__content__countdown border-right border-lg-right-0 mx-0">
                                     <div class="col-lg-5">
                                         '. $new .'
-                                        <a class="d-inline-block p-2" href="detail.html">
+                                        <a class="d-inline-block p-2" href="'.$link.'">
                                             <img src="'. $value['image'] .'" class="w-100">
                                         </a>
                                     </div>
@@ -37,7 +39,7 @@
                                         </p>
                 
                                         <h3 class="product__name limit_line_1">
-                                            <a href="detail.html" title="SonicFuel Wireless Over-Ear Headphones">'. $value['product_name'] .'</a>
+                                            <a href="'.$link.'" title="SonicFuel Wireless Over-Ear Headphones">'. $value['product_name'] .'</a>
                                         </h3>
                 
                                         <div class="star_box">
@@ -48,7 +50,7 @@
                                             <i class="fa fa-star" aria-hidden="true"></i>
                                         </div>
                                         <div class="mt-3 mb-3 limit_line_2">'. $value['description'] .'</div>
-                                        <span class="text__price pr-2">'. number_format($value['price'], 0, ',', '.') . ' ₫'.'</span>
+                                        <span class="text__price pr-2">$'. number_format($value['price'], 0, ',', '.') . ' </span>
                                         <span class="price__discount">'. $formatDiscount .'</span> <br>
                                         <button class="btn btn__addtocart border px-4 py-2 mx-1 mt-3">Add to
                                             cart</button>

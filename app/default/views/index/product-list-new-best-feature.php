@@ -1,7 +1,7 @@
 <?php
     $newProductList = '';
     foreach ($this->newProductList as $key => $value){
-        $url    = $value['breakcrumbs'] . '/' . trim($value['product_name']). '_' . $value['id'];
+        $url    ='/product/' . trim($value['product_name']). '-' . $value['id'];
         $link = Url::filterURL($url) . '.html';
         $new        = $value['is_new'] == 0 ? '' : '<div class="d-inline-block px-3 py-1 rounded msg__status">New</div>';
         $promotion  = $value['promotion'] == 0 ? '' : '<div class="d-inline-block px-3 py-1 rounded msg__status">- '.$value['promotion'].'%</div>';
@@ -9,11 +9,12 @@
             $newProductList .= '<div class="slider_item h-100 align-items-baseline">';
         }
         $discount       = (int) $value['price'] - (int) $value['promotion'] * (int) $value['price'] / 100;
+
         $price = '';
         if ($value['promotion'] > 0){
-            $price = '<span class="text__price pr-2">'. number_format($value['price'], 0, ',', '.') .' ₫</span>';
+            $price = '<span class="text__price pr-2">$'. number_format($value['price'], 0, ',', '.') .'</span>';
         }
-        $formatDiscount = number_format($discount, 0, ',', '.') . ' ₫';
+        $formatDiscount = '$'.number_format($discount, 0, ',', '.');
         $newProductList .= ' <div class="item h-50 position-relative wrapper_product_item text-center">
                                 <div class="product__item d-inline-block border-right position-relative" href="#">
                                     <div class="d-flex justify-content-between position-absolute w-100 px-3" style="left: 0">
@@ -29,7 +30,7 @@
                                         '. $value['category_name'] .'
                                     </p>
                                     <h3 class="product__name limit_line_1">
-                                        <a href="detail.html" title="Janon vista fhd 4k">'. $value['product_name'] .'</a>
+                                        <a href="'.$link.'" title="Janon vista fhd 4k">'. $value['product_name'] .'</a>
                                     </h3>
                                     <div class="star_box">
                                         <i class="fa fa-star" aria-hidden="true"></i>

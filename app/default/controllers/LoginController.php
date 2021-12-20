@@ -11,9 +11,9 @@ class LoginController extends Controller
             $info_user = $this->_model->OneRecord($query);
             if (empty($info_user)){
                 Session::delete('user');
-                header('Location: /jobaria/');die();
+                header('Location: /');die();
             }
-            header('Location: /jobaria/');
+            header('Location: /');
         }
     }
     public function loginAction()
@@ -25,9 +25,9 @@ class LoginController extends Controller
             $login = $this->_model->login($this->_arrParam);
             if (!empty($login)){
 //                if (!empty($redirect)){
-//                    header('Location: /jobaria/'.$redirect);die();
+//                    header('Location: /'.$redirect);die();
 //                }
-                header('Location: /jobaria/my-account.html');die();
+                header('Location: /my-account.html');die();
             }
             $this->_view->block_errors = 'd-block';
             $this->_view->message_errors = 'Incorrect account or password';
@@ -41,7 +41,7 @@ class LoginController extends Controller
     }
     public function logoutAction(){
         Session::delete('user');
-        header('Location: /jobaria/');
+        header('Location: /');
     }
     public function forgotAction(){
         $this->_view->errors = '';

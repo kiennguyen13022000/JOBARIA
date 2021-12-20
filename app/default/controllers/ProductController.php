@@ -48,7 +48,7 @@ class ProductController extends Controller
         if ($id > 0){
             Session::set('review', '\'' . 'success' . '\'');
             $value = $this->_model->productInfo($this->_arrParam['id']);
-            $url    = $value['breakcrumbs'] . '/' . trim($value['product_name']). '_' . $value['id'];
+            $url    ='/product/' . trim($value['product_name']). '-' . $value['id'];
             $url = Url::filterURL($url) . '.html';
             Url::redirect(null,  null, null, null, $url);
         }

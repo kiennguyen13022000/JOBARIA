@@ -18,9 +18,9 @@
                         <th>Billing Name</th>
                         <th>Date</th>
                         <th>Total</th>
-                        <th>Payment Status</th>
-                        <th>Payment Method</th>
                         <th>Status</th>
+                        <th>Payment Method</th>
+                        <th class="d-none">Status</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -62,7 +62,7 @@
                                             <td>$'. $value['total'] .'</td>
                                             <td>'.$payment_status_html.'</td>
                                             <td>Mastercard</td>
-                                            <td> <span data-control="product" data-id="'.$value['id'].'" data-status="'.$value['status'].'" class="'. $classStatus .' status__item">'. ucfirst($status) .'</span></td>
+                                            <td class="d-none"> <span data-control="product" data-id="'.$value['id'].'" data-status="'.$value['status'].'" class="'. $classStatus .' status__item">'. ucfirst($status) .'</span></td>
                                            
                                             <td>
                                                 <ul class="list-inline table-action m-0">

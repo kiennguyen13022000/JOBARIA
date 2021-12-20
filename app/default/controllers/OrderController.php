@@ -6,18 +6,27 @@ class OrderController extends Controller
         parent::__construct($arrParams);
     }
     public function cartAction(){
+        $this->_view->sevenBanner           = $this->_model->getTopBanners(7);
+        $this->_view->settings              = $this->_model->getSettings();
+        $this->_view->categories            = $this->_model->getCategory();
         $this->_view->_module = $this->_arrParam['module'];
         $this->_view->_controller = $this->_arrParam['controller'];
         $this->_view->_action = $this->_arrParam['action'];
         $this->_view->render('order/cart');
     }
     public function successAction(){
+        $this->_view->sevenBanner           = $this->_model->getTopBanners(7);
+        $this->_view->settings              = $this->_model->getSettings();
+        $this->_view->categories            = $this->_model->getCategory();
         $this->_view->_module = $this->_arrParam['module'];
         $this->_view->_controller = $this->_arrParam['controller'];
         $this->_view->_action = $this->_arrParam['action'];
         $this->_view->render('order/success');
     }
     public function checkoutAction(){
+        $this->_view->sevenBanner           = $this->_model->getTopBanners(7);
+        $this->_view->settings              = $this->_model->getSettings();
+        $this->_view->categories            = $this->_model->getCategory();
         $this->_view->_loggedIn = 1;
         if(!empty($_SESSION['user'])){
             $user_id = $_SESSION['user']['user_id'];
@@ -26,7 +35,7 @@ class OrderController extends Controller
         }
         if (empty($_SESSION['user']['loggedIn']) || empty($info_user)){
             Session::delete('user');
-            //header('Location: /jobaria/login-redirect?redirect=checkout');
+            //header('Location: /login-redirect?redirect=checkout');
             $this->_view->_loggedIn = 0;
         }
         $this->_view->block_errors = '';

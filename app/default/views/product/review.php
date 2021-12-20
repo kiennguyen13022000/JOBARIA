@@ -1,11 +1,13 @@
 <?php
-$valueReview        = (isset($this->result['content'])) ? $this->result['content'] : '';
-$valueEmail         = (isset($this->result['email'])) ? $this->result['email'] : '';
-$valueName          = (isset($this->result['name'])) ? $this->result['name'] : '';
+$valueReview        = (isset($this->review['content'])) ? $this->review['content'] : '';
+$valueEmail         = (isset($this->review['email'])) ? $this->review['email'] : '';
+$valueName          = (isset($this->review['name'])) ? $this->review['name'] : '';
 $userInfo = Session::get('user');
+
 if (!empty($userInfo)){
+
     $userInfo           = $userInfo['userInfo'];
-    $valueEmail         = $userInfo ['email'];
+    $valueEmail         = !empty($userInfo ['email']) ? $userInfo ['email'] : '';
     $valueName          = $userInfo ['firstname'] . ' ' . $userInfo ['lastname'];
 }
 
@@ -79,11 +81,11 @@ if($ratingTotal > 0){
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <form id="id_new_comment_form" method="post" class="mb-2" action="/jobaria/<?php echo $linkReviewSubmit?>">
+                <form id="id_new_comment_form" method="post" class="mb-2" action="/<?php echo $linkReviewSubmit?>">
                     <h2 class="title">Write your review</h2>
                     <div class="row mt-3">
                         <div class="product clearfix col-12 col-lg-6">
-                            <img class="w-100" src="/jobaria/public/template/default/assets/images/product/medium-size/1-1.jpg"
+                            <img class="w-100" src="/public/template/default/assets/images/product/medium-size/1-1.jpg"
                                  alt="">
                             <div class="product_desc mt-3">
                                 <p class="product_name"><strong>HD Video Recording PJ Handycam

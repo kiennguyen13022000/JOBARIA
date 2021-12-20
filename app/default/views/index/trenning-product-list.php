@@ -12,15 +12,20 @@ foreach ($this->trenningProductList as $key => $value){
                 </li>';
 
     foreach ($value as $key2 => $value2){
+        $url    ='/product/' . trim($value2['product_name']). '-' . $value2['id'];
+      //  $link = Url::filterURL($url) . '.html';
+        $link = '';
         $new        = $value2['is_new'] == 0 ? '' : '<div class="d-inline-block px-3 py-1 rounded msg__status">New</div>';
         $promotion  = $value2['promotion'] == 0 ? '' : '<div class="d-inline-block px-3 py-1 rounded msg__status">- '.$value['promotion'].'%</div>';
 
-        $discount       = (int) $value['price'] - (int) $value2['promotion'] * (int) $value2['price'] / 100;
+        $discount       = (int) $value2['price'] - ((int) $value2['promotion'] * (int) $value2['price'] / 100);
         $price = '';
         if ($value2['promotion'] > 0){
-            $price = '<span class="text__price pr-2">'. number_format($value2['price'], 0, ',', '.') .' ₫</span>';
+            $price = '<span class="text__price pr-2">$'. number_format($value2['price'], 0, ',', '.') .'</span>';
         }
-        $formatDiscount = number_format($discount, 0, ',', '.') . ' ₫';
+
+        $formatDiscount = '$'.number_format($discount, 0, ',', '.') ;
+
         $itemTab .= '<div class="slider_item">';
         $itemTab .= '<div class="item position-relative wrapper_product_item text-center">
                           <div class="product__item d-inline-block border-right" href="#">';
@@ -28,7 +33,7 @@ foreach ($this->trenningProductList as $key => $value){
                                     '. $new . $promotion .'
                                 </div>
                                 <div class="overflow-hidden wrapper__poduct__image">
-                                    <a href="detail.html" title="">
+                                    <a '.$value2['id'].' href="'.$link.'" title="">
                                         <img src="'. $value2['image'] .'"
                                              class="product__img" alt="">
                                     </a>
@@ -38,7 +43,7 @@ foreach ($this->trenningProductList as $key => $value){
                                     '. $value2['category_name'] .'
                                 </p>
                                 <h3 class="product__name limit_line_1">
-                                    <a href="detail.html" title="Janon vista fhd 4k">'. $value2['product_name'] .'</a>
+                                    <a href="'.$link.'" title="Janon vista fhd 4k">'. $value2['product_name'] .'</a>
                                 </h3>
                                 <div class="star_box">
                                     <i class="fa fa-star" aria-hidden="true"></i>

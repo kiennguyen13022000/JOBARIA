@@ -42,7 +42,7 @@ $rowPassword = Helper::cmsRow($inputPassword . $inputRetypePassword);
                 </h1>
             </header>
             <div class="info_content">
-                <form method="post" enctype="multipart/form-data" class="w-100" action="my-information">
+                <form method="post" enctype="multipart/form-data" class="w-100" action="/my-information">
                     <div class="card">
                         <div class="card-body">
                             <?php echo $rowFirstLast . $inputUsername . $inputEmail . $inputPhone . $inputAddress . $inputAvatar . $rowPassword; ?>

@@ -322,7 +322,7 @@ function format2(n, currency = "") {
 function checkCoupon(coupon_code) {
   $.ajax({
     type: "POST",
-    url: 'index.php?module=default&controller=order&action=checkCoupon',
+    url: '/index.php?module=default&controller=order&action=checkCoupon',
     data: {coupon_code:coupon_code},
     dataType: 'json',
     async:false,
@@ -355,7 +355,7 @@ function renderProduct() {
   $("#empty_product").hide();
   $.ajax({
     type: "POST",
-    url: 'index.php?module=default&controller=order&action=renderProduct',
+    url: '/index.php?module=default&controller=order&action=renderProduct',
     data: {getlocalStorage:getlocalStorage},
     dataType: 'json',
     success: function(data) {
@@ -385,7 +385,7 @@ function renderPriceCheckout(num) {
 
   $.ajax({
     type: "POST",
-    url: 'index.php?module=default&controller=order&action=renderPriceCheckout',
+    url: '/index.php?module=default&controller=order&action=renderPriceCheckout',
     data: {
       checkOutStorage:checkOutStorage,
       productsCart:productsCart,
@@ -455,7 +455,7 @@ function renderCart(){
   if (dataCart.length >0){
     $.ajax({
       type: "POST",
-      url: 'index.php?module=default&controller=order&action=renderCart',
+      url: '/index.php?module=default&controller=order&action=renderCart',
       data: {dataCart:dataCart},
       dataType: 'json',
       success: function(data) {
@@ -532,7 +532,7 @@ if (document.querySelector(".zoom__plus") !== null && items_img_product.length >
 // modal
 $('.btnModalProduct').click(function (){
   var id = $(this).attr('data-id');
-  var url = '/jobaria/index.php?module=default&controller=index&action=info';
+  var url = '/index.php?module=default&controller=index&action=info';
   $('.hereModal').load(url , { id: id }, function (data){
       var main = new Splide(".splide_modal", {
         type: "fade",
@@ -581,14 +581,14 @@ $('.criterions_list .fa-star').hover(function() {
 
 $('.input__search').keyup(function (){
   var val   = $(this).val();
-  var url   = '/jobaria/index.php?module=default&controller=header&action=productSearch';
+  var url   = '/index.php?module=default&controller=header&action=productSearch';
   var data  = {keyword: val};
   setTimeout(function (){
       $('.search-product-list').load(url, data);
   }, 500);
 });
 $('.btn__favorite').click(function (){
-  var url   = '/jobaria/index.php?module=default&controller=user&action=addToFavorites';
+  var url   = '/index.php?module=default&controller=user&action=addToFavorites';
   var id    = $(this).attr('data-id');
   var data  = {id: id};
   $.post(url, data, function (data, status){

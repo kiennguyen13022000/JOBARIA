@@ -153,4 +153,11 @@ class IndexModel extends Model
         $result['childImage'] = $this->ListRecord($queryChildImage);
         return $result;
     }
+    public function getLink($id){
+        $this->setTable('products');
+        $query = 'SELECT slug FROM products WHERE `id` = ' . $id;
+        $result = $this->OneRecord($query);
+        $slug = '/product/'.$result['slug'].'-'.$id.'.html';
+        return $slug;
+    }
 }

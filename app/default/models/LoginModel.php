@@ -14,7 +14,7 @@ class LoginModel extends Model
         $password = $form['password'];
         $password =  md5($password);
 
-        $query = "SELECT username, id, password, firstname, lastname, avatar FROM users WHERE username='$username' and password='$password' and `status` = 1 and is_Admin = 0";
+        $query = "SELECT username, id, password, firstname, lastname, avatar, email FROM users WHERE username='$username' and password='$password' and `status` = 1 and is_Admin = 0";
         $result = $this->OneRecord($query);
         if (empty($result)) return false;
 

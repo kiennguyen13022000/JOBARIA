@@ -12,7 +12,7 @@ class UserController extends Controller
         }
         if ($arrParams['action'] != 'signup' && (empty($_SESSION['user']['loggedIn']) || empty($info_user))){
             Session::delete('user');
-            header('Location: /jobaria/');
+            header('Location: /');
         }
     }
     public function formAction(){
@@ -106,7 +106,7 @@ class UserController extends Controller
                         'user_id'   => $OneRecord['id'],
                         'userInfo'  => $OneRecord
                     );
-                    header('Location: /jobaria/my-account.html');
+                    header('Location: /my-account.html');
                 }
             }
         }

@@ -139,7 +139,8 @@
                                     <i class='bx bxs-user'></i> My account
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#"><i class='bx bxs-user-circle'></i> Sign up</a>
+                                    <a class="dropdown-item" href="/my-account.html"><i class='bx bxs-user-circle'></i> My account</a>
+                                    <a class="dropdown-item" href="/sign-up.html"><i class='bx bxs-user-circle'></i> Sign up</a>
                                     <a class="dropdown-item" href="/login.html"><i class='bx bx-log-in'></i> Sign in</a>
                                     <a class="dropdown-item" href="/logout.html"><i class='bx bx-log-out'></i> Log out</a>
                                 </div>
@@ -176,7 +177,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="header_main">
