@@ -6,7 +6,6 @@ class Bootstrap{
 
     public function init(){
         $this->setParam();
-
         $controllerName	= ucfirst($this->_params['controller']) . 'Controller';
         $filePath	= APPLICATION_PATH . $this->_params['module'] . DS . 'controllers' . DS . $controllerName . '.php';
         

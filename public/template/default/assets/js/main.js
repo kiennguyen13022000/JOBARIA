@@ -558,7 +558,7 @@ $('.btnModalProduct').click(function (){
       $('#modal_product').modal();
   })
 });
-
+$('#rating').val(1);
 $('.criterions_list .fa-star').hover(function() {
       var idexCurrent = $(this).index();
       var i;
@@ -587,20 +587,53 @@ $('.input__search').keyup(function (){
       $('.search-product-list').load(url, data);
   }, 500);
 });
-$('.btn__favorite').click(function (){
-  var url   = '/index.php?module=default&controller=user&action=addToFavorites';
-  var id    = $(this).attr('data-id');
-  var data  = {id: id};
-  $.post(url, data, function (data, status){
-      if (data == 'error')
-        alert('Bạn chưa đăng nhập');
-      else {
-        let options = {
-          position: 'top-right',
-          animationDuration: 300
-        };
-        new AWN(options).modal('<b>Bạn đã thêm thành công.</b>');
+
+$('.btn__favorite').click(function () {
+
+  var id = $(this).attr('data-id');
+  var data = {id: id};
+  var url = '/index.php?module=default&controller=account&action=addToFavorites';
+  var btn = this;
+
+  $.post(url, data, function (data2){
+    if (data2.result == 'error')
+      alert('Bạn chưa đăng nhập');
+    else {
+      let options = {
+        position: 'top-right',
+        animationDuration: 300
       }
-  });
+      if (data2.result == 'already-exist'){
+        $(btn).css({ backgroundColor: '#fff' });
+        $(btn).find('i').css({color: '#343a40 '});
+      }else{
+        new AWN(options).modal('<b>Sản phẩm đã được thêm vào danh sách yêu thích.</b>');
+        $(btn).css({ backgroundColor: '#0184c5' });
+        $(btn).find('i').css({color: '#fff '});
+      }
+    }
+  }, 'json');
 });
+
+$('.btn__favorites__page').click(function () {
+
+  var id = $(this).attr('data-id');
+  var data = {id: id};
+  var url = '/index.php?module=default&controller=account&action=addToFavorites';
+  var btn = this;
+
+  $.post(url, data, function (data2){
+      let options = {
+        position: 'top-right',
+        animationDuration: 300
+      }
+      if (data2.result == 'already-exist'){
+        $(btn).find('i').css({color: '#343a40 '});
+      }else{
+        new AWN(options).modal('<b>Sản phẩm đã được thêm vào danh sách yêu thích.</b>');
+        $(btn).find('i').css({ color: '#0184c5' });
+      }
+  }, 'json');
+});
+
 

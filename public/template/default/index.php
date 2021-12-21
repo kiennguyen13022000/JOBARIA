@@ -20,6 +20,7 @@
     />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.3/default-skin/default-skin.min.css" integrity="sha512-Rck8F2HFBjAQpszOB9Qy+NVLeIy4vUOMB7xrp46edxB3KXs2RxXRguHfrJqNK+vJ+CkfvcGqAKMJTyWYBiBsGA==" crossorigin="anonymous"
           referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="/public/notification/index.css">
     <link rel="stylesheet" href="/public/template/default/assets/css/main.css">
     <link rel="stylesheet" href="/public/template/default/assets/css/account.css">
     <script src="https://momentjs.com/downloads/moment.js"></script>
@@ -53,7 +54,7 @@
 <script src="/public/template/default/assets/js/jquery-confirm.js"></script>
 <script src="/public/template/default/assets/js/splide.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.3/photoswipe.min.js" integrity="sha512-2R4VJGamBudpzC1NTaSkusXP7QkiUYvEKhpJAxeVCqLDsgW4OqtzorZGpulE3eEA7p++U0ZYmqBwO3m+R2hRjA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+<script src="/public/notification/index.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.3/photoswipe-ui-default.min.js" integrity="sha512-SxO0cwfxj/QhgX1SgpmUr0U2l5304ezGVhc0AO2YwOQ/C8O67ynyTorMKGjVv1fJnPQgjdxRz6x70MY9r0sKtQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="/public/template/default/assets/js/main.js"></script>
 <script>
@@ -63,10 +64,17 @@
     };
     let success = <?php echo Session::get("success", '\'' . 'default' . '\'' ); Session::delete('success');?>;
     let msg = '';
+
     if (success == 'edit'){
         msg = 'Update successful';
         let notifier = new AWN(options);
         notifier.success(msg, {durations: {success: 2000}});
+    }
+
+    if (success == 'review'){
+        msg = 'Cảm ơn bạn đã đánh giá sản phẩm.';
+        let notifier = new AWN(options);
+        notifier.modal(msg);
     }
 </script>
 </body>

@@ -22,7 +22,9 @@ class ProductModel extends Model
 
     public function review($review, $product_id){
         $this->SetTable('reviews');
-        $review['user_id']      = $_SESSION['user']['user_id'];
+        if (!empty($_SESSION['user'])){
+            $review['user_id']      = $_SESSION['user']['user_id'];
+        }
         $review['status']         = 1;
         $review['product_id']     = $product_id;
         $review['created_at']     = date('Y-m-d H:i:s', time());

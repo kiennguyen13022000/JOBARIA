@@ -277,7 +277,7 @@ class OrderController extends Controller
             'total_price_cart' => '$'.$total_price_cart,
             'total_products' => $total_products,
             'renderCartHtml' => $renderCartHtml,
-        ));die();
+        ));
     }
     public function renderPriceCheckoutAction(){
         $productsCart = isset($_POST['productsCart']) ? $_POST['productsCart'] : array();

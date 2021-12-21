@@ -46,14 +46,17 @@ class ProductController extends Controller
         $this->_view->categories            = $this->_model->getCategory();
         $id = $this->_model->review($this->_arrParam['form'], $this->_arrParam['id']);
         if ($id > 0){
-            Session::set('review', '\'' . 'success' . '\'');
+            Session::set('success', '\'' . 'review' . '\'');
             $value = $this->_model->productInfo($this->_arrParam['id']);
             $url    ='/product/' . trim($value['product_name']). '-' . $value['id'];
             $url = Url::filterURL($url) . '.html';
             Url::redirect(null,  null, null, null, $url);
         }
     }
+    public function testAction(){
+        echo json_encode(['result' => 'abc']);
 
+    }
     private function createLinkCss(){
         $css = array(
             array(

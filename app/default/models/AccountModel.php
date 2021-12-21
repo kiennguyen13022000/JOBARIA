@@ -1,47 +1,7 @@
 <?php
 
-class UserModel extends Model
+class AccountModel extends Model
 {
-    public function __construct($param = null)
-    {
-        parent::__construct($param);
-        $this->setTable('users');
-    }
-
-    public function form($arrParams){
-        $this->SetTable('users');
-         $arrParams['updated_at'] = date('Y-m-d H:i:s', time());
-         $id = $arrParams['id'];
-         unset($arrParams['confirm_password']);
-         if (empty($arrParams['password']))
-             unset($arrParams['password']);
-         else
-             $arrParams['password']   = md5($arrParams['password']);
-
-         if (!empty($arrParams['avatar']['name'])){
-            $info = $this->info($id);
-            $uploadObj = new Upload();
-            $uploadObj->removeFile('users', null, $info['avatar']);
-            $arrParams['avatar'] = $uploadObj->uploadFile($arrParams['avatar'], 'users', 100, 130);
-         }else{
-             unset($arrParams['avatar']);
-         }
-
-         $this->Update($arrParams, [['id', $id, '']]);
-
-    }
-    public function signup($arrParams){
-        $arrParams['created_at'] = date('Y-m-d H:i:s', time());
-        $arrParams['password']   = md5($arrParams['password']);
-        unset($arrParams['confirm_password']);
-        $this->Insert($arrParams);
-    }
-    public function info($id){
-        $query = 'select * from users where `id` = ' . $id;
-        $result = $this->OneRecord($query);
-        return $result;
-    }
-
     public function getTopBanners($position){
         $this->SetTable('banners');
         $query  = "select * from `$this->table` where `position` = $position and `status` = 1";
@@ -91,5 +51,24 @@ class UserModel extends Model
         return $newResult;
     }
 
+    public function getWishList($user){
+         $result = [];
+         if (!empty([$user])){
+             $query = 'select p.* from `products` as p join `favorites` as f on p.id = f.product_id where f.user_id = ' . $user['user_id'];
+             $result = $this->ListRecord($query);
+         }
+         return $result;
+    }
 
+    public function addToFavorites($id, $userId){
+        $this->SetTable('favorites');
+        $params = ['user_id' => $userId, 'product_id' => $id];
+        $query = 'select `id` from `favorites` where `user_id` = ' .$userId . ' and `product_id` = ' . $id;
+        $result = $this->OneRecord($query);
+        if (!empty($result)){
+            $this->Delete([$result['id']]);
+            return 'already-exist';
+        }
+        return $this->Insert($params);
+    }
 }

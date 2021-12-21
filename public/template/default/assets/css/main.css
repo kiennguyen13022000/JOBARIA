@@ -2642,3 +2642,15 @@ input.number_product[type="number"] {
   object-position: center;
 }
 
+.class__favorite{
+  background-color: #0184c5;
+  color: #fff !important;
+}
+
+.btn__favorites__page{
+  color: #0184c5;;
+}
+
+.favorites_product td{
+   vertical-align: middle;
+}

@@ -13,7 +13,7 @@ RewriteRule ^my-account.html$ 			index.php?module=default&controller=user&action
 RewriteRule ^my-information$ 			index.php?module=default&controller=user&action=form
 RewriteRule ^order-history$			index.php?module=default&controller=user&action=order
 RewriteRule ^review-history$ 			index.php?module=default&controller=user&action=review
-RewriteRule ^my-wishlists$ 			index.php?module=default&controller=user&action=wishlist
+RewriteRule ^my-wishlists$ 			index.php?module=default&controller=account&action=wishlist
 RewriteRule ^cart.html$			    index.php?module=default&controller=order&action=cart
 RewriteRule ^checkout$			    index.php?module=default&controller=order&action=checkout
 RewriteRule ^success$			    index.php?module=default&controller=order&action=success

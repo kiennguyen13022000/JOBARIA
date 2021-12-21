@@ -123,24 +123,5 @@ class UserController extends Controller
         $this->_view->_controller = $this->_arrParam['controller'];
         $this->_view->render('user/dashboard');
     }
-
-    public function wishlistAction(){
-        $this->_view->sevenBanner           = $this->_model->getTopBanners(7);
-        $this->_view->settings              = $this->_model->getSettings();
-        $this->_view->render('account/wishlist');
-    }
-
-    public function addToFavoritesAction(){
-
-        $userId = Session::get('user')['user_id'];
-        if (empty($userId)){
-            echo json_encode('error');
-        }else{
-            $id = $this->_arrParam['id'];
-            $this->_model->addToFavorites($id, $userId);
-            echo json_encode('success');
-        }
-
-    }
-
 }
+

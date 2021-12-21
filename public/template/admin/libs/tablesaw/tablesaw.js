@@ -1722,7 +1722,7 @@
 	"use strict";
 
   var document = window.document;
-// Account for Tablesaw being loaded either before or after the DOMContentLoaded event is fired.
+// AccountModel for Tablesaw being loaded either before or after the DOMContentLoaded event is fired.
 var domContentLoadedTriggered = /complete|loaded/.test(document.readyState);
 document.addEventListener("DOMContentLoaded", function() {
 	domContentLoadedTriggered = true;
@@ -1751,7 +1751,7 @@ var Tablesaw = {
 		Tablesaw.$(element || document).trigger("enhance.tablesaw");
 	},
 	init: function(element) {
-		// Account for Tablesaw being loaded either before or after the DOMContentLoaded event is fired.
+		// AccountModel for Tablesaw being loaded either before or after the DOMContentLoaded event is fired.
 		domContentLoadedTriggered =
 			domContentLoadedTriggered || /complete|loaded/.test(document.readyState);
 		if (!domContentLoadedTriggered) {

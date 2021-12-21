@@ -19,48 +19,31 @@ class IndexModel extends Model
         return $this->ListRecord($query);
     }
 
-    public function getNewProductList(){
+    public function getNewProductList($type, $field){
+        $user = Session::get('user');
         $this->SetTable('products');
         $query[]    = "select p.*, child.name as category_name, GROUP_CONCAT(parent.name order by parent.left) as breakcrumbs";
         $query[]    = "from `$this->table` as p join `categories` as child, `categories` as parent";
         $query[]    = "WHERE p.status = 1 and p.category_id = child.id";
         $query[]    = "and child.left BETWEEN parent.left AND parent.right";
-        $query[]    = "AND parent.left > 0 AND p.is_new = 1";
+        $query[]    = "AND parent.left > 0 AND p.$field = 1";
         $query[]    = "GROUP BY p.id";
         $query[]    = "HAVING COUNT(p.id) = SUM(parent.status)";
         $query[]    = "ORDER BY parent.left";
         $query      = implode(' ', $query);
-        return $this->ListRecord($query);
-    }
-
-    public function getBestsellerProductList(){
-        $this->SetTable('products');
-        $query[]    = "select p.*, child.name as category_name, GROUP_CONCAT(DISTINCT parent.name order by parent.left) as breakcrumbs";
-        $query[]    = "from `$this->table` as p join `categories` as child, `categories` as parent";
-        $query[]    = "WHERE p.status = 1 and p.category_id = child.id";
-        $query[]    = "and child.left BETWEEN parent.left AND parent.right";
-        $query[]    = "AND parent.left > 0 AND p.is_new = 1";
-        $query[]    = "GROUP BY p.id";
-        $query[]    = "HAVING COUNT(p.id) = SUM(parent.status)";
-        $query[]    = "ORDER BY parent.left";
-        $query      = implode(' ', $query);
-
-        return $this->ListRecord($query);
-    }
-
-    public function getFeatureProductList(){
-        $this->SetTable('products');
-        $query[]    = "select p.*, child.name as category_name, GROUP_CONCAT(DISTINCT parent.name order by parent.left) as breakcrumbs";
-        $query[]    = "from `$this->table` as p join `categories` as child, `categories` as parent";
-        $query[]    = "WHERE p.status = 1 and p.category_id = child.id";
-        $query[]    = "and child.left BETWEEN parent.left AND parent.right";
-        $query[]    = "AND parent.left > 0 AND p.feature = 1";
-        $query[]    = "GROUP BY p.id";
-        $query[]    = "HAVING COUNT(p.id) = SUM(parent.status)";
-//        $query[]    = "ORDER BY parent.left";
-        $query      = implode(' ', $query);
-
-        return $this->ListRecord($query);
+        $result = [];
+        if (!empty($user)){
+            $user_id = $user['user_id'];
+            $queryFavorites = 'select `product_id` from `favorites` as f where f.user_id = ' . $user_id;
+            $favorites = $this->ListRecord($queryFavorites);
+            $newFavorites = [];
+            foreach ($favorites as $value){
+                $newFavorites[] = $value['product_id'];
+            }
+            $result['favorites'] =  $newFavorites;
+        }
+        $result[$type]= $this->ListRecord($query);
+        return $result;
     }
 
     public function getCategory(){

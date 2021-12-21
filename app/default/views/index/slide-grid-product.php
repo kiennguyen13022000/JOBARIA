@@ -1,9 +1,9 @@
 <?php
 
-function createHtmlGrid($productList){
+function createHtmlGrid($productList, $type){
     $html = '';
     $k = 1;
-    foreach ($productList as $key => $value){
+    foreach ($productList[$type] as $key => $value){
         if ($key == 0){
             $html .= '<div class="item">';
         }
@@ -35,7 +35,7 @@ function createHtmlGrid($productList){
             $html .= '</div><div class="item">';
         }
 
-        if (count($productList) - 1 == $key && $key % 3 != 0)
+        if (count($productList[$type]) - 1 == $key && $key % 3 != 0)
             $html .= '</div>';
         $k++;
     }
@@ -43,9 +43,9 @@ function createHtmlGrid($productList){
     return $html;
 }
 
-$htmlNewProduct = createHtmlGrid($this->newProductList);
-//$htmlBestsellerProduct = createHtml($this->bestsellerProductList);
-$htmlFeatureProduct = createHtmlGrid($this->featureProductList);
+$htmlNewProduct = createHtmlGrid($this->newProductList, 'newProductList');
+$htmlBestsellerProduct = createHtmlGrid($this->bestSellerProductList, 'bestSellerProductList' );
+$htmlFeatureProduct = createHtmlGrid($this->featureProductList, 'featureProductList');
 ?>
 <!-- product slide  -->
 <div class="container">
@@ -63,7 +63,7 @@ $htmlFeatureProduct = createHtmlGrid($this->featureProductList);
                 Bestseller
             </div>
             <div class="owl-carousel  product_style_mall product_style">
-<!--                --><?php //echo $htmlBestsellerProduct; ?>
+                <?php echo $htmlBestsellerProduct; ?>
             </div>
         </div>
         <div class="col-lg-4">
