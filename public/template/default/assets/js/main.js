@@ -131,9 +131,20 @@ $(function () {
       $(this).next().val(+$(this).next().val() - 1);
   });
   //change number cart page
+  var clickDisabled = false;
   $(document).on("click", ".quantity_up_cart", function () {
-    $(this).prev().val(+$(this).prev().val() + 1);
-    var index = $(this).data("index");
+    var $_this = $(this);
+
+    if (clickDisabled)
+      return;
+
+    $_this.prev().val(+$_this.prev().val() + 1);
+    var max  = $_this.attr('max');
+    if ($_this.prev() > max) {
+      alert("You can only order up to "+max+" products");
+      $this.val(max);
+    }
+    var index = $_this.data("index");
     number_product = $(".number_product[data-index=" + index + "]").val();
     unit_price_product = $(".unit_price_product_val[data-index=" + index + "]").val();
     let products = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
@@ -143,8 +154,13 @@ $(function () {
       }
     });
     localStorage.setItem("products", JSON.stringify(products));
-
     pricingProduct(index, number_product, unit_price_product);
+
+    clickDisabled = true;
+    setTimeout(function(){clickDisabled = false;}, 1000);
+
+
+
   });
   $(document).on("click", ".quantity_down_cart", function () {
     if ($(this).next().val() > 1)
@@ -168,19 +184,26 @@ $(function () {
   });
   $(document).on("keyup", ".number_product", function () {
     var $this = $(this);
-    if ($this.val() > 99) {
-      alert("You can only order up to 99 products");
-      $this.val("99");
+    var max  = $this.attr('max');
+    if ($this.val() > max) {
+      alert("You can only order up to "+max+" products");
+      $this.val(max);
     }
     if ($this.val() < 1) {
       alert("Quantity must be at least 1");
       $this.val("1");
     }
-    var product_id = $(this).data("product-id");
-    number_product = $(".number_product[data-product-id=" + product_id + "]").val();
-    unit_price_product = $(".unit_price_product_val[data-product-id=" + product_id + "]").val();
-
-    pricingProduct(product_id, number_product, unit_price_product);
+    var index = $(this).data("index");
+    number_product = $(".number_product[data-index=" + index + "]").val();
+    unit_price_product = $(".unit_price_product_val[data-index=" + index + "]").val();
+    let products = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
+    products.forEach((product,key)=>{
+      if (index == key){
+        product.number_product = $('.number_product[data-index='+key+']').val();
+      }
+    });
+    localStorage.setItem("products", JSON.stringify(products));
+    pricingProduct(index, number_product, unit_price_product);
   });
   $(document).on("click", ".btn_proceed_checkout", function () {
     var $this = $(this);
@@ -436,7 +459,9 @@ function pricingTotalProducts() {
 
   $(".cart_table .total_price_product").each(function () {
     var get_textbox_value = $(this).val();
+
     if ($.isNumeric(get_textbox_value)) {
+
       calculated_total_sum += parseFloat(get_textbox_value);
     }
   });

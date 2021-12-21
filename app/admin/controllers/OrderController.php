@@ -74,9 +74,7 @@ class OrderController extends Controller
         $this->_view->title = 'List product';
         $this->createLinkCss();
         $this->createLinkJs();
-
         $this->_view->data = $this->_model->list();
-
         $this->_view->render('order/list');
     }
     public function deleteAction(){
