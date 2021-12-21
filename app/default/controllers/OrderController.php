@@ -56,8 +56,8 @@ class OrderController extends Controller
 
             $client_id = $_SESSION['user']['user_id'];
             $number_type = $_POST['number_type'];
-            $LastId = $this->_model->getLastId('orders') + 1;
-            $orderParams['code'] = '#ORDER'.$LastId;
+            $getMaxId = $this->_model->getMaxId();
+            $orderParams['code'] = '#ORDER'.$getMaxId;
             $orderParams['status'] = 0;
             $orderParams['created_at'] = date('Y-m-d H:i:s');
             $orderParams['client_id'] = $client_id;
@@ -170,7 +170,7 @@ class OrderController extends Controller
                                 <a href="'.$link.'" class="product_name">'.$info['product_name'].'</a>
                             </td>
                             <td class="text-bold">
-                              <span class="unit_price_product_text">$'.$info['price'].'</span>
+                              <span class="unit_price_product_text">$'.$new_price.'</span>
                               <input type="hidden" data-index="'.$k.'" value="'.$new_price.'"
                                 class="unit_price_product_val">
                             </td>

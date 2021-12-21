@@ -517,7 +517,7 @@
                                     </label>
                                 </li>
                                 <li class="nav-item show__cart">
-                                    <a href="cart.html"
+                                    <a href="/cart.html"
                                        class="  text-center text-white d-inline-block  position-relative cart_box ">
                                         <i class="fa fa-shopping-cart " aria-hidden="true "></i>
                                         <span class="total__cart position-absolute">0</span>
@@ -547,7 +547,7 @@
 
 
                         <div class="d-lg-inline-block d-none show__cart text-right position-relative ">
-                            <a href="cart.html"
+                            <a href="/cart.html"
                                class=" text-center text-white d-inline-block  position-relative cart_box ">
                                 <i class="fa fa-shopping-cart " aria-hidden="true "></i>
                                 <span class="total__cart position-absolute">0</span>

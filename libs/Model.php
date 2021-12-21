@@ -191,6 +191,11 @@ class Model{
         $result = $this->OneRecord($query);
         return $result['max'];
     }
-
+    public function getMaxId(){
+        $this->setTable('orders');
+        $query = "SELECT max(id) as max FROM orders";
+        $result = $this->OneRecord($query);
+        return $result['max'] + 1;
+    }
 }
 ?>
