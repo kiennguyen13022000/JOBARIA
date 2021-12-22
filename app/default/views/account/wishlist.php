@@ -36,6 +36,15 @@
                     </tbody>
                 </table>';
 ?>
+<nav aria-label="breadcrumb" class="nav_breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="jobaria/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
+        </ol>
+    </div>
+
+</nav>
 <section class="main_page main_page_cart">
     <div class="container">
         <?php

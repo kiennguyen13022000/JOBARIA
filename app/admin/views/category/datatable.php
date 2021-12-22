@@ -31,6 +31,8 @@ foreach ($this->data as $key => $value){
 
     $status         = $value['status'] == 1 ? 'active' : 'deactive';
     $classStatus    = $value['status'] == 1 ? 'activeStatus' : 'deactive';
+    $trending         = $value['trending'] == 1 ? 'active' : 'deactive';
+    $classTrending    = $value['trending'] == 1 ? 'activeStatus' : 'deactive';
     $xhtml .= '<tr id="row-'. $value['id'] .'">
                                             <td class="d-none">'. $value['left'] .'</td>
                                             <td>'. $img. '</td>
@@ -41,9 +43,11 @@ foreach ($this->data as $key => $value){
                                             </td>
                                             <td class="font-weight-bold">'. $value['parentName'] .'</td>
                                             <td>
+                                                <span  data-control="category" data-id="'.$value['id'].'" data-trending="'.$value['trending'].'" class="trending__item '. $classTrending .'">'. ucfirst($trending) .'</span>
+                                            </td>
+                                            <td>
                                                 <span  data-control="category" data-id="'.$value['id'].'" data-status="'.$value['status'].'" class="status__item '. $classStatus .'">'. ucfirst($status) .'</span>
                                             </td>
-                                          
                                             <td>
                                                 <ul class="list-inline table-action m-0">                
                                                     <li class="list-inline-item">

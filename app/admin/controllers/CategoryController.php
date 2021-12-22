@@ -73,13 +73,11 @@ class CategoryController extends Controller
             if(!empty($info['image'])){
                 $upload = new Upload();
                 $upload->removeFile('category', null, $info['image']);
-
             }
             Session::set('success', '\'' . 'delete' . '\'');
         }
         echo json_encode(['affected' => $affected]);
     }
-
     public function moveNodeAction(){
         $data = $this->_model->moveNode($this->_arrParam['type'], $this->_arrParam['id']);
         $this->_view->data = $data;
@@ -90,6 +88,12 @@ class CategoryController extends Controller
         $status = $this->_arrParam['status'] == 1 ? 0 : 1;
         $affected = $this->_model->changeStatus($id, $status);
         echo json_encode(['affected' => $affected, 'status' => $status]);
+    }
+    public function changeTrendingAction(){
+        $id = $this->_arrParam['id'];
+        $trending = $this->_arrParam['trending'] == 1 ? 0 : 1;
+        $affected = $this->_model->changeTrending($id, $trending);
+        echo json_encode(['affected' => $affected, 'trending' => $trending]);
     }
     private function createLinkCss(){
         $css = array(

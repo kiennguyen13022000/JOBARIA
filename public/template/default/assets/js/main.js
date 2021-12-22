@@ -382,6 +382,7 @@ function renderProduct() {
     data: {getlocalStorage:getlocalStorage},
     dataType: 'json',
     success: function(data) {
+      console.log(data)
       if (data.msg == 'ok'){
         $('#cart_table').html(data.productsContent);
         $('input[name="number_type"]').val(data.number_type);

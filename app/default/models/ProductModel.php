@@ -21,6 +21,7 @@ class ProductModel extends Model
     }
 
     public function review($review, $product_id){
+
         $this->SetTable('reviews');
         if (!empty($_SESSION['user'])){
             $review['user_id']      = $_SESSION['user']['user_id'];
@@ -28,7 +29,7 @@ class ProductModel extends Model
         $review['status']         = 1;
         $review['product_id']     = $product_id;
         $review['created_at']     = date('Y-m-d H:i:s', time());
-       
+        $review = $this->prepare($review);
         return $this->Insert($review);
     }
 
@@ -83,7 +84,6 @@ class ProductModel extends Model
     public function getReviews($id){
         $query = "select rv.*, u.avatar from `reviews` as rv left join `users` as u on u.id = rv.user_id where `product_id` = $id";
         $reviews = $this->ListRecord($query);
-
         return $reviews;
     }
     public function getTopBanners($position){

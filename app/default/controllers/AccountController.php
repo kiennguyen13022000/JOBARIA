@@ -11,7 +11,15 @@ class AccountController extends Controller
         $this->_view->wishlists     = $this->_model->getWishList($user);
         $this->_view->render('account/wishlist');
     }
-
+    public function historyOrderAction(){
+        $this->_view->sevenBanner           = $this->_model->getTopBanners(7);
+        $this->_view->settings              = $this->_model->getSettings();
+        $this->_view->categories            = $this->_model->getCategory();
+        $this->_view->settings              = $this->_model->getSettings();
+        $user = Session::get('user', []);
+        $this->_view->historyOrder     = $this->_model->historyOrder($user);
+        $this->_view->render('account/order-history');
+    }
     public function addToFavoritesAction(){
         $user = Session::get('user', []);
         if (empty($user)){

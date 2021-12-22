@@ -59,6 +59,14 @@ class AccountModel extends Model
          }
          return $result;
     }
+    public function historyOrder($user){
+        $result = [];
+        if (!empty([$user])){
+            $query = 'select id, code, status, first_name, last_name, total, created_at, phone from `orders` as o where o.client_id = ' . $user['user_id'];
+            $result = $this->ListRecord($query);
+        }
+        return $result;
+    }
 
     public function addToFavorites($id, $userId){
         $this->SetTable('favorites');

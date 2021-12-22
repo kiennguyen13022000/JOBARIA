@@ -2,8 +2,8 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <table id="scroll-horizontal-datatable" class="table w-100 nowrap table-striped table-data">
-                    <thead>
+                <table id="scroll-horizontal-datatable" class="table w-100 nowrap table-data">
+                    <thead class="thead-light">
                     <tr>
                         <th>Avatar</th>
                         <th>First name</th>

@@ -83,6 +83,7 @@ function moveNode(type, id){
     var data = {type: type, id: id};
     $('#datatable').load('/index.php?module=admin&controller=category&action=moveNode', data, function (){
         changeStatus();
+        changeTrending();
     });
 }
 function changeStatus(){
@@ -108,6 +109,32 @@ function changeStatus(){
         }, 'json');
     });
 }
+changeStatus();
+
+function changeTrending(){
+    $('.trending__item').click(function (){
+        var id = $(this).attr('data-id');
+        var trending = $(this).attr('data-trending');
+        var control = $(this).attr('data-control');
+        var url = '/index.php?module=admin&controller=' + control + '&action=changeTrending';
+        var dataPost = {id: id, trending: trending};
+        var obj = this;
+        $.post(url, dataPost, function (data){
+            if (data.affected > 0){
+                $(obj).attr('data-trending', data.trending);
+                if(data.trending == 1){
+                    $(obj).text('Active');
+                    $(obj).addClass('activeStatus').removeClass('deactive');
+                }else{
+                    $(obj).text('Deactive');
+                    $(obj).addClass('deactive').removeClass('activeStatus');
+                }
+            }
+
+        }, 'json');
+    });
+}
+changeTrending();
 changeStatus();
 
 $('.is__admin__item').click(function (){

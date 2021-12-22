@@ -53,7 +53,7 @@ class Model{
     }
 
     public function Query($sql){
-
+//        echo $sql; die();
         $result = mysqli_query($this->connect, $sql);
         $this->resultQuery = $result;
 
@@ -70,6 +70,12 @@ class Model{
         $query['cols'] = substr($cols, 2);
         $query['vals'] = substr($vals, 2);
         return $query;
+    }
+    public function prepare($arrParam){
+        foreach ($arrParam as $key => $value){
+            $arrParam[$key] = mysqli_real_escape_string($this->connect, $value);
+        }
+        return $arrParam;
     }
     public function Insert($param, $type = 'single'){
         if($type == 'single'){

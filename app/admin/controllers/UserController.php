@@ -88,21 +88,12 @@ class UserController extends Controller
 
     public function deleteAction(){
         $info = $this->_model->info($this->_arrParam['id']);
-
-
-        try
-        {
-            $affected = $this->_model->deleteItem($this->_arrParam['id']);
-            if ($affected > 0){
-                $upload = new Upload();
-                $upload->removeFile('users', null, $info['avatar']);
-                Session::set('success', '\'' . 'delete' . '\'');
-            }
-        }catch (Exception $e){
-
+        $affected = $this->_model->deleteItem($this->_arrParam['id']);
+        if ($affected > 0){
+            $upload = new Upload();
+            $upload->removeFile('users', null, $info['avatar']);
+            Session::set('success', '\'' . 'delete' . '\'');
         }
-
-
         echo json_encode(['affected' => $affected]);
     }
 
@@ -118,14 +109,50 @@ class UserController extends Controller
         $affected = $this->_model->changeIsAdmin($id, $isAdmin);
         echo json_encode(['affected' => $affected, 'isAdmin' => $isAdmin]);
     }
-
     public function profileAction(){
         $this->_view->title = 'Profile';
         $this->createLinkCss();
         $this->createLinkJs();
+        $this->_view->control = $this->_arrParam['controller'];
+        $this->_view->errors = null;
+        $this->_view->id = $this->_arrParam['id'];
         $this->_view->info = $this->_model->info($this->_arrParam['id']);
         $this->_view->render('user/profile');
     }
+
+    public function changePasswordAction(){
+        $this->_view->control = $this->_arrParam['controller'];
+        $this->_view->errors = null;
+        $this->_view->title = 'Profile';
+        $this->createLinkCss();
+        $this->createLinkJs();
+        $user_id = Session::get('userAdmin')['user_id'];
+        if (isset($this->_arrParam['form'])){
+            $passwordOld = md5($this->_arrParam['form']['old_password']);
+            $query = 'select `id` from `users` where `id` = ' . $user_id . ' and `password` = ' . "'". $passwordOld . "'";
+            $validate = new Validate($this->_arrParam['form']);
+            $validate->addRule('old_password', 'old-password', ['database' => $this->_model, 'query' => $query])
+                ->addRule('password', 'password', ['action' => 'edit'])
+                ->addRule('confirm_password', 'confirm_password');
+            $validate->run();
+            if(!empty($validate->getError())){
+                $this->_view->errors = $validate->getError();
+                $this->_view->result = $validate->getResult();
+            }else{
+                $this->_model->changePassword($user_id, $this->_arrParam['form']['password']);
+                if($this->_model->affectedAction() == 1){
+                    Session::set('success', '\'' . 'edit'.  '\'' );
+                    Url::redirect('admin', 'user', 'profile', ['id' => $user_id]);
+                }
+
+            }
+        }
+
+        $this->_view->id = $this->_arrParam['id'];
+        $this->_view->info = $this->_model->info($this->_arrParam['id']);
+        $this->_view->render('user/profile');
+    }
+
 
     private function createLinkCss(){
         $css = array(

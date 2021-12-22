@@ -31,7 +31,6 @@ class OrderController extends Controller
             $this->_view->title     = $this->_view->result['product_name'].' | Product';
             $this->_view->id = $product_id;
             $this->_view->listImages = $this->_model->getImage($product_id);
-
         }
 
         $this->_view->task = $task;
@@ -39,7 +38,6 @@ class OrderController extends Controller
 
         //$validate   = new Validate();
         // $this->form             = $this->_model->form($this->_view->_arrParam['form']);
-
 
         if(isset($this->_arrParam['form'])){
             $form = $this->_arrParam['form'];
