@@ -56,21 +56,21 @@
                                             <td>'. $num .'</td>
                                             <td>'. $value['code'] .'</td>
                                             <td>
-                                            James Modlin	</a>
+                                                '.$value['first_name'].' '.$value['last_name'].'
                                             </td>
                                             <td>'. $value['created_at'] .'</td>
                                             <td>$'. $value['total'] .'</td>
                                             <td>'.$payment_status_html.'</td>
-                                            <td>Mastercard</td>
+                                            <td>Cash</td>
                                             <td class="d-none"> <span data-control="product" data-id="'.$value['id'].'" data-status="'.$value['status'].'" class="'. $classStatus .' status__item">'. ucfirst($status) .'</span></td>
                                            
                                             <td>
                                                 <ul class="list-inline table-action m-0">
                                                     <li class="list-inline-item">
-                                                        <a href="index.php?module=admin&controller=product&action=edit&task=edit&id='.$value['id'].'"" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                        <a href="index.php?module=admin&controller=order&action=edit&task=edit&id='.$value['id'].'" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
                                                     </li>
                                                     <li class="list-inline-item">
-                                                        <a href="javascript:void(0)" data-id="'. $value['id'] .'" data-table="products" data-control="product" onclick="delItem(this);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                                        <a href="javascript:void(0)" data-id="'. $value['id'] .'" data-table="orders" data-control="order" onclick="delItem(this);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
                                                     </li>
                                                 </ul>
                                             </td>

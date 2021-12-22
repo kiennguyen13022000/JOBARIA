@@ -1,221 +1,256 @@
 <?php
-
-
-// create radio
-$valueStatus          = (isset($this->result['status'])) ? $this->result['status'] : '';
-$valueIsNew        = (isset($this->result['is_new'])) ? $this->result['is_new'] : '';
-
-$raidoStatusActive = Helper::cmsRadio('status', 'active', 1, $valueStatus);
-$raidoStatusNotActive = Helper::cmsRadio('status','Not active',0, $valueStatus);
-$raidoIsNew = Helper::cmsRadio('is_new', 'Active', 1, $valueIsNew);
-$raidoIsNotNew = Helper::cmsRadio('is_new','Not active',0, $valueIsNew);
-
-$label = ['label' => 'Product name', 'id' => 'validationProductname'];
-$inputProductname = Helper::cmsFormGroup($label, 'text', 'product_name', $this->result['product_name'], 'form-control', true, 'form-group mb-3', $this->errors);
-$label = ['label' => 'Price', 'id' => 'validationPrice'];
-$inputPrice = Helper::cmsFormGroup($label, 'number', 'price', $this->result['price'], 'form-control', true, 'form-group mb-3', $this->errors);
-$label = ['label' => 'Quantity', 'id' => 'validationQuantity'];
-$inputQuantity = Helper::cmsFormGroup($label, 'number', 'quantity', $this->result['quantity'], 'form-control', true, 'form-group mb-3', $this->errors);
-
-$link =Url::createLink('admin', 'product', 'edit');
-if($this->task == 'edit'){
-    $link =Url::createLink('admin', 'product', 'edit', ['task' => $this->task, 'id' => $this->id]);
-}
-$image = !empty($this->result['image']) ? $this->result['image'] : '';
-$choose_file = !empty($image)? $image : 'Choose file';
-$img_product = !empty($image)? 'img_product' : '';
-
-$errors = $this->errors;
-$nav_image = '';
-$list_images_view = '
-    <div class="nav-item position-relative">
-                            <img class="preview__image img_product"
-                                 src="'.$image.'">
+$link =Url::createLink('admin', 'orders', 'edit', ['task' => $this->task, 'id' => $this->id]);
+$product_order = $this->product_order;
+$list_items = '';
+if (!empty($product_order)){
+    foreach ($product_order as $k=>$v){
+        $list_items .='
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <div class="mr-3">
+                            <img src="'.$v['image'].'" alt="product-img" height="40">
                         </div>
-';
-if($this->task == 'edit'){
-    $nav_image = '
-        <li class="nav-item">
-        <a href="#images1" data-toggle="tab" aria-expanded="true" class="nav-link">
-            <span class="d-inline-block d-sm-none"><i class="far fa-user"></i></span>
-            <span class="d-none d-sm-inline-block">Images</span>
-        </a>
-    </li>
-    ';
-   $listImages =  $this->listImages;
-   if (!empty($listImages)){
-       foreach ($listImages as $k => $v){
-           $list_images_view .='
-             <div class="nav-item position-relative">
-                <i class="fas fa-times remove_img" data-id="'. $v['id'] .'" data-table="product_image" data-control="product" onclick="delItem(this);"></i>
-                            <img class="preview__image img_product"
-                                 src="'.$v['image'].'">
+                        <div class="flex-1">
+                            <h5 class="m-0">'.$v['product_name'].'</h5>
+                            <p class="mb-0">Size : '.$v['size'].'</p>
                         </div>
-          ';
-       }
-   }
-}
-$listCategories = '
-     <select class="form-control" name="form[category_id]" id="">
-';
-$getListCategories = $this->getListCategories;
-if (!empty($getListCategories)){
-    foreach ($getListCategories as $k =>$v){
-        $name = str_repeat('-', $v['level'] * 2) . $v['name'] . str_repeat('-', $v['level'] * 2);
-        $category_id = $this->result['category_id'];
-        ($category_id == $v['id']) ? $selected = 'selected' : $selected = '';
-        $listCategories .='
-            <option '.$selected.' value="'.$v['id'].'">'.$name.'</option>
+                    </div>
+                </td>
+                <td>'.$v['quantity'].'</td>
+                <td>$'.$v['price'].'</td>
+                <td>$'.number_format($v['price']*$v['quantity'], 2, '.', ',').'</td>
+            </tr>
         ';
     }
 }
-$listCategories .= '</select>';
+
+$shipping_address_block = '';
+if($this->result['ship_defferent_address'] == 1){
+    $shipping_address = json_decode($this->result['shipping_address'],true);
+    if (!empty($shipping_address)){
+        $shipping_address_block = '
+        <div class="col-lg-4">
+            <div>
+                <h4 class="font-15 mb-2">Shipping Information</h4>
+    
+                <div class="card p-2 mb-lg-0">
+    
+                    <table class="table table-borderless table-sm mb-0">
+    
+                        <tbody>
+                        <tr>
+                            <th colspan="2"><h5 class="font-15 m-0">'.$shipping_address['first_name'].' '.$shipping_address['last_name'].'</h5></th>
+                        </tr>
+                        <tr>
+                            <th scope="row">Address:</th>
+                            <td>'.$shipping_address['address'].'</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Phone :</th>
+                            <td>'.$shipping_address['phone'].'</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Email :</th>
+                            <td>'.$shipping_address['email'].'</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    ';
+    }
+
+}
 ?>
-<ul class="nav nav-pills navtab-bg nav-tabs-detail">
-    <li class="nav-item">
-        <a href="#information1" data-toggle="tab" aria-expanded="false" class="nav-link active">
-            <span class="d-inline-block d-sm-none"><i class="fas fa-home"></i></span>
-            <span class="d-none d-sm-inline-block">Information</span>
-        </a>
-    </li>
-    <?php echo $nav_image ?>
-</ul>
-<div class="tab-content">
-    <div class="tab-pane fade active show" id="information1">
-        <form method="post" enctype="multipart/form-data" class="needs-validation w-100" novalidate="" action="<?php echo $link; ?>">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="form-group mb-3">
-                                <label for="validationAvatar">Image</label>
-                                <div class="custom-file cursor_label">
-                                    <input type="file" name="image" id="validationImage" value="<?php echo  $image; ?>"
-                                           class="input__image custom-file-input cursor"
-                                           size="" placeholder="Image">
-                                    <label class="custom-file-label" for="validationImage"><?php echo $choose_file; ?></label>
+<div class="container-fluid">
 
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header border-bottom bg-transparent">
+                    <h5 class="header-title mb-0">Order <?php echo $this->result['code'] ?></h5>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <div class="row">
+                            <div class="col-lg-3 col-sm-6">
+
+                                <div class="d-flex mb-2">
+                                    <div class="me-2 align-self-center">
+                                        <i class="ri-hashtag h2 m-0 text-muted"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="mb-1">ID No.</p>
+                                        <h5 class="mt-0">
+                                            <?php echo $this->result['code'] ?>
+                                        </h5>
+                                    </div>
                                 </div>
-                                <img class="preview__image <?php echo $img_product; ?>"
-                                     src="<?php echo $image; ?>">
                             </div>
-                            <?php echo $inputProductname.$inputPrice.$inputQuantity ?>
-                            <div class="form-group mb-3">
-                                <label for="">Category</label>
-                                <?php echo $listCategories; ?>
+                            <div class="col-lg-3 col-sm-6">
+
+                                <div class="d-flex mb-2">
+                                    <div class="me-2 align-self-center">
+                                        <i class="ri-user-2-line h2 m-0 text-muted"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="mb-1">Billing Name</p>
+                                        <h5 class="mt-0">
+                                            <?php echo $this->result['first_name'].' '.$this->result['last_name'] ?>
+                                        </h5>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="">Reference</label>
-                                <input type="text" name="form[reference]"
-                                       value="<?php echo $this->result['reference']; ?>" class="form-control"
-                                       placeholder="Reference">
+                            <div class="col-lg-3 col-sm-6">
+
+                                <div class="d-flex mb-2">
+                                    <div class="me-2 align-self-center">
+                                        <i class="ri-calendar-event-line h2 m-0 text-muted"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="mb-1">Date</p>
+                                        <h5 class="mt-0">
+                                            <?php echo $this->result['created_at'] ?>
+                                        </h5>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="">Promotion</label>
-                                <input type="number" name="form[promotion]" min="0" id="validationPromotion"
-                                       value="<?php echo $this->result['promotion']; ?>" class="form-control"
-                                       placeholder="Promotion">
+                            <div class="col-lg-3 col-sm-6">
+
+                                <div class="d-flex mb-2">
+                                    <div class="me-2 align-self-center">
+                                        <i class="ri-map-pin-time-line h2 m-0 text-muted"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="mb-1">Tracking ID</p>
+                                        <h5 class="mt-0">
+                                            <?php echo $this->result['id'] ?>
+                                        </h5>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="">Promotion End date</label>
-                                <input type="datetime-local" name="form[promotion_end_date]" id="validationPromotionEnddate"
-                                       value="<?php echo $this->result['promotion_end_date']; ?>" class="form-control"
-                                       placeholder="Promotion End date">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="">Intro</label>
-                                <textarea role="textbox" aria-multiline="true" class="form-control note-codable" name="form[description]" placeholder="Intro" id=""
-                                          cols="30" rows="10"><?php echo htmlentities($this->result['description']); ?></textarea>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="">Description</label>
-                                <textarea class="form-control" name="form[content]" placeholder="Description"
-                                          id="" cols="30" rows="10"><?php echo htmlentities($this->result['content']); ?></textarea>
+                        </div>
+                    </div>
+
+                    <div class="mt-2">
+                        <h4 class="header-title mb-3">Items from Order <?php echo $this->result['code'] ?></h4>
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div>
+                                    <div class="table-responsive">
+                                        <table class="table table-centered border table-nowrap mb-lg-0">
+                                            <thead class="bg-light">
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Quantity</th>
+                                                <th>Price</th>
+                                                <th>Total</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php echo $list_items ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="form-group mb-3">
-                                <label for="">Product Detail</label>
-                                <textarea class="form-control" name="form[product_features]" placeholder="Product Detail"
-                                          id="" cols="30" rows="10"><?php echo htmlentities($this->result['content']); ?></textarea>
+                            <div class="col-lg-4">
+                                <div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-centered border mb-0">
+                                            <thead class="bg-light">
+                                            <tr>
+                                                <th colspan="2">Order summary</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <th scope="row">Sub Total :</th>
+                                                <td>$<?php echo $this->result['sub_total'] ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Shipping Charge :</th>
+                                                <td>Free</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Estimated Tax :</th>
+                                                <td>Free</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Total :</th>
+                                                <td>$<?php echo $this->result['total'] ?></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
-                            <?php echo $this->button_form; ?>
                         </div>
                     </div>
 
                 </div>
-                <div class="col-lg-4 col-12">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="form-group mb-3">
-                                        <label for="validationCustom01">Status</label>
-                                        <div class="row cursor_label">
-                                            <div class="col-6">
-                                                <?php echo $raidoStatusActive; ?>
-                                            </div>
+            </div>
+            <!-- end card -->
 
-                                            <div class="col-6">
-                                                <?php echo $raidoStatusNotActive; ?>
-                                            </div>
-                                        </div>
+            <div class="row mb-3">
+                <?php echo $shipping_address_block ?>
+                <div class="col-lg-4 ">
+                    <div>
+                        <h4 class="font-15 mb-2">Billing  Information</h4>
 
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="card p-2 mb-lg-0">
+                            <table class="table table-borderless table-sm mb-0">
+
+                                <tbody>
+                                <tr>
+                                    <th scope="row">Payment Type:</th>
+                                    <td>Credit Card</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Provider :</th>
+                                    <td>Visa ending in 2851</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Valid Date :</th>
+                                    <td>02/2021</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">CVV :</th>
+                                    <td>xxx</td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="form-group mb-3">
-                                        <label for="validationCustom01">Is New</label>
-                                        <div class="row cursor_label">
-                                            <div class="col-6">
-                                                <?php echo $raidoIsNew; ?>
-                                            </div>
+                    </div>
+                </div>
 
-                                            <div class="col-6">
-                                                <?php echo $raidoIsNotNew; ?>
-                                            </div>
-                                        </div>
-                                    </div>
+                <div class="col-lg-4 ">
+                    <div>
+                        <h4 class="font-15 mb-2">Delivery Info</h4>
+
+                        <div class="card p-2 mb-lg-0">
+                            <div class="text-center">
+                                <div class="my-2">
+                                    <i class="mdi mdi-truck-fast h1 text-muted"></i>
+                                </div>
+                                <h5><b>UPS Delivery</b></h5>
+                                <div class="mt-2 pt-1">
+                                    <p class="mb-1"><span class="fw-semibold">Order ID :</span> xxxx048</p>
+                                    <p class="mb-0"><span class="fw-semibold">Payment Mode :</span> COD</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
-    </div>
-    <div class="tab-pane fade" id="images1">
-        <div class="container-fluid">
-            <form action="" method="post">
-                <input type="hidden" name="product_id" value="<?php echo $this->id; ?>">
-                <div class="card">
-                    <div class="card-body images_block">
-                        <nav class="product_images nav mb-3">
-                            <?php echo $list_images_view ?>
-                        </nav>
-                        <label for="img_product" class="dropzone dz-clickable cursor px-3">
-                            <div class="dz-message needsclick mt-3 mb-3 text-center ">
-                                <input type="file"  id="img_product" name="img_product" class="filePhotoImage d-none">
-                                <p class="h1 text-muted"><i class="mdi mdi-cloud-upload"></i></p>
-                                <h3>Drop files here or click to upload.</h3>
-                                <span class="text-muted font-13">(This is just a demo dropzone. Selected files are
-                                                    <strong>not</strong> actually uploaded.)</span>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-            </form>
 
         </div>
-
-
-<!--        <a title="Upload" class="add_image_product cursor">-->
-<!--            <img src="public/template/admin/images/file-icons/upload.png" alt="">-->
-<!--        </a>-->
     </div>
+    <!-- end row -->
 
-</div>
-
+</div> <!-- container -->

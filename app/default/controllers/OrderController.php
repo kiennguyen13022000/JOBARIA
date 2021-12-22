@@ -92,7 +92,7 @@ class OrderController extends Controller
                     $arrayParrams['price'] = $_POST['new_price'][$i];
                     $arrayParrams['promotion'] = $_POST['promotion_product'][$i];
                     $arrayParrams['product_name'] = $_POST['product_name'][$i];
-                    $arrayParrams['image'] = $_POST['product_name'][$i];
+                    $arrayParrams['image'] = $_POST['image'][$i];
                     // $arrayParrams[$i]['color'] = $_POST['color'][$i];
                     //$arrayParrams[$i]['size'] = $_POST['size'][$i];
                     //$field = 'product_name,slug';
@@ -369,3 +369,4 @@ class OrderController extends Controller
         ));die();
     }
 }
+
