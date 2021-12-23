@@ -37,7 +37,7 @@ class ProductModel extends Model
             if (!empty($arrParams['image']['name'])){
                 $info = $this->info($id);
                 $uploadObj = new Upload();
-                $uploadObj->removeFileName($info['image'], null);
+                //$uploadObj->removeFileName($info['image'], null);
                 $arrParams['image'] = $uploadObj->getUrlFile($arrParams['image'], 'product', 300, 300);
 
             }else{

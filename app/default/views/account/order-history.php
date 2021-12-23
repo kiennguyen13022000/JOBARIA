@@ -43,6 +43,9 @@
                                 <td class="text-bold">
                                     <span class="unit_price_product_text">$'. number_format($value['total'], 0, ',', '.') .'</span>                               
                                 </td>
+                                 <td >
+                                    <a href="/order/'.$value['id'].'" class="action-icon"><i class="fas fa-eye"></i></a>                              
+                                </td>
                             </tr>';
     }
 
@@ -53,6 +56,7 @@
                         <th class="th_name">Created</th>
                          <th class="th_name">Status</th>
                         <th class="th_price">Total</th>
+                        <th class="th_price">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -63,7 +67,7 @@
 <nav aria-label="breadcrumb" class="nav_breadcrumb">
     <div class="container">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="jobaria/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">Order history</li>
         </ol>
     </div>

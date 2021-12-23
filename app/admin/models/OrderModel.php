@@ -9,7 +9,7 @@ class OrderModel extends Model
     }
 
     public function list(){
-        $query = 'select * from orders';
+        $query = 'SELECT * FROM orders';
         $result = $this->ListRecord($query);
         return  $result;
     }
@@ -46,14 +46,20 @@ class OrderModel extends Model
         }
     }
     public function deleteItem($id, $table){
-        if (empty($table)) $table = 'products';
+        if (empty($table)) $table = 'orders';
         $this->setTable($table);
         return $this->Delete([$id]);
     }
     public function info($id){
         $this->setTable('orders');
-        $query = 'select * from orders where `id` = ' . $id;
+        $query = 'SELECT * FROM orders WHERE `id` = ' . $id;
         $result = $this->OneRecord($query);
+        return $result;
+    }
+    public function listProductOrder($id){
+        $this->setTable('product_order');
+        $query = 'SELECT * FROM product_order WHERE `order_id` = ' . $id;
+        $result = $this->ListRecord($query);
         return $result;
     }
     public function changeStatus($id, $status){

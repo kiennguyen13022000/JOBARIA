@@ -143,4 +143,59 @@ class IndexModel extends Model
         $slug = '/product/'.$result['slug'].'-'.$id.'.html';
         return $slug;
     }
+    public function subscribe($email){
+        $this->setTable('subscribe');
+        $query = "SELECT id FROM subscribe WHERE email="."'$email'";
+        $result = $this->OneRecord($query);
+        if ($result) return false;
+        return $this->Insert(array(
+            'email' => $email,
+            'created_at' => date('Y-m-d H:i:s', time())
+        ));
+    }
+    public function sendMailSubscribe($params){
+        require "public/PHPMailer-master/src/PHPMailer.php";  //nhúng thư viện vào để dùng, sửa lại đường dẫn cho đúng nếu bạn lưu vào chỗ khác
+        require "public/PHPMailer-master/src/SMTP.php"; //nhúng thư viện vào để dùng
+        require 'public/PHPMailer-master/src/Exception.php'; //nhúng thư viện vào để dùng
+        $mail = new PHPMailer\PHPMailer\PHPMailer(true);  //true: enables exceptions
+        try {
+            $mail->SMTPDebug = 0;  // 0,1,2: chế độ debug. khi mọi cấu hình đều tớt thì chỉnh lại 0
+            $mail->isSMTP();
+            $mail->CharSet  = "utf-8";
+            $mail->Host = 'smtp.gmail.com';  //SMTP servers
+            $mail->SMTPAuth = true; // Enable authentication
+            $from = 'dinhkhamhubt@gmail.com';
+            $password = 'khamdkvl1';
+            $name_to = 'Nguyễn Đình Khâm';
+            $mail->Username = $from; // SMTP username
+            $mail->Password = $password;   // SMTP password
+            $mail->SMTPSecure = 'ssl';  // encryption TLS/SSL
+            $mail->Port = 465;  // port to connect to
+            $mail->setFrom($from, $name_to );
+            $to = $params['email'];
+            $from_name = '';
+            $mail->addAddress($to, $from_name); //mail và tên người nhận
+            $mail->isHTML(true);  // Set email format to HTML
+            $mail->Subject = 'Subscribe successfully';
+            $message = "
+                    <b>Hello !!!</b><br>
+                    Chúc mừng bạn đã đăng ký theo dõi thành công.<br>
+                    Jobaria sẽ gửi tin tức mới nhất đến cho bạn.
+                  " ;
+            $mail->Body = $message;
+            $mail->smtpConnect( array(
+                "ssl" => array(
+                    "verify_peer" => false,
+                    "verify_peer_name" => false,
+                    "allow_self_signed" => true
+                )
+            ));
+            $mail->send();
+            //echo 'Đã gửi mail xong';
+            return true;
+        } catch (Exception $e) {
+            // echo 'Mail không gửi được. Lỗi: ', $mail->ErrorInfo;
+            return false;
+        }
+    }
 }

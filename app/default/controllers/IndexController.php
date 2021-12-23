@@ -24,4 +24,18 @@ class IndexController extends Controller
         $this->_view->productInfo           = $this->_model->info($this->_arrParam['id']);
         $this->_view->render('index/modal', false);
     }
+    public function subscribeAction(){
+        $email = isset($_POST['email']) ? $_POST['email'] : '';
+        $msg = 'error';
+        if (!empty($email)){
+            $subscribe=$this->_model->subscribe($email);
+            if ($subscribe){
+                $this->_model->sendMailSubscribe(array('email'=>$email));
+                $msg = 'ok';
+            }
+        }
+        echo json_encode(array(
+            'msg' => $msg
+        ));die();
+    }
 }

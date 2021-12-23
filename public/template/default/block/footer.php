@@ -8,10 +8,11 @@
         <div class="subscribe_intro"><?php echo $this->sevenBanner[0]['title_3']; ?>
         </div>
         <form action="" method="" class="position-relative sub_form">
-            <input type="text" class="input__subcribe" placeholder="Enter your email address">
-            <button class="btn__subscribe">
+            <input type="text" id="email_subscribe" class="input__subcribe" placeholder="Enter your email address">
+            <button class="btn__subscribe btn_subscribe_email" type="button">
                 <i class="fa fa-location-arrow" aria-hidden="true"></i>
             </button>
+            <div id="subcribe_msg" class="subcribe_msg text-left mt-2 pl-1"></div>
         </form>
     </div>
 </section>
@@ -21,8 +22,10 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="logo_footer">
-                        <a href="#" title="Jobaria" class="d-block">
-                            <img src="/public/template/default/assets/images/footer/logo/1.png" alt="Jobaria">
+                        <a href="/" title="Jobaria" class="d-block">
+                            <img src="/<?php
+                            echo !empty($this->settings['footer_logo']) ? $this->settings['footer_logo'] : 'public/template/default/assets/images/footer/logo/1.png'
+                            ?>" alt="Jobaria">
                         </a>
                     </div>
                     <div class="border_bot_main">

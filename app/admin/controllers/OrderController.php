@@ -8,84 +8,70 @@ class OrderController extends Controller
     }
 
     public function editAction(){
-        error_reporting (E_ALL ^ E_NOTICE);
+        //error_reporting (E_ALL ^ E_NOTICE);
         $this->createLinkCss();
         $this->createLinkJs();
-        $this->_view->title     = 'Add product';
+        $this->_view->title     = 'Order detail';
         $this->_view->errors = null;
-        if(!empty($_FILES['image'])) $this->_arrParam['edit']['image'] = $_FILES['image'];
+
         $task = 'add';
         $this->_view->button_form = '<button class="btn btn-primary" type="submit">Save</button>';
         $requiredPass = true;
         $this->_view->result= array();
-        $product_id = $this->_arrParam['id'];
-        $this->_view->getListCategories = $this->_model->getListCategories($product_id);
+        $order_id = $this->_arrParam['id'];
 
-        if (isset($product_id)){
+        if (isset($order_id)){
             $this->_view->button_form = '<button class="btn btn-primary" type="submit">Update</button>';
             $task = 'edit';
             $requiredPass = false;
-            $result = $this->_model->info($product_id);
-            if (empty($result)) header('Location: index.php?module=admin&controller=product&action=list');
+            $result = $this->_model->info($order_id);
+            if (empty($result)) header('Location: index.php?module=admin&controller=order&action=list');
             $this->_view->result = $result;
-            $this->_view->title     = $this->_view->result['product_name'].' | Product';
-            $this->_view->id = $product_id;
-            $this->_view->listImages = $this->_model->getImage($product_id);
+            $this->_view->product_order = $this->_model->listProductOrder($order_id);
+            $this->_view->title     = 'Order detail';
+            $this->_view->id = $order_id;
         }
-
         $this->_view->task = $task;
         $this->_view->errors    = null;
 
-        //$validate   = new Validate();
-        // $this->form             = $this->_model->form($this->_view->_arrParam['form']);
-
         if(isset($this->_arrParam['form'])){
             $form = $this->_arrParam['form'];
-            $form['image'] = $_FILES['image'];
-            $validate   = new Validate($form);
-            $validate->addRule('product_name', 'min', ['min' => 1])
-                ->addRule('price', 'int_min', ['min' => 0])
-                ->addRule('quantity', 'int_min', ['min' => 0])
-                ->addRule('image', 'file', ['extension' => ['png', 'jpg', 'gif']], false);
-            $validate->run();
-
-            if(!empty($validate->getError())){
-                $this->_view->errors = $validate->getError();
-                $this->_view->result = $validate->getResult();
-            }else{
-                $form['id']=$this->_model->edit($this->_arrParam, $task);
-                if($this->_model->affectedAction() == 1){
-                    if ($task == 'add'){
-                        Session::set('success', '\'' . 'edit'.  '\'' );
-                        Url::redirect('admin', 'product', 'edit',['task' => 'edit', 'id' => $form['id']]);
-                    }else{
-                        $id = $this->_arrParam['id'];
-                        Session::set('success', '\'' . 'edit'.  '\'' );
-                        Url::redirect('admin', 'product', 'edit',['task' => 'edit', 'id' => $id]);
-                    }
+            $form['id']=$this->_model->edit($this->_arrParam, $task);
+            if($this->_model->affectedAction() == 1){
+                if ($task == 'add'){
+                    Session::set('success', '\'' . 'edit'.  '\'' );
+                    Url::redirect('admin', 'order', 'edit',['task' => 'edit', 'id' => $form['id']]);
+                }else{
+                    $id = $this->_arrParam['id'];
+                    Session::set('success', '\'' . 'edit'.  '\'' );
+                    Url::redirect('admin', 'order', 'edit',['task' => 'edit', 'id' => $id]);
                 }
             }
         }
-        $this->_view->render('product/edit');
+        $this->_view->control = $this->_arrParam['controller'];
+        $this->_view->render('order/edit');
     }
     public function listAction(){
-        $this->_view->title = 'List product';
+        $this->_view->title = 'List order';
         $this->createLinkCss();
         $this->createLinkJs();
         $this->_view->data = $this->_model->list();
+        $this->_view->control = $this->_arrParam['controller'];
         $this->_view->render('order/list');
     }
     public function deleteAction(){
         $table = $this->_arrParam['table'];
         if (empty($table)) $table = 'orders';
-        $info = $this->_model->info($this->_arrParam['id']);
-        $affected = $this->_model->deleteItem($this->_arrParam['id'], $table);
-        if ($affected > 0){
-            $upload = new Upload();
-            $upload->removeFileName($info['image'], null);
-            Session::set('success', '\'' . 'delete' . '\'');
+        $query = "SELECT id FROM product_order WHERE order_id=".$this->_arrParam['id'];
+        $listProductOrder = $this->_model->ListRecord($query);
+
+        if (!empty($listProductOrder)){
+            foreach ($listProductOrder as $k=>$v){
+                $this->_model->deleteItem($v['id'], 'product_order');
+            }
         }
-        echo json_encode(['affected' => 1]);
+        $affected = $this->_model->deleteItem($this->_arrParam['id'], $table);
+        echo json_encode(['affected' => $affected]);
     }
     public function changeStatusAction(){
         $id = $this->_arrParam['id'];

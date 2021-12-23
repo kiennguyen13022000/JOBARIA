@@ -50,7 +50,6 @@ class AccountModel extends Model
         }
         return $newResult;
     }
-
     public function getWishList($user){
          $result = [];
          if (!empty([$user])){
@@ -78,5 +77,17 @@ class AccountModel extends Model
             return 'already-exist';
         }
         return $this->Insert($params);
+    }
+    public function info($id,$user_id){
+        $this->setTable('orders');
+        $query = 'SELECT * FROM orders WHERE `id` = ' . $id.' and `client_id`='.$user_id;
+        $result = $this->OneRecord($query);
+        return $result;
+    }
+    public function listProductOrder($id){
+        $this->setTable('product_order');
+        $query = 'SELECT * FROM product_order WHERE `order_id` = ' . $id;
+        $result = $this->ListRecord($query);
+        return $result;
     }
 }
