@@ -27,7 +27,7 @@ class OrderController extends Controller
             $result = $this->_model->info($order_id);
             if (empty($result)) header('Location: index.php?module=admin&controller=order&action=list');
             $this->_view->result = $result;
-            $this->_view->product_order = $this->_model->listProductOrder($order_id);;
+            $this->_view->product_order = $this->_model->listProductOrder($order_id);
             $this->_view->title     = 'Order detail';
             $this->_view->id = $order_id;
         }

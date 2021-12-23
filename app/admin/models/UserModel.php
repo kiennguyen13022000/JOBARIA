@@ -13,7 +13,6 @@ class UserModel extends Model
         $result = $this->ListRecord($query);
         return $result;
     }
-
     public function form($arrParams, $task){
          if($task == 'add'){
              $arrParams['user_id']    = $_SESSION['userAdmin']['user_id'];;
@@ -22,6 +21,7 @@ class UserModel extends Model
              unset($arrParams['confirm_password']);
              $uploadObj = new Upload();
              $arrParams['avatar'] = $uploadObj->uploadFile($arrParams['avatar'], 'users', 100, 130);
+             $arrParams = $this->prepare($arrParams);
              return $this->Insert($arrParams);
 
          }else{
@@ -41,7 +41,7 @@ class UserModel extends Model
              }else{
                  unset($arrParams['avatar']);
              }
-
+             $arrParams = $this->prepare($arrParams);
              $this->Update($arrParams, [['id', $id, '']]);
          }
     }
@@ -64,6 +64,11 @@ class UserModel extends Model
         $query = 'select * from users where `id` = ' . $id;
         $result = $this->OneRecord($query);
         return $result;
+    }
+
+    public function changePassword($user_id, $password){
+        $password = md5($password);
+        return $this->Update(['password' => $password], [['id', $user_id, '']]);
     }
 
 }

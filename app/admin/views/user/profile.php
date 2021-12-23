@@ -3,6 +3,19 @@
     if($this->info['avatar'] == null){
         $this->info['avatar'] = 'public/upload/users/avatar-1.jpg';
     }
+
+$valuePassword          = (isset($this->result['password'])) ? $this->result['password'] : '';
+$valueConfirmPassword   = (isset($this->result['confirm_password'])) ? $this->result['confirm_password'] : '';
+$valueOldPassword   = (isset($this->result['old_password'])) ? $this->result['old_password'] : '';
+
+
+$label = ['label' => 'Old password', 'id' => 'validationOldPassword'];
+$inputOldPassword = Helper::cmsFormGroup($label, 'password', 'old_password', $valueOldPassword, 'form-control',  true, 'form-group mb-3', $this->errors);
+$label = ['label' => 'New password', 'id' => 'validationPassword'];
+$inputPassword = Helper::cmsFormGroup($label, 'password', 'password', $valuePassword, 'form-control',  true, 'form-group mb-3 col-lg-6', $this->errors);
+$label = ['label' => 'Retype password', 'id' => 'validationRetypePassword'];
+$inputRetypePassword = Helper::cmsFormGroup($label, 'password', 'confirm_password', $valueConfirmPassword, 'form-control',true, 'form-group mb-3 col-lg-6', $this->errors);
+$rowPassword = Helper::cmsRow($inputPassword . $inputRetypePassword);
 ?>
 <div class="container-fluid">
     <div class="row">
@@ -45,27 +58,9 @@
 
                 <div class="tab-content">
                     <div class="tab-pane active" id="settings">
-                        <form>
+                        <form action="/index.php?module=admin&controller=user&action=changePassword&id=<?php echo $this->id; ?>" method="post">
                             <h5 class="mb-3 text-uppercase bg-light p-2"><i class="mdi mdi-account-circle mr-1"></i> Đổi mật khẩu</h5>
-                            <div class="form-group">
-                                <label for="firstname">Mật Khẩu cũ</label>
-                                <input type="text" class="form-control" id="firstname" placeholder="Enter first name">
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="firstname">Mật Khẩu mới</label>
-                                        <input type="text" class="form-control" id="firstname" placeholder="Enter first name">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="lastname">Mật lại mật khẩu</label>
-                                        <input type="text" class="form-control" id="lastname" placeholder="Enter last name">
-                                    </div>
-                                </div> <!-- end col -->
-                            </div> <!-- end row -->
-
+                            <?php echo $inputOldPassword. $rowPassword?>
 
                             <div class="text-right">
                                 <button type="submit" class="btn btn-success waves-effect waves-light mt-2"><i class="mdi mdi-content-save"></i> Save</button>

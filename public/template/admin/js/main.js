@@ -65,7 +65,7 @@ function deleteItem(id, controller){
     }
     let notifier = new AWN(options);
     let onOk = () => {
-        $.post('index.php?module=admin&controller='+ controller +'&action=delete', {id: id}, function (data){
+        $.post('/index.php?module=admin&controller='+ controller +'&action=delete', {id: id}, function (data){
             if (data.affected > 0){
                  location.reload();
             }else{
@@ -81,8 +81,9 @@ function deleteItem(id, controller){
 }
 function moveNode(type, id){
     var data = {type: type, id: id};
-    $('#datatable').load('index.php?module=admin&controller=category&action=moveNode', data, function (){
+    $('#datatable').load('/index.php?module=admin&controller=category&action=moveNode', data, function (){
         changeStatus();
+        changeTrending();
     });
 }
 function changeStatus(){
@@ -90,7 +91,7 @@ function changeStatus(){
         var id = $(this).attr('data-id');
         var status = $(this).attr('data-status');
         var control = $(this).attr('data-control');
-        var url = 'index.php?module=admin&controller=' + control + '&action=changeStatus';
+        var url = '/index.php?module=admin&controller=' + control + '&action=changeStatus';
         var dataPost = {id: id, status: status};
         var obj = this;
         $.post(url, dataPost, function (data){
@@ -110,11 +111,37 @@ function changeStatus(){
 }
 changeStatus();
 
+function changeTrending(){
+    $('.trending__item').click(function (){
+        var id = $(this).attr('data-id');
+        var trending = $(this).attr('data-trending');
+        var control = $(this).attr('data-control');
+        var url = '/index.php?module=admin&controller=' + control + '&action=changeTrending';
+        var dataPost = {id: id, trending: trending};
+        var obj = this;
+        $.post(url, dataPost, function (data){
+            if (data.affected > 0){
+                $(obj).attr('data-trending', data.trending);
+                if(data.trending == 1){
+                    $(obj).text('Active');
+                    $(obj).addClass('activeStatus').removeClass('deactive');
+                }else{
+                    $(obj).text('Deactive');
+                    $(obj).addClass('deactive').removeClass('activeStatus');
+                }
+            }
+
+        }, 'json');
+    });
+}
+changeTrending();
+changeStatus();
+
 $('.is__admin__item').click(function (){
     var id          = $(this).attr('data-id');
     var isAdmin     = $(this).attr('data-admin');
     var control     = $(this).attr('data-control');
-    var url         = 'index.php?module=admin&controller=' + control + '&action=changeIsAdmin';
+    var url         = '/index.php?module=admin&controller=' + control + '&action=changeIsAdmin';
     var dataPost    = {id: id, isAdmin: isAdmin};
     var obj         = this;
     $.post(url, dataPost, function (data){
@@ -139,7 +166,7 @@ function changeOrder(){
         var control     = $(this).attr('data-control');
         var position    = $(this).attr('data-position');
         var dataPost    = {id: id, type: type, position : position };
-        var url         = 'index.php?module=admin&controller='+control+'&action=changeOrder';
+        var url         = '/index.php?module=admin&controller='+control+'&action=changeOrder';
         $('#datatable').load(url, dataPost, function (){
             changeStatus();
             changeOrder();
@@ -180,7 +207,7 @@ function changeStatusReview(){
         var id = $(this).attr('data-id');
         var status = $(this).attr('data-status');
         var control = $(this).attr('data-control');
-        var url = 'index.php?module=admin&controller=' + control + '&action=changeStatusReview';
+        var url = '/index.php?module=admin&controller=' + control + '&action=changeStatusReview';
         var dataPost = {id: id, status: status};
         var obj = this;
         $.post(url, dataPost, function (data){
@@ -210,10 +237,9 @@ function reviewDelete(id){
     }
     let notifier = new AWN(option2);
     let onOk = () => {
-        $.post('index.php?module=admin&controller=product&action=reviewDelete', {id: id}, function (data){
+        $.post('/index.php?module=admin&controller=product&action=reviewDelete', {id: id}, function (data){
             if (data.affected > 0){
                 location.reload();
-                console.log('vaof')
             }else{
                 options.labels = {
                     warning: 'Error',

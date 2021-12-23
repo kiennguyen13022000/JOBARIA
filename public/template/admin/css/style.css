@@ -208,3 +208,21 @@
      height: auto;
      border: none !important;
  }
+
+
+ element.style {
+ }
+ .table>thead {
+     vertical-align: bottom;
+ }
+ .table-light {
+     --bs-table-bg: #f1f5f7;
+     --bs-table-striped-bg: #343a40;
+     --bs-table-striped-color: #fff;
+     --bs-table-active-bg: #dee2e5;
+     --bs-table-active-color: #343a40;
+     --bs-table-hover-bg: #e3e7e9;
+     --bs-table-hover-color: #343a40;
+     color: #343a40;
+     border-color: #dee2e5;
+ }

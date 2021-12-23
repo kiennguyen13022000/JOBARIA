@@ -25,6 +25,7 @@ class SlideModel extends Model
              }else{
                  unset($arrParams['image']);
              }
+             $arrParams = $this->prepare($arrParams);
              return $this->Insert($arrParams);
 
          }else{
@@ -39,6 +40,7 @@ class SlideModel extends Model
              }else{
                  unset($arrParams['image']);
              }
+             $arrParams = $this->prepare($arrParams);
              $this->Update($arrParams, [['id', $id, '']]);
          }
     }

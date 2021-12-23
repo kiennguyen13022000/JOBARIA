@@ -105,6 +105,34 @@ $(function () {
   $("#backTop").click(function () {
     $("html, body").animate({ scrollTop: 0 }, 1000);
   });
+  $(".btn_subscribe_email").click(function () {
+    var $subscribe_email = $("#email_subscribe").val();
+
+    if ($("#email_subscribe").val() == '') {
+      $('#subcribe_msg').html('Your email should not be empty !').fadeIn().delay(3000).fadeOut();
+      $("#email_subscribe").focus();
+      return false;
+    }
+    if (checkValidEmail($subscribe_email) == false) {
+      $('#subcribe_msg').html('Your email is not valid!').fadeIn().delay(3000).fadeOut();
+      $("#email_subscribe").focus();
+      return false;
+    }
+    $.ajax({
+      type: 'POST',
+      url: '/index.php?module=default&controller=index&action=subscribe',
+      data: {'email': $subscribe_email},
+      dataType: 'json',
+      success: function(data) {
+        if (data.msg == 'ok') {
+          $('#subcribe_msg').html('Sign up for email success!').fadeIn().delay(3000).fadeOut();
+        } else {
+          $('#subcribe_msg').html('Email address already exists!').fadeIn().delay(3000).fadeOut();
+        }
+      }
+    });
+    return false;
+  });
   // Add slideUp animation
   $(".dropdown").on("show.bs.dropdown", function () {
     $(this).find(".dropdown-menu").first().stop(true, true).slideDown();
@@ -158,9 +186,6 @@ $(function () {
 
     clickDisabled = true;
     setTimeout(function(){clickDisabled = false;}, 1000);
-
-
-
   });
   $(document).on("click", ".quantity_down_cart", function () {
     if ($(this).next().val() > 1)
@@ -301,7 +326,6 @@ if (document.querySelector("#slide__brand") !== null) {
 }
 if (document.querySelector(".splide_modal") !== null) {
   document.addEventListener("DOMContentLoaded", function () {
-
   });
 }
 if (document.querySelector(".splide_detail") !== null) {
@@ -335,7 +359,10 @@ if (document.querySelector(".splide_detail") !== null) {
     thumbnails.mount();
   });
 }
-
+function checkValidEmail(e) {
+  var a = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return a.test(e)
+}-
 function format2(n, currency = "") {
   if (currency === "" || currency === null || currency === undefined) {
     return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
@@ -382,6 +409,7 @@ function renderProduct() {
     data: {getlocalStorage:getlocalStorage},
     dataType: 'json',
     success: function(data) {
+      console.log(data)
       if (data.msg == 'ok'){
         $('#cart_table').html(data.productsContent);
         $('input[name="number_type"]').val(data.number_type);
@@ -583,7 +611,7 @@ $('.btnModalProduct').click(function (){
       $('#modal_product').modal();
   })
 });
-
+$('#rating').val(1);
 $('.criterions_list .fa-star').hover(function() {
       var idexCurrent = $(this).index();
       var i;
@@ -612,20 +640,51 @@ $('.input__search').keyup(function (){
       $('.search-product-list').load(url, data);
   }, 500);
 });
-$('.btn__favorite').click(function (){
-  var url   = '/index.php?module=default&controller=user&action=addToFavorites';
-  var id    = $(this).attr('data-id');
-  var data  = {id: id};
-  $.post(url, data, function (data, status){
-      if (data == 'error')
-        alert('Bạn chưa đăng nhập');
-      else {
-        let options = {
-          position: 'top-right',
-          animationDuration: 300
-        };
-        new AWN(options).modal('<b>Bạn đã thêm thành công.</b>');
+
+$('.btn__favorite').click(function () {
+
+  var id = $(this).attr('data-id');
+  var data = {id: id};
+  var url = '/index.php?module=default&controller=account&action=addToFavorites';
+  var btn = this;
+
+  $.post(url, data, function (data2){
+    if (data2.result == 'error')
+      alert('Bạn chưa đăng nhập');
+    else {
+      let options = {
+        position: 'top-right',
+        animationDuration: 300
       }
-  });
+      if (data2.result == 'already-exist'){
+        $(btn).css({ backgroundColor: '#fff' });
+        $(btn).find('i').css({color: '#343a40 '});
+      }else{
+        new AWN(options).modal('<b>Sản phẩm đã được thêm vào danh sách yêu thích.</b>');
+        $(btn).css({ backgroundColor: '#0184c5' });
+        $(btn).find('i').css({color: '#fff '});
+      }
+    }
+  }, 'json');
 });
 
+$('.btn__favorites__page').click(function () {
+
+  var id = $(this).attr('data-id');
+  var data = {id: id};
+  var url = '/index.php?module=default&controller=account&action=addToFavorites';
+  var btn = this;
+
+  $.post(url, data, function (data2){
+      let options = {
+        position: 'top-right',
+        animationDuration: 300
+      }
+      if (data2.result == 'already-exist'){
+        $(btn).find('i').css({color: '#343a40 '});
+      }else{
+        new AWN(options).modal('<b>Sản phẩm đã được thêm vào danh sách yêu thích.</b>');
+        $(btn).find('i').css({ color: '#0184c5' });
+      }
+  }, 'json');
+});

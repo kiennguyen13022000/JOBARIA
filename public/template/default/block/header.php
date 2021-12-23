@@ -185,7 +185,9 @@
                     <div class="col-6 col-md-4 col-lg-3 col_logo">
                         <div id="logo" class="d-flex align-items-center h-100">
                             <a href="/" class="logo nav-link pl-0 ">
-                                <img src="/public/template/default/assets/images/menu/logo/1.jpg " alt=" ">
+                                <img src="/<?php
+                                echo !empty($this->settings['header_logo']) ? $this->settings['header_logo'] : 'public/template/default/assets/images/menu/logo/1.jpg'
+                                ?>" alt=" ">
                             </a>
                         </div>
                     </div>

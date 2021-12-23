@@ -1,7 +1,5 @@
 <div class="left-side-menu">
-
     <div class="slimscroll-menu">
-
         <!--- Sidemenu -->
         <div id="sidebar-menu">
 
@@ -28,6 +26,12 @@
                         </li>
 
                     </ul>
+                </li>
+                <li>
+                    <a href="index.php?module=admin&controller=chat&action=index" class="waves-effect">
+                        <i class="remixicon-message-2-line"></i>
+                        <span> Chat </span>
+                    </a>
                 </li>
 
                 <li>

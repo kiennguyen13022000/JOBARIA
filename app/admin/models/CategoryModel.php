@@ -31,7 +31,7 @@ class CategoryModel extends Model
             }else{
                 unset($arrParams['image']);
             }
-
+            $arrParams = $this->prepare($arrParams);
             return $this->Insert($arrParams);
 
         }else{
@@ -48,6 +48,7 @@ class CategoryModel extends Model
             $nested = new NestedSetModel('categories');
             if ($arrParams['parent_id'] != $info['parent_id'])
                     $nested->updateNode($id, $arrParams['parent_id']);
+            $arrParams = $this->prepare($arrParams);
             $this->Update($arrParams, [['id', $id, '']]);
         }
     }
@@ -62,6 +63,12 @@ class CategoryModel extends Model
         $where   = array(array('id', $id, ''));
         return $this->Update($param, $where);
     }
+    public function changeTrending($id, $trending){
+        $param   = array('trending' => $trending);
+        $where   = array(array('id', $id, ''));
+        return $this->Update($param, $where);
+    }
+
     public function info($id){
         $query = 'select * from `categories` where `id` = ' . $id;
         $result = $this->OneRecord($query);

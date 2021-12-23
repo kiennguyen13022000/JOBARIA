@@ -22,12 +22,11 @@ class SettingModel extends Model
             if (!empty($info['header_logo'])){
                 $uploadObj->removeFile('logo', null, $info['header_logo']);
             }
-
             $arrParams['header_logo'] = $uploadObj->uploadFile($arrParams['header_logo'], 'logo');
         }else{
             unset($arrParams['header_logo']);
         }
-
+        $arrParams = $this->prepare($arrParams);
         $ud = 0;
         foreach ($arrParams as $key => $value) {
             $query = "select * from `configs` where `config_name` = '$key'";

@@ -11,6 +11,7 @@
                         <th>Level</th>
                         <th>Move</th>
                         <th>Parent</th>
+                        <th>Trending</th>
                         <th>Status</th>
 <!--                    <th>Create at</th>-->
                         <th>Action</th>

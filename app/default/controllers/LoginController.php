@@ -3,7 +3,6 @@ class LoginController extends Controller
 {
     public function __construct($arrParams)
     {
-//        error_reporting (E_ALL ^ E_NOTICE);
         parent::__construct($arrParams);
         if (!empty($_SESSION['user']['loggedIn'])){
             $user_id = $_SESSION['user']['user_id'];

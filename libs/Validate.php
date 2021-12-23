@@ -17,7 +17,17 @@ class Validate{
     public function __construct($source){
         if(array_key_exists('submit', $source)) unset($source['submit']);
         if(array_key_exists('token', $source)) unset($source['token']);
-        $this->source = $source;
+        $this->prepare($source);
+    }
+    public function getSource(){
+        return $this->source;
+    }
+    private function prepare($source){
+        foreach ($source as $key => $value){
+            $source[$key] = htmlspecialchars($value);
+        }
+       $this->source = $source;
+
     }
 
     // Add rules
@@ -52,7 +62,7 @@ class Validate{
             if($value['required'] == true && trim($this->source[$element]) == null){
                 $this->errors[$element] = ucfirst($element) . ' is not empty!';
             }else{
-                if(!isset($this->getError()[$element]) && $value['required'] == true){
+
                     switch ($value['type']) {
                         case 'int':
                             $this->validateInt($element, $value['options']['min'], $value['options']['max']);
@@ -80,6 +90,9 @@ class Validate{
                             break;
                         case 'password':
                             $this->validatePassword($element, $value['options']);
+                            break;
+                        case 'old-password':
+                            $this->validatePasswordIsExists($element, $value['options']);
                             break;
                         case 'phone':
                             $this->validatePhone($element, $value['options']);
@@ -111,8 +124,6 @@ class Validate{
                             $this->validateEmail($element);
                             break;
                     }
-                }
-
             }
             if(!array_key_exists($element, $this->errors)) {
                 $this->result[$element] = $this->source[$element];
@@ -245,7 +256,13 @@ class Validate{
             $this->errors[$element] = ucfirst($element) . ' này đã tồn tại!';
         }
     }
-
+    public function validatePasswordIsExists($element, $data){
+        $db = $data['database'];
+        $query = $data['query'];
+        if($db->isExists($query) == false){
+            $this->errors[$element] = 'Old password is incorrect!';
+        }
+    }
     private function validateFile($element, $options){
         if(!empty($this->source[$element]['name'])){
 //            if(!filter_var($this->source[$element]['size'], FILTER_VALIDATE_INT, array("options"=>array("min_range"=>$options['min'],"max_range"=>$options['max'])))){

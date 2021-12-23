@@ -1,0 +1,34 @@
+.inbox-user{
+    width: 40px;
+}
+.inbox-user img{
+    width: 40px;
+}
+
+.inbox-settings{
+    top: 0;
+    right: 0;
+    font-size: 22px;
+}
+
+.input-inbox-search-user, .input-inbox-search-user:focus{
+    background-color: #f3f7f9;
+    color: #6c757d;
+    padding-left: 40px;
+    border-color: #f3f7f9!important;;
+}
+
+.inbox-icon-search{
+    position: absolute;
+    top: 23%;
+    left: 15px;
+}
+
+.wrapper-input-inbox-send{
+    background-color: #f1f5f7;
+    padding: 20px;
+}
+
+.wrapper-input-inbox-send input{
+    border: none;
+}
