@@ -43,10 +43,7 @@ class ProductController extends Controller
     }
 
     public function reviewAction(){
-        $validate = new Validate($this->_arrParam['form']);
-        $revew = $validate->getSource();
-
-        $id = $this->_model->review($revew, $this->_arrParam['id']);
+        $id = $this->_model->review($this->_arrParam['form'], $this->_arrParam['id']);
         if ($id > 0){
             Session::set('success', '\'' . 'review' . '\'');
             $value = $this->_model->productInfo($this->_arrParam['id']);

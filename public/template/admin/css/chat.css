@@ -32,3 +32,39 @@
 .wrapper-input-inbox-send input{
     border: none;
 }
+
+.title-author{
+    color: #323a46;
+    margin-bottom: 0 !important;
+    line-height: 40px;
+}
+
+.user-search{
+
+}
+
+.wrapper-user-search{
+    background: white;
+    width: auto;
+    left: -24px;
+    border-radius: 10px;
+    z-index: 100;
+    padding: 0 24px ;
+    right: -24px;
+    position: absolute;
+    top: 136%;
+}
+.triangle{
+    width: 0px;
+    position: absolute;
+    left: 43%;
+    top: -13px;
+    height: 0px;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 40px solid white;
+}
+.user-search-item{
+    cursor: pointer;
+    z-index: 1000;
+}

@@ -17,18 +17,18 @@ class Validate{
     public function __construct($source){
         if(array_key_exists('submit', $source)) unset($source['submit']);
         if(array_key_exists('token', $source)) unset($source['token']);
-        $this->prepare($source);
+        $this->source = $source;
     }
-    public function getSource(){
-        return $this->source;
-    }
-    private function prepare($source){
-        foreach ($source as $key => $value){
-            $source[$key] = htmlspecialchars($value);
-        }
-       $this->source = $source;
-
-    }
+//    public function getSource(){
+//        return $this->source;
+//    }
+//    private function prepare($source){
+//        foreach ($source as $key => $value){
+//            $source[$key] = htmlspecialchars($value);
+//        }
+//       $this->source = $source;
+//
+//    }
 
     // Add rules
     public function addRules($rules){
