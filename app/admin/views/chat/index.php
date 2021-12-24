@@ -1,3 +1,6 @@
+<?php
+$avatar = empty($this->userInfo['avatar']) ? '/public/template/admin/images/users/avatar-1.jpg' : $this->userInfo['avatar'];
+?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-3 col-md-4">
@@ -5,7 +8,7 @@
                 <div class="card-body">
                     <div class="d-flex">
                         <div class="inbox-user">
-                            <img src="<?php echo $this->userInfo['avatar']; ?>" class="rounded-circle">
+                            <img src="<?php echo $avatar; ?>" class="rounded-circle">
                         </div>
                         <div class="pl-2 flex-grow-1 position-relative">
                             <h5 class="mt-0 mb-1"><?php echo $this->userInfo['firstname']. ' ' . $this->userInfo['lastname']; ?></h5>
@@ -43,7 +46,7 @@
                         <div class=" ">
                             <div class="d-flex wrapper-input-inbox-send">
                                 <textarea id="emoji" class="form-control chat-input flex-grow-1" rows="3" placeholder="Enter your text"></textarea>
-                                <button type="submit" class="align-self-center btn btn-primary chat-send ml-3 waves-effect waves-light">
+                                <button type="submit" class="align-self-center btn btn-primary chat-send-my ml-3 waves-effect waves-light">
                                     <i class="remixicon-send-plane-fill"></i>
                                 </button>
                             </div>

@@ -28,6 +28,9 @@ class Model{
     }
 
     // set database
+    public function setCharset(){
+        mysqli_set_charset($this->connect, 'utf8mb4');
+    }
 
     public function SetDatabase($database = null){
         if($database != null){
@@ -165,7 +168,6 @@ class Model{
             $arrData = $this->ListRecord();
             foreach ($arrData as $key => $value) {
                 $result[$value['id']] = $value['name'];
-
             }
         }
         ksort($result);

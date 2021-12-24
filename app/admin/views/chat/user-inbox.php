@@ -1,6 +1,5 @@
 <?php
 
-
 $html = '';
 foreach ($this->userInbox as $key => $value){
     $avatar = empty($value['avatar']) ? '/public/template/admin/images/users/avatar-1.jpg' : $value['avatar'];

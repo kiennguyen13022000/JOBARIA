@@ -12,7 +12,9 @@ class ChatController extends Controller
         $this->_view->userInbox = $this->_model->getUserInbox($userInfo['id']);
         $this->_view->inboxDetail = [];
         if (!empty($this->_view->userInbox)){
-            $this->_view->inboxDetail = $this->_model->getInboxDetail($userInfo['id'], $this->_view->userInbox[0]);
+            $userChat = $this->_view->userInbox[0];
+            Session::set('userChat', $userChat);
+            $this->_view->inboxDetail = $this->_model->getInboxDetail($userInfo['id'], $userChat['user_chat']);
         }
 
         $this->_view->render('chat/index');
@@ -28,9 +30,19 @@ class ChatController extends Controller
     }
     public function infoChatItemAction(){
         $id = $this->_arrParam['id'];
-        $result = [];
+        Session::set('userChat', $id);
         $result = $this->_model->infoChatItem($id);
         echo json_encode($result);
+    }
+
+    public function messageAction(){
+        $pusher = Pusher::inti();
+        $userInfo =  Session::get('userAdmin')['userInfo'];
+        $userChat =  Session::get('userChat');
+
+        $chatModel = $this->_model->message($this->_arrParam['message'], $userInfo, $userChat);
+        $pusher->trigger('message-channel', 'message-event', $chatModel);
+        echo json_encode(['user_id' => $userInfo['id']]);
     }
     private function createLinkCss(){
         $css = array(
@@ -116,6 +128,9 @@ class ChatController extends Controller
             ),
             array(
                 'link' => '/node_modules/emojionearea/dist/emojionearea.min.js',
+            ),
+            array(
+                'link' => 'https://js.pusher.com/7.0/pusher.min.js',
             ),
             array(
                 'link' => '/public/template/admin/js\chat.js',
