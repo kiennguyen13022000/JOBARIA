@@ -12,6 +12,7 @@ const TEMPLATE_PATH = PUBLIC_PATH . 'template' . DS;
 const DEFAULT_MODULE = 'default';
 const DEFAULT_CONTROLLER = 'index';
 const DEFAULT_ACTION = 'index';
+const DOMAIN_NAME = 'jobaria.local';
 
 // ====================== DATABASE ===========================
 const DB_HOST = 'localhost';

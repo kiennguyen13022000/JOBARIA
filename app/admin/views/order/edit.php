@@ -1,5 +1,5 @@
 <?php
-$link =Url::createLink('admin', 'orders', 'edit', ['task' => $this->task, 'id' => $this->id]);
+$link =Url::createLink('admin', 'order', 'edit', ['task' => $this->task, 'id' => $this->id]);
 $product_order = $this->product_order;
 $list_items = '';
 if (!empty($product_order)){
@@ -62,6 +62,11 @@ if($this->result['ship_defferent_address'] == 1){
     ';
     }
 
+}
+$intro_process = 'Tick choose if this Order already dealing! A confirmation email will be sent to the customer after saving. Please check carefully before saving';
+$status = $this->result['status'];
+if ($status == 1){
+    $intro_process = 'Order has been confirmed';
 }
 ?>
 <div class="container-fluid">
@@ -247,7 +252,40 @@ if($this->result['ship_defferent_address'] == 1){
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-4 ">
+                    <div>
+                        <h4 class="font-15 mb-2">Order notes</h4>
+
+                        <div class="card p-2 mb-lg-0 min-height-note-block">
+                            <h5 class="font-15 m-0">Customer note information: <?php if(empty($this->result['notes'])) echo '(nothing)'; ?></h5>
+                            <div class="min-height-note">
+                                <?php if (!empty($this->result['notes'])) echo $this->result['notes']; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <form action="<?php echo $link;?>" method="post">
+                <div class="row-field">
+                    <div class="row-heading">Process order*</div>
+                    <div class="coltrols">
+                        <input type="checkbox" <?php if ($status == 1) echo 'checked disabled'?> id="status_order" name="form[status]" value="1">
+                        <label class="cursor" for="status_order"><?php echo $intro_process ?> </label>
+                    </div>
+                </div>
+                <?php if ($status != 1) echo ' <fieldset class="submit-buttons">
+                    <button type="submit" name="button" id="submit_form" value="_EDIT" class="btn btn-primary start">
+                        <i class="icon-ok icon-white"></i>
+                        <span>Save</span>
+                    </button>
+                    <button type="reset" class="btn btn-warning delete d-none">
+                        <i class="icon-retweet icon-white"></i>
+                        <span>Reset</span>
+                    </button>
+                    <input value="Update" name="submit" type="hidden">
+                </fieldset>'?>
+
+            </form>
 
         </div>
     </div>

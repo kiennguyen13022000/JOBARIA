@@ -362,7 +362,7 @@ if (document.querySelector(".splide_detail") !== null) {
 function checkValidEmail(e) {
   var a = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return a.test(e)
-}-
+}
 function format2(n, currency = "") {
   if (currency === "" || currency === null || currency === undefined) {
     return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
@@ -409,7 +409,6 @@ function renderProduct() {
     data: {getlocalStorage:getlocalStorage},
     dataType: 'json',
     success: function(data) {
-      console.log(data)
       if (data.msg == 'ok'){
         $('#cart_table').html(data.productsContent);
         $('input[name="number_type"]').val(data.number_type);
@@ -475,6 +474,7 @@ function delProduct(item){
   if(products.length === 0)  window.location.reload();
 }
 function pricingProduct(index, number_product, unit_price_product) {
+
   price_product = format2(unit_price_product * number_product, "$");
   price_product_val = format2(unit_price_product * number_product, "");
   $(".total_price_product_text[data-index=" + index + "]").text(price_product);
@@ -482,18 +482,17 @@ function pricingProduct(index, number_product, unit_price_product) {
   pricingTotalProducts();
 }
 function pricingTotalProducts() {
-  var calculated_total_sum = 0;
-  promotion = parseInt($('input[name="promotion"]').val());
+  var calculated_total_sum = 0,
+      promotion = parseInt($('input[name="promotion"]').val());
 
   $(".cart_table .total_price_product").each(function () {
-    var get_textbox_value = $(this).val();
+    var get_textbox_value = $(this).val().replace(/,/g, "");
 
     if ($.isNumeric(get_textbox_value)) {
-
       calculated_total_sum += parseFloat(get_textbox_value);
     }
   });
-
+  console.log(calculated_total_sum);
   $("#sub_total_products_text").text(format2(calculated_total_sum, "$"));
   $('input[name="sub_total_products"]').val(format2(calculated_total_sum, ""));
   if (promotion > 0) {

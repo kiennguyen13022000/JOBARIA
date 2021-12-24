@@ -35,10 +35,20 @@ class SettingController extends Controller
             }
         }
         $this->_view->control = $this->_arrParam['controller'];
+        $this->_view->action = $this->_arrParam['action'];
         $this->_view->result = $this->_model->getConfig();
         $this->_view->render('settings/index');
     }
-
+    public function listTemplateAction(){
+        $this->_view->title = 'List Template';
+        $this->createLinkCss();
+        $this->createLinkJs();
+        $field = 'id,template_name';
+        $this->_view->data = $this->_model->list($field,'email_template');
+        $this->_view->control = $this->_arrParam['controller'];
+        $this->_view->action = $this->_arrParam['action'];
+        $this->_view->render('settings/listTemplate');
+    }
     private function createLinkCss(){
         $css = array(
             array(

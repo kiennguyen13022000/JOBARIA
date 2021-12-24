@@ -244,10 +244,10 @@ if($this->result['ship_defferent_address'] == 1){
                             <div class="card p-2 mb-lg-0">
                                 <div class="text-center">
                                     <div class="my-2">
-                                        <i class="mdi mdi-truck-fast h1 text-muted"></i>
+                                        <i class="fas fa-truck h1 text-muted"></i>
                                     </div>
-                                    <h5><b>UPS Delivery</b></h5>
-                                    <div class="mt-2 pt-1">
+                                    <h5 class="mb-0"><b>UPS Delivery</b></h5>
+                                    <div class="pt-1">
                                         <p class="mb-1"><span class="fw-semibold">Order ID :</span> xxxx048</p>
                                         <p class="mb-0"><span class="fw-semibold">Payment Mode :</span> COD</p>
                                     </div>

@@ -1,6 +1,3 @@
-<?php
-    error_reporting (E_ALL ^ E_NOTICE);
-?>
 <section class="subcribe_box" style="background: url('/<?php echo $this->sevenBanner[0]['image']; ?>'); background-size: cover; ">
     <div class="subscribe text-center">
         <p class="subscribe__title_1"><?php echo $this->sevenBanner[0]['title_1']; ?></p>

@@ -7,6 +7,7 @@ class IndexController extends Controller
         $this->createLinkCss();
         $this->createLinkJs();
         $this->_view->control = $this->_arrParam['controller'];
+        $this->_view->action = $this->_arrParam['action'];
         $this->_view->render('index/index');
     }
 

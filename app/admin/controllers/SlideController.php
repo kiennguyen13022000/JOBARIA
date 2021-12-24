@@ -57,6 +57,7 @@ class SlideController extends Controller
             }
         }
         $this->_view->control = $this->_arrParam['controller'];
+        $this->_view->action = $this->_arrParam['action'];
         $this->_view->task = $task;
         $this->_view->render('slide/form');
     }
@@ -66,6 +67,7 @@ class SlideController extends Controller
         $this->createLinkCss();
         $this->createLinkJs();
         $this->_view->control = $this->_arrParam['controller'];
+        $this->_view->action = $this->_arrParam['action'];
         $this->_view->data = $this->_model->list();
         $this->_view->render('slide/index');
     }

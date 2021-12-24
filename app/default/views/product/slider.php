@@ -4,14 +4,14 @@
     if(empty($listImages) && empty($this->result['image'])) $d_none = 'd-none';
     $splide__list = '<ul class="splide__list">
                     <li class="splide__slide">
-                        <img src="/'. $this->result['image'].'">
+                        <img class="img_detail_product" height="443" src="'. $this->result['image'].'">
                     </li>
                 ';
     if (!empty($listImages)){
         foreach ($listImages as $k => $v){
             $splide__list .='
                 <li class="splide__slide">
-                    <img '.$v['id'].' src="'.$v['image'].'">
+                    <img class="img_detail_product" height="443" src="'.$v['image'].'">
                 </li>
               ';
         }
@@ -35,7 +35,7 @@
                     <i class="fa fa-chevron-right" aria-hidden="true"></i>
                 </button>
             </div>
-            <div class="splide__track">
+            <div class="splide__track ">
                 <?php echo $splide__list ?>
             </div>
         </div>
@@ -43,7 +43,7 @@
     </div>
     <!-- slide thumb -->
     <div class="splide thumbnail_splide thumbnail_splide_detail mt-3">
-        <div class="splide__track">
+        <div class="splide__track splide__track__thumbnail">
             <?php echo $splide__list ?>
         </div>
     </div>

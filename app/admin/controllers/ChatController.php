@@ -14,7 +14,7 @@ class ChatController extends Controller
         if (!empty($this->_view->userInbox)){
             $this->_view->inboxDetail = $this->_model->getInboxDetail($userInfo['id'], $this->_view->userInbox[0]);
         }
-
+        $this->_view->action = $this->_arrParam['action'];
         $this->_view->render('chat/index');
     }
 
