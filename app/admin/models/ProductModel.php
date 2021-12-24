@@ -27,7 +27,7 @@ class ProductModel extends Model
             $arrParams['position']= 1;
             $sql = "UPDATE products SET position = position + 1";
             $this->Query($sql);
-            $arrParams = $this->prepare($arrParams);
+            //$arrParams = $this->prepare($arrParams);
             return $this->Insert($arrParams);
         }else{
             $arrParams['updated_at'] = date('Y-m-d H:i:s');
@@ -43,7 +43,7 @@ class ProductModel extends Model
             }else{
                 unset($arrParams['image']);
             }
-            $arrParams = $this->prepare($arrParams);
+            //$arrParams = $this->prepare($arrParams);
             return $this->Update($arrParams, [['id', $id, '']]);
         }
     }

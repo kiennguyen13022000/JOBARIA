@@ -656,10 +656,16 @@ button.focus_none:focus {
   cursor: pointer;
 }
 
-.splide__slide img {
+.splide__slide img{
   width: 100%;
   object-fit: contain;
+}
+.splide__slide img:not(.img_detail_product) {
   height: auto;
+}
+.splide__track__thumbnail .splide__slide img{
+  height: auto;
+  max-height: 90px;
 }
 .splide_modal .splide__slide{
    padding: 15px;

@@ -6,9 +6,7 @@ class ProductController extends Controller
     {
         parent::__construct($arrParams);
     }
-
     public function editAction(){
-        error_reporting (E_ALL ^ E_NOTICE);
         $this->createLinkCss();
         $this->createLinkJs();
         $this->_view->title     = 'Add product';
@@ -57,7 +55,10 @@ class ProductController extends Controller
                 $this->_view->errors = $validate->getError();
                 $this->_view->result = $validate->getResult();
             }else{
-                $this->_arrParam['slug'] = makeSlug($form['product_name']);
+                $this->_arrParam['form']['slug'] = makeSlug($form['product_name']);
+                $this->_arrParam['form']['is_new'] = isset($this->_arrParam['form']['is_new']) ? $this->_arrParam['form']['is_new'] : 0;
+                $this->_arrParam['form']['feature'] = isset($this->_arrParam['form']['feature']) ? $this->_arrParam['form']['feature'] : 0;
+                $this->_arrParam['form']['best_seller'] = isset($this->_arrParam['form']['best_seller']) ? $this->_arrParam['form']['best_seller'] : 0;
                 $form['id']=$this->_model->edit($this->_arrParam, $task);
                 if($this->_model->affectedAction() == 1){
                     if ($task == 'add'){
@@ -72,6 +73,9 @@ class ProductController extends Controller
             }
         }
         $this->_view->control = $this->_arrParam['controller'];
+        $this->_view->action = $this->_arrParam['action'];
+        $this->_view->getLink = $this->_model->getLink($product_id);
+        $this->_view->DOMAIN_NAME = DOMAIN_NAME;
         $this->_view->render('product/edit');
     }
     public function nextStepAction(){
@@ -115,6 +119,7 @@ class ProductController extends Controller
 //        }
         $this->_view->data = $this->_model->list();
         $this->_view->control = $this->_arrParam['controller'];
+        $this->_view->action = $this->_arrParam['action'];
         $this->_view->render('product/list');
     }
     public function deleteAction(){

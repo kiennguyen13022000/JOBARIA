@@ -52,7 +52,7 @@
                                             <td>
                                                 <ul class="list-inline table-action m-0">
                                                     <li class="list-inline-item">
-                                                        <a href="index.php?module=admin&controller=product&action=edit&task=edit&id='.$value['id'].'"" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                        <a href="index.php?module=admin&controller=product&action=edit&task=edit&id='.$value['id'].'" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
                                                     </li>
                                                     <li class="list-inline-item">
                                                         <a href="javascript:void(0)" data-id="'. $value['id'] .'" data-table="products" data-control="product" onclick="delItem(this);" class="action-icon"> <i class="mdi mdi-delete"></i></a>

@@ -54,5 +54,16 @@ class SettingModel extends Model
         }
         return $newResult;
     }
-
+    public function info($id,$table){
+        $this->setTable($table);
+        $query = 'SELECT * FROM '.$table.' WHERE `id` = ' . $id;
+        $result = $this->OneRecord($query);
+        return $result;
+    }
+    public function list($field,$table){
+        $this->setTable($table);
+        $query = 'SELECT '.$field.' FROM '.$table;
+        $result = $this->ListRecord($query);
+        return  $result;
+    }
 }

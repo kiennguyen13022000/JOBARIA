@@ -16,7 +16,7 @@ class ChatController extends Controller
             Session::set('userChat', $userChat);
             $this->_view->inboxDetail = $this->_model->getInboxDetail($userInfo['id'], $userChat['user_chat']);
         }
-
+        $this->_view->action = $this->_arrParam['action'];
         $this->_view->render('chat/index');
     }
 

@@ -6,7 +6,7 @@ class OrderController extends Controller
         parent::__construct($arrParams);
     }
     public function cartAction(){
-        error_reporting(0);
+
         $this->_view->sevenBanner           = $this->_model->getTopBanners(7);
         $this->_view->settings              = $this->_model->getSettings();
         $this->_view->categories            = $this->_model->getCategory();
@@ -16,7 +16,7 @@ class OrderController extends Controller
         $this->_view->render('order/cart');
     }
     public function successAction(){
-        error_reporting(0);
+
         $this->_view->sevenBanner           = $this->_model->getTopBanners(7);
         $this->_view->settings              = $this->_model->getSettings();
         $this->_view->categories            = $this->_model->getCategory();
@@ -26,7 +26,7 @@ class OrderController extends Controller
         $this->_view->render('order/success');
     }
     public function checkoutAction(){
-        error_reporting(0);
+
         $this->_view->sevenBanner           = $this->_model->getTopBanners(7);
         $this->_view->settings              = $this->_model->getSettings();
         $this->_view->categories            = $this->_model->getCategory();
@@ -113,7 +113,7 @@ class OrderController extends Controller
         $this->_view->render('order/checkout');
     }
     public function checkCouponAction(){
-        error_reporting(0);
+
         $coupon_code = isset($_POST['coupon_code']) ? $_POST['coupon_code'] : '';
         $msg = 'error';
 
@@ -126,7 +126,7 @@ class OrderController extends Controller
         echo json_encode($output);die();
     }
     public function renderProductAction(){
-        error_reporting(0);
+
         $coupon_code = isset($_POST['coupon_code']) ? $_POST['coupon_code'] : '';
         $getlocalStorage = isset($_POST['getlocalStorage']) ? $_POST['getlocalStorage'] : array();
         $msg = 'ok';
@@ -158,10 +158,13 @@ class OrderController extends Controller
                 $price = $info['price'];
                 $promotion = (int) $info['promotion'];
                 $new_price = $price;
+                $new_price_int  = number_format($new_price, 2, '.', '');
                 if ($promotion > 0){
-                    $new_price = number_format($price - $price * $promotion / 100, 2, '.', ',');
+                    $new_price = number_format($new_price_int - $new_price_int * $promotion / 100, 2, '.', ',');
+                    $new_price_int = number_format($new_price_int - $new_price_int * $promotion / 100, 2, '.', '');
                 }
-                $price_product_by_num = number_format($new_price *  $number_product, 2, '.', ',');
+                $price_product_by_num = number_format($new_price_int *  $number_product, 2, '.', ',');
+                $price_product_by_num_int = number_format($new_price_int *  $number_product, 2, '.', '');
                 $productsContent .='
                         <tr class="product_cart" data-product-id="'.$product_id.'">
                             <td>
@@ -178,7 +181,7 @@ class OrderController extends Controller
                             </td>
                             <td class="text-bold">
                               <span class="unit_price_product_text">$'.$new_price.'</span>
-                              <input type="hidden" data-index="'.$k.'" value="'.$new_price.'"
+                              <input type="hidden" data-index="'.$k.'" value="'.$new_price_int.'"
                                 class="unit_price_product_val">
                             </td>
                             <td class="">
@@ -213,7 +216,7 @@ class OrderController extends Controller
         ));die();
     }
     public function renderCartAction(){
-        error_reporting(0);
+
         $dataCart = isset($_POST['dataCart']) ? $_POST['dataCart'] : array();
         $msg = 'ok';
         $renderCartHtml = '';
@@ -232,11 +235,15 @@ class OrderController extends Controller
                 $price = $info['price'];
                 $product_name = $info['product_name'];
                 $promotion = (int) $info['promotion'];
+                $new_price = $price;
+                $new_price_int = number_format($new_price, 2, '.', '');
                 if ($promotion > 0){
                     $new_price = number_format($price - $price * $promotion / 100, 2, '.', ',');
+                    $new_price_int = number_format($new_price_int - $new_price_int * $promotion / 100, 2, '.', '');
                 }
                 $price_product_by_num = number_format($new_price *  $number_product, 2, '.', ',');
-                $total_price_cart += $price_product_by_num;
+                $price_product_by_num_int = number_format($new_price_int *  $number_product, 2, '.', '');
+                $total_price_cart += $price_product_by_num_int;
                 $renderCartHtml .='
                      <li class="py-3 border-bottom ">
                         <div class="row ">
@@ -288,7 +295,7 @@ class OrderController extends Controller
         ));die();
     }
     public function renderPriceCheckoutAction(){
-        error_reporting(0);
+
         $productsCart = isset($_POST['productsCart']) ? $_POST['productsCart'] : array();
         $checkOutStorage = isset($_POST['checkOutStorage'][0]) ? $_POST['checkOutStorage'][0] : array();
 
@@ -303,11 +310,11 @@ class OrderController extends Controller
             $sub_total_products = $checkOutStorage['sub_total_products'];
             $price_total_products = $sub_total_products;
             $promotion_cart = $checkOutStorage['promotion'];
+
             if (trim($coupon_input) == 'MUACUCDA'){
-                $price_total_products = number_format($sub_total_products - $sub_total_products * 20 / 100, 2, '.', ',');
-
+                $sub_total_products_int = str_replace(",","",$sub_total_products);
+                $price_total_products = number_format($sub_total_products_int - $sub_total_products_int * 20 / 100, 2, '.', ',');
             }
-
             $checkOutContent .='
                  <tr class="text-center text-uppercase">
                     <td class="w-50">Product</td>
@@ -324,11 +331,14 @@ class OrderController extends Controller
                 $product_name = $info['product_name'];
                 $promotion = (int) $info['promotion'];
                 $new_price = $price;
+                $new_price_int = number_format($new_price, 2, '.', '');
                 if ($promotion > 0){
                     $new_price = number_format($price - $price * $promotion / 100, 2, '.', ',');
+                    $new_price_int = number_format($new_price_int - $new_price_int * $promotion / 100, 2, '.', '');
                 }
-                $price_product_by_num = number_format($new_price *  $number_product, 2, '.', ',');
-                $total_price_cart += $price_product_by_num;
+                $price_product_by_num = number_format($new_price_int *  $number_product, 2, '.', ',');
+                $price_product_by_num_int = number_format($new_price_int *  $number_product, 2, '.', '');
+                $total_price_cart += $price_product_by_num_int;
                 $checkOutContent .='
                      <tr>
                         <td>

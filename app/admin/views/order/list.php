@@ -38,8 +38,9 @@
                                                             </div>
                             ';
                         }elseif ($payment_status == 1){
+                           // <div><span class="badge badge-soft-warning">Unpaid</span></div>
                             $payment_status_html = '
-                                <div><span class="badge bg-warning">Unpaid</span></div>
+                                <div><span class="badge bg-success">Confirmed</span></div>
                             ';
                         }elseif ($payment_status == 4){
                             $payment_status_html = '
@@ -47,7 +48,7 @@
                         ';
                         }else{
                             $payment_status_html = '
-                                <div><span class="badge badge-soft-warning">Awaiting Confirm</span></div>
+                                <div><span class="badge bg-warning">Awaiting Confirm</span></div>
                             ';
                         }
                         $status         = $value['status'] == 1 ? 'Shipped' : 'Delivered';
@@ -67,7 +68,7 @@
                                             <td>
                                                 <ul class="list-inline table-action m-0">
                                                     <li class="list-inline-item">
-                                                        <a href="index.php?module=admin&controller=order&action=edit&task=edit&id='.$value['id'].'" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                        <a href="index.php?module=admin&controller=order&action=edit&task=edit&id='.$value['id'].'" class="action-icon"><i class="fas fa-eye"></i></a>
                                                     </li>
                                                     <li class="list-inline-item">
                                                         <a href="javascript:void(0)" data-id="'. $value['id'] .'" data-table="orders" data-control="order" onclick="delItem(this);" class="action-icon"> <i class="mdi mdi-delete"></i></a>

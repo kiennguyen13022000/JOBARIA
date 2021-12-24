@@ -7,20 +7,20 @@
         //$category_name = $this->_model->getCategoryName($value['category_id']);
         if ($payment_status == 2){
             $payment_status_html = '
-                                <div><span class="badge badge-soft-success">Paid</span>
+                                <div><span class="text-white badge badge-soft-success">Paid</span>
                                                             </div>
                             ';
         }elseif ($payment_status == 1){
             $payment_status_html = '
-                                <div><span class="badge bg-warning">Unpaid</span></div>
+                                <div><span class="text-white badge bg-success">Confirmed</span></div>
                             ';
         }elseif ($payment_status == 4){
             $payment_status_html = '
-                            <div><span class="badge badge-soft-danger">Cancelled</span></div>
+                            <div><span class="text-white badge badge-soft-danger">Cancelled</span></div>
                         ';
         }else{
             $payment_status_html = '
-                                <div><span class="badge badge-soft-warning">Awaiting Confirm</span></div>
+                                <div><span class="text-white badge badge-warning">Awaiting Confirm</span></div>
                             ';
         }
         $status         = $value['status'] == 1 ? 'Shipped' : 'Delivered';

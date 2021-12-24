@@ -36,19 +36,19 @@ class OrderController extends Controller
 
         if(isset($this->_arrParam['form'])){
             $form = $this->_arrParam['form'];
-            $form['id']=$this->_model->edit($this->_arrParam, $task);
+
+            $update=$this->_model->edit($this->_arrParam, $task);
+            if (!empty($update)){
+                $this->_model->sendMailConfirmOrder($order_id);
+            }
             if($this->_model->affectedAction() == 1){
-                if ($task == 'add'){
-                    Session::set('success', '\'' . 'edit'.  '\'' );
-                    Url::redirect('admin', 'order', 'edit',['task' => 'edit', 'id' => $form['id']]);
-                }else{
-                    $id = $this->_arrParam['id'];
-                    Session::set('success', '\'' . 'edit'.  '\'' );
-                    Url::redirect('admin', 'order', 'edit',['task' => 'edit', 'id' => $id]);
-                }
+                $id = $this->_arrParam['id'];
+                Session::set('success', '\'' . 'edit'.  '\'' );
+                Url::redirect('admin', 'order', 'edit',['task' => 'edit', 'id' => $id]);
             }
         }
         $this->_view->control = $this->_arrParam['controller'];
+        $this->_view->action = $this->_arrParam['action'];
         $this->_view->render('order/edit');
     }
     public function listAction(){
@@ -57,6 +57,7 @@ class OrderController extends Controller
         $this->createLinkJs();
         $this->_view->data = $this->_model->list();
         $this->_view->control = $this->_arrParam['controller'];
+        $this->_view->action = $this->_arrParam['action'];
         $this->_view->render('order/list');
     }
     public function deleteAction(){

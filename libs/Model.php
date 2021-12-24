@@ -56,7 +56,7 @@ class Model{
     }
 
     public function Query($sql){
-//        echo $sql; die();
+       // echo $sql; die();
         $result = mysqli_query($this->connect, $sql);
         $this->resultQuery = $result;
 
