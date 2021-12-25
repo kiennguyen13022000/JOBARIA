@@ -608,6 +608,32 @@ $('.btnModalProduct').click(function (){
       main.mount();
       thumbnails.mount();
       $('#modal_product').modal();
+    $('.btn-favorite').click(function () {
+
+      var id = $(this).attr('data-id');
+      var data = {id: id};
+      var url = '/index.php?module=default&controller=account&action=addToFavorites';
+      var btn = this;
+
+      $.post(url, data, function (data2){
+        if (data2.result == 'error')
+          alert('Bạn chưa đăng nhập');
+        else {
+          let options = {
+            position: 'top-right',
+            animationDuration: 300
+          }
+          if (data2.result == 'already-exist'){
+            $(btn).css({ backgroundColor: '#fff' });
+            $(btn).find('i').css({color: '#343a40 '});
+          }else{
+            new AWN(options).modal('<b>Sản phẩm đã được thêm vào danh sách yêu thích.</b>');
+            $(btn).css({ backgroundColor: '#0184c5' });
+            $(btn).find('i').css({color: '#fff '});
+          }
+        }
+      }, 'json');
+    });
   })
 });
 $('#rating').val(1);

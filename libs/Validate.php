@@ -55,14 +55,12 @@ class Validate{
 
     // Run
     public function run(){
-
         foreach($this->rules as $element => $value){
             if(isset($this->getError()[$element]))
                 unset($this->source[$element]);
             if($value['required'] == true && trim($this->source[$element]) == null){
                 $this->errors[$element] = ucfirst($element) . ' is not empty!';
             }else{
-
                     switch ($value['type']) {
                         case 'int':
                             $this->validateInt($element, $value['options']['min'], $value['options']['max']);
@@ -189,8 +187,10 @@ class Validate{
         }
     }
     private function validatePassword($element, $option){
+
         $pattern = "#^(?=.*\d)(?=.*[A-Z])(?=.*\W).{8,8}$#";
-        if($option['action'] == 'add' || ($option['action'] == 'edit' && $this->source[$element]!= null)){
+        if(($option['action'] == 'add' || $option['action'] == 'edit') && trim($this->source[$element]) != null){
+
             if(!preg_match($pattern, $this->source[$element])){
                 $this->errors[$element] = $element. " is an invalid password";
             }

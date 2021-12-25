@@ -9,7 +9,9 @@ class Upload {
                     mkdir('public/upload/' .$folder, 0777, true);
                 }
                 try {
-                    $fileName = $uploadDir . bin2hex(random_bytes(10)) . '.' .pathinfo(basename($file["name"]), PATHINFO_EXTENSION);
+                    $ext = pathinfo(basename($file["name"]), PATHINFO_EXTENSION);
+                    $filenametemp = bin2hex(random_bytes(10));
+                    $fileName = $uploadDir . $filenametemp . '.' . $ext;
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
@@ -18,7 +20,7 @@ class Upload {
                 if ($height != null && $width != null){
                     $thum = PhpThumbFactory::create($fileName);
                     $thum->adaptiveResize($width, $height);
-                    $thum->save($uploadDir . $file['name']);
+                    $thum->save($uploadDir . $filenametemp . '-100x100'. '.' . $ext);
                 }
                 return '/'.$fileName;
             }

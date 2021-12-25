@@ -130,7 +130,7 @@ $formatDiscount = '$'. $numFormatDiscount;
                         </a>
                     </li>
                     <li class="nav-item mt-3 ml-md-auto">
-                        <a href="" class="nav-link ">
+                        <a href="javascript:void(0)" class="nav-link btn-favorite" data-id="<?php echo $this->productInfo['id']; ?>">
                             <i class="fa fa-heart" aria-hidden="true"></i> Add to favorite
                         </a>
                     </li>

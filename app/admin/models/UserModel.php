@@ -20,7 +20,7 @@ class UserModel extends Model
              $arrParams['password']   = md5($arrParams['password']);
              unset($arrParams['confirm_password']);
              $uploadObj = new Upload();
-             $arrParams['avatar'] = $uploadObj->uploadFile($arrParams['avatar'], 'users', 100, 130);
+             $arrParams['avatar'] = $uploadObj->uploadFile($arrParams['avatar'], 'users', 100, 100);
              $arrParams = $this->prepare($arrParams);
              return $this->Insert($arrParams);
 
@@ -37,7 +37,7 @@ class UserModel extends Model
                 $info = $this->info($id);
                 $uploadObj = new Upload();
                 $uploadObj->removeFile('users', null, $info['avatar']);
-                $arrParams['avatar'] = $uploadObj->uploadFile($arrParams['avatar'], 'users', 100, 130);
+                $arrParams['avatar'] = $uploadObj->uploadFile($arrParams['avatar'], 'users', 100, 100);
              }else{
                  unset($arrParams['avatar']);
              }

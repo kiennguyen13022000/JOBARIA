@@ -7,8 +7,9 @@ $count = 0;
 foreach ($this->trenningProductList as $key => $value){
     $itemTab = '';
     $activeTab = $count == 0 ? 'active' : '';
+    $href = URL::filterURL($key);
     $tab .= '<li class="nav-item '. $activeTab .'">
-                    <a class="nav-link pr-0 pr-md-3 '. $activeTab .'" data-toggle="pill" href="#'. strtolower($key) .'">'. $key .'</a>
+                    <a class="nav-link pr-0 pr-md-3 '. $activeTab .'" data-toggle="pill" href="#'. $href .'">'. $key .'</a>
                 </li>';
 
     foreach ($value as $key2 => $value2){
@@ -60,7 +61,7 @@ foreach ($this->trenningProductList as $key => $value){
                             <div class="d-flex algin-items-center justify-content-center mt-3">
                                 <button data-id="'. $value2['id'] .'" class="btnModalProduct btn border btn__preview"><i class="fa fa-search"
                                                                            aria-hidden="true"></i></button>
-                                <button class="btn__favorite btn text-dark border  ">
+                                <button data-id="'. $value2['id'] .'" class="btn__favorite btn text-dark border  ">
                                     <i class="fa fa-heart" aria-hidden="true"></i>
                                 </button>
                                 <button class="btn btn__addtocart border mx-1">Add to cart</button>
@@ -71,7 +72,7 @@ foreach ($this->trenningProductList as $key => $value){
         $itemTab .= '</div>';
     }
     $activeTabContent = $count == 0 ? 'active show' : '';
-    $tabContent .= '<div id="'. strtolower($key) .'" class="tab-pane '. $activeTabContent .'">
+    $tabContent .= '<div id="'. $href.'" class="tab-pane '. $activeTabContent .'">
                         <div class="owl-carousel list_item_product product_style">
                            '. $itemTab .'
                         </div>
