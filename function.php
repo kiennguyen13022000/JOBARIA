@@ -38,3 +38,7 @@ function makeSlug($str) {
     //$str = preg_match("[^A-Za-z0-9\-]", "", $str);
     return strtolower($str);
 }
+function getLinkProduct($id,$slug){
+    $slug = '/product/'.$slug.'-'.$id.'.html';
+    return $slug;
+}

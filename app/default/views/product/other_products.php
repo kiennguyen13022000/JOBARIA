@@ -72,7 +72,7 @@
                         <button type="button" class="btn__favorite btn text-dark border  ">
                             <i class="fa fa-heart" aria-hidden="true"></i>
                         </button>
-                        <button type="button" class="btn btn__addtocart border mx-1">Add to
+                        <button data-id="'.$v['id'].'" type="button" class="btn btnModalProduct btn__addtocart border mx-1">Add to
                             cart</button>
                         <button type="button" class="btn__copy btn text-dark border">
                             <i class="fa fa-file" aria-hidden="true"></i>

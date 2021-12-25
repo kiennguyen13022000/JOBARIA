@@ -1,5 +1,5 @@
 <?php
-class Pagination
+class Pagination2
 {
     private $totalItem;
     private $totalItemPage;
@@ -93,5 +93,72 @@ class Pagination
             $pagination = '<div class="pagination">' . $start . $prev . $listPages . $next . $end . $endPagination . '</div>';
         }
         return $pagination;
+    }
+}
+class Pagination
+{
+    private $totalItems;
+    private $itemsPerPage;
+    private $currPage;
+
+    public function __construct($totalItems, $itemsPerPage, $currPage)
+    {
+        $this->totalItems = $totalItems;
+        $this->itemsPerPage = $itemsPerPage;
+        $this->currPage = $currPage;
+    }
+
+    public function getLinksHtml($baseUrl, $pageVar)
+    {
+        $html = '  <ul class="pagination justify-content-center justify-content-lg-end">';
+        $str = !empty($baseUrl) ? '&' : '?' ;
+        if ($this->hasPrev()) {
+            $html .= '<li class="page-item mr-1"><a class="page-link" href="'.$baseUrl.$str.$pageVar.'='.($this->currPage-1).'">';
+            $html .= '<i class="fas fa-chevron-left"></i> Previous';
+            $html .= '</a></li>';
+        }
+
+        for($i=1; $i<=$this->getNumPages(); $i++) {
+            if ($i != $this->currPage) {
+                $html .= ' <li class="page-item mr-1"><a class="page-link" href="'.$baseUrl.$str.$pageVar.'='.$i.'">'.$i.'</a></li>';
+            } else {
+                $html .= '<li class="page-item mr-1 active"><a class="page-link" href="javascript:void(0);">'.$i.'</a></li>';
+            }
+        }
+
+        if ($this->hasNext()) {
+            $html .= '<li class="page-item"><a class="page-link" href="'.$baseUrl.$str.$pageVar.'='.($this->currPage+1).'">';
+            $html .= 'Next <i class="fas fa-chevron-right"></i>';
+            $html .= '</a></li>';
+        }
+        $html .= '</ul>';
+        return $html;
+    }
+
+    public function hasPrev()
+    {
+        if ($this->currPage > 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function hasNext()
+    {
+
+
+        if ($this->currPage < $this->getNumPages()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getNumPages()
+    {
+        $numPages = ceil($this->totalItems/$this->itemsPerPage);
+
+        return $numPages;
     }
 }

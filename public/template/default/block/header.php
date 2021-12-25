@@ -4,9 +4,12 @@
     $htmlCategoryTablet = '';
     $allCategory = '';
     if (!empty($this->categories)){
+        $link_categories = '/product-list/';
         foreach ($this->categories as $key => $value){
             $arrow = '';
             $categoryLinkClass = '';
+            //$breakcrumbs = $link_categories.makeSlug($value['breakcrumbs']).'-'.$value['id'];
+            $breakcrumbs = $link_categories.makeSlug($value['name']).'-'.$value['id'];
             if (!empty($value['child_second'])){
                 $htmlCategory .= '<li class="nav-item shop__categories__item position-relative">';
                 $categoryLinkClass = 'categories__link';
@@ -15,7 +18,7 @@
                 $htmlCategory .= '<li class="nav-item">';
             }
 
-            $htmlCategory .= '<a href="list.html" class="nav-link text-dark border-bottom '.$categoryLinkClass.'">
+            $htmlCategory .= '<a href="'.$breakcrumbs.'" class="nav-link text-dark border-bottom '.$categoryLinkClass.'">
                               '.$value['name'] . $arrow .'  
                           </a>';
 
@@ -24,17 +27,19 @@
                 $htmlCategory .= '<div class="shop__categories__item__right">
                                    <div class="row mx-0">';
                 foreach ($value['child_second'] as $keyChildSecond => $valueChildSecond){
+                   // $breakcrumbs_child = $link_categories.strtolower(str_replace(',','/',$valueChildSecond['breakcrumbs'])).'-'.$valueChildSecond['id'];
+                    $breakcrumbs_child = $link_categories.strtolower(str_replace(',','/',$valueChildSecond['name'])).'-'.$valueChildSecond['id'];
                     $htmlCategory .= '<div class="col-3 categories__item__right py-3">
                                       <ul class="nav flex-column">';
                     $htmlCategory .= '<li class="nav-item shop__categories__item">
-                                        <a class="nav-link font-weight-bold categories__link" href="list.html">
+                                        <a class="nav-link font-weight-bold categories__link" href="'.$breakcrumbs_child.'">
                                             '.$valueChildSecond['name'].'
                                         </a>
                                   </li>';
                     if (!empty($valueChildSecond['child_third'])){
                         foreach ($valueChildSecond['child_third'] as $keyChildThird => $valueChildThird){
                             $htmlCategory .= '<li class="nav-item shop__categories__item">
-                                                <a class="nav-link py-1 categories__link" href="list.html">
+                                                <a class="nav-link py-1 categories__link" href="'.$breakcrumbs_child.'">
                                                     '.$valueChildThird['name'].'
                                                 </a>
                                           </li>';
@@ -52,6 +57,9 @@
 
         }
         foreach ($this->categories as $key => $value){
+            $link_categories = '/product-list/';
+            //$breakcrumbs = $link_categories.makeSlug($value['breakcrumbs']).'-'.$value['id'];
+            $breakcrumbs = $link_categories.makeSlug($value['name']).'-'.$value['id'];
             $htmlCategoryTablet .= '<li class="nav-item shop__categories__item position-relative ">';
 
             $add = empty($value['child_second']) ? '' : '<i class="fa fa-plus float-right"></i>';
@@ -63,6 +71,8 @@
                 $htmlCategoryTablet .= '<ul id="category_'.$value['id'].'_tablet" class="list-unstyled collapse"
                                              data-parent="#accordion__categories">';
                 foreach ($value['child_second'] as $keyChildSecond => $valueChildSecond){
+                    //$breakcrumbs_child = $link_categories.strtolower(str_replace(',','/',$valueChildSecond['breakcrumbs'])).'-'.$value['id'];
+                    $breakcrumbs_child = $link_categories.strtolower(str_replace(',','/',$valueChildSecond['name'])).'-'.$value['id'];
                     $add = empty($valueChildSecond['child_third']) ? '' : '<i class="fa fa-plus float-right"></i>';
                     $htmlCategoryTablet .= '<li class="nav-item shop__categories__item ">
                                                 <a data-toggle="collapse" class="nav-link shop__categories__item__a "

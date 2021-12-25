@@ -1651,8 +1651,8 @@ input.number_product[type="number"] {
 }
 .backTop {
   display: none;
-  background: #1c5875;
-  z-index: 99;
+  background-color: var(--main-bg-color);
+  color: #fff !important;
   width: 50px;
   height: 50px;
   text-align: center;
@@ -1881,7 +1881,7 @@ input.number_product[type="number"] {
 .grid_product_tab .item_grid {
   border-bottom: 1px solid #e5e5e5;
   margin-bottom: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 18px;
 }
 .grid_product_tab .item_grid:last-child {
   border-bottom: none;
@@ -2678,4 +2678,7 @@ input.number_product[type="number"] {
   color: #f7b84b;
   background-color: rgba(247,184,75,.18);
   box-shadow: none;
+}
+.grid_product_tab .item_grid .description p{
+  margin-bottom: 10px;
 }

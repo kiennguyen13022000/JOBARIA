@@ -18,4 +18,6 @@ RewriteRule ^my-wishlists$ 			index.php?module=default&controller=account&action
 RewriteRule ^cart.html$			    index.php?module=default&controller=order&action=cart
 RewriteRule ^checkout$			    index.php?module=default&controller=order&action=checkout
 RewriteRule ^success$			    index.php?module=default&controller=order&action=success
+RewriteRule ^product-list/(.+)-([0-9]+)     index.php?module=default&controller=category&action=index&slug=$1&id=$2 [QSA,L]
 RewriteRule ^product/(.+)-([0-9]+).html$     index.php?module=default&controller=product&action=detail&slug=$1&id=$2
+

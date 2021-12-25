@@ -13,6 +13,12 @@ $(function () {
   $(".select_cat").select2({ dropdownCssClass: "select_box" });
   $(".product_size").select2({ dropdownCssClass: "per_page_css", width: "100%" });
   $(".per_page_select").select2({ dropdownCssClass: "per_page_css", width: "100%" });
+  $('.per_page_select').on('select2:select', function (e) {
+     let per_page = $(this).val();
+      var $form = $(this).closest('form');
+      $form.find('input[type=submit]').click();
+
+  });
   $(".select_sort").select2({ dropdownCssClass: "select_sort_css", width: "100%" });
   if ($(".jorbaria_slider").length > 0) {
     var $owl = $(".jorbaria_slider");
@@ -501,7 +507,6 @@ function pricingTotalProducts() {
   $("#price_total_products").text(format2(calculated_total_sum, "$"));
   $('input[name="price_total_products"]').val(format2(calculated_total_sum, ""));
 }
-
 function renderCart(){
   var dataCart = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
   if (dataCart.length >0){
@@ -525,6 +530,7 @@ function renderCart(){
   }
 }
 renderCart();
+
 function getFormData($form) {
   var unindexed_array = $form.serializeArray();
   var indexed_array = {};
