@@ -30,6 +30,7 @@ class IndexModel extends Model
         $query[]    = "GROUP BY p.id";
         $query[]    = "HAVING COUNT(p.id) = SUM(parent.status)";
         $query[]    = "ORDER BY parent.left";
+        $query[]    = " limit 0,24";
         $query      = implode(' ', $query);
         $result = [];
         if (!empty($user)){
@@ -90,6 +91,7 @@ class IndexModel extends Model
         $query[]    = "AND parent.left > 0 AND `promotion_end_date` > '$currentTime' and `promotion` > 0";
         $query[]    = "GROUP BY p.id";
         $query[]    = "HAVING COUNT(p.id) = SUM(parent.status)";
+        $query[]    = " limit 0,6";
 //        $query[]    = "ORDER BY parent.left";
         $strQuery       = implode(' ', $query);
         return $this->ListRecord($strQuery);
@@ -106,6 +108,7 @@ class IndexModel extends Model
             $query[] = 'ON p.category_id = c.id';
             $query[] = 'where `category_id` in (select id from `categories` WHERE';
             $query[] = '`left` between '. $value['left'] .' and '. $value['right'] .')';
+            $query[]    = " limit 0,12";
             $query   = implode(' ', $query);
             $trenningProductList[$value['name']] =  $this->ListRecord($query);
         }

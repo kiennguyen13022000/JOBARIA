@@ -10,7 +10,7 @@ $(function () {
   }
   //owl-carousel
   $(".select_country").select2({ dropdownCssClass: "select_country", width: "100%" });
-  $(".select_cat").select2({ dropdownCssClass: "select_box" });
+  $(".select_cat").select2({ dropdownCssClass: "select_box",width: "90%" });
   $(".product_size").select2({ dropdownCssClass: "per_page_css", width: "100%" });
   $(".per_page_select").select2({ dropdownCssClass: "per_page_css", width: "100%" });
   $('.per_page_select').on('select2:select', function (e) {

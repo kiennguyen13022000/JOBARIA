@@ -52,7 +52,7 @@
                                         <div class="mt-3 mb-3 limit_line_2">'. $value['description'] .'</div>
                                         <span class="text__price pr-2">$'. number_format($value['price'], 0, ',', '.') . ' </span>
                                         <span class="price__discount">'. $formatDiscount .'</span> <br>
-                                        <button class="btn btn__addtocart border px-4 py-2 mx-1 mt-3">Add to
+                                        <button data-id="'. $value['id'] .'"  class="btn btn__addtocart btnModalProduct border px-4 py-2 mx-1 mt-3">Add to
                                             cart</button>
                                     </div>
                                 </div>

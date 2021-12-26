@@ -1219,6 +1219,7 @@ input.number_product[type="number"] {
   /*background: url("../images/banner/1-12.jpg");*/
   background-size: cover;
   background-repeat: no-repeat;
+  min-height: 491px;
 }
 .sale_up > .container-fluid {
   max-width: 1660px;
