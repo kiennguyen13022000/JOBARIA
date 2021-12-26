@@ -31,7 +31,7 @@ if (!empty($data)){
             ';
         $price_discount_grid .= '</div>';
         $is_new = !empty($v['is_new']) ? '<div class="d-inline-block px-3 py-1 rounded msg__status">New</div>' : '';
-        $is_promotion = !empty($promotion) ? '<div class="d-inline-block px-3 py-1 rounded msg__status">-'.$v['promotion'].'</div>' : '';
+        $is_promotion = !empty($promotion) ? '<div class="d-inline-block px-3 py-1 rounded msg__status">-'.$v['promotion'].'%</div>' : '';
         $listProduct .= '
             <div class="col-12 col-sm-6 col-md-4">
                 <div class="item position-relative wrapper_product_item text-center">
@@ -137,7 +137,13 @@ if (!empty($data)){
     <section class="main_page">
         <div class="container">
             <div class="row flex-wrap-reverse flex-lg-wrap">
-                <?php include_once 'filter.php'; ?>
+                <?php
+                    if ($this->type != 'search'){
+                        include_once 'filter.php';
+                    }else{
+                        include_once 'filterSearch.php';
+                    }
+                ?>
                 <div class="col-12 col-lg-9">
                     <div class="position-relative banner__item">
                         <div class="bg__hover__top"></div>
@@ -214,22 +220,19 @@ if (!empty($data)){
 
                         <div class="row align-items-center pagination_box">
                             <div class="col-lg-4  mb-3 mb-lg-0 <?php if(empty($listProductGrid)) echo 'd-none'?>">
-                                <form action="<?php echo $this->REQUEST_URI ?>" method="get">
-                                    <div class="d-flex aling-items-center0">
-                                        <div class="mr-3 lh_30">Show</div>
-                                        <div class="per_page mr-3">
-                                            <select name="per_page" data-minimum-results-for-search="Infinity"
-                                                    class="per_page_select" id="">
-                                                <option <?php if($this->per_page == 6) echo 'selected'?> value="6">6</option>
-                                                <option <?php if($this->per_page == 12) echo 'selected'?> value="12">12</option>
-                                                <option <?php if($this->per_page == 24) echo 'selected'?> value="24">24</option>
-                                            </select>
-                                            <input type="submit" value="submitPerPage" class="d-none">
-                                        </div>
-                                        <div class="lh_30">Per Page</div>
+                                <div class="d-flex aling-items-center0">
+                                    <div class="mr-3 lh_30">Show</div>
+                                    <div class="per_page mr-3">
+                                        <select name="per_page_select" data-minimum-results-for-search="Infinity"
+                                                class="per_page_select" id="">
+                                            <option <?php if($this->per_page == 6) echo 'selected'?> value="6">6</option>
+                                            <option <?php if($this->per_page == 12) echo 'selected'?> value="12">12</option>
+                                            <option <?php if($this->per_page == 24) echo 'selected'?> value="24">24</option>
+                                        </select>
+                                        <input type="submit" value="submitPerPage" class="d-none">
                                     </div>
-
-                                </form>
+                                    <div class="lh_30">Per Page</div>
+                                </div>
                             </div>
                             <div class="col-lg-8">
                                 <?php echo $this->getLinksHtml ?>

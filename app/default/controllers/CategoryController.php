@@ -67,22 +67,119 @@ class CategoryController extends Controller
         $this->createLinkJs();
         $category_id = $this->_arrParam['id'];
         $this->_view->control = $this->_arrParam['controller'];
+        $type = isset($_GET["type"])? $_GET["type"] : '';
+        $price_range = isset($_GET["price_range"])? (int) $_GET["price_range"] : 0;
         $current_page = isset($_GET["page"])? (int) $_GET["page"] : 1;
         $per_page = isset($_GET["per_page"])? (int) $_GET["per_page"] : 6;
         $limit_page = $current_page  > 1 ? $per_page * ($current_page - 1)  : 0;
         $limit_cond= " limit ".$limit_page.",".$per_page;
+        if (isset($_POST['filter_form']) && $_POST['filter_form'] == 'filter_form'){
+            $link = '/search?';
+            $cat_id = isset($_POST['cat_id']) ? $_POST['cat_id'] : array();
+            $cat_id = !empty($cat_id) ? implode(',',$cat_id) : '';
+            if (!empty($cat_id)){
+                $link .='&cat_id='.$cat_id;
+            }
+            $price_range = isset($_POST['price_range']) ? $_POST['price_range'] : '';
+            if (!empty($price_range)){
+                $link .='&price_range='.$price_range;
+            }
+            $per_page = isset($_POST['per_page']) ? $_POST['per_page'] : 6;
+            if (!empty($per_page)){
+                $link .='&per_page='.$per_page;
+            }
+            header('Location: '.$link);die();
+        }
         $data = $this->_model->list($category_id,'products',$limit_cond);
         $this->_view->data = $data;
         $total_result = $this->_model->countRecord($category_id,'products');
         $pagination = new Pagination($total_result, $per_page, $current_page);
         //$REQUEST_URI = isset($_GET["page"]) ? $_SERVER['REQUEST_URI'] : '';
+        $this->_view->getLinksHtml = $pagination->getLinksHtml('', 'page');
+        $this->_view->action = $this->_arrParam['action'];
+        $this->_view->total_result = $total_result;
+        $this->_view->category_id = $category_id;
+        $this->_view->REDIRECT_URL = $_SERVER['REDIRECT_URL'];
+        $this->_view->REQUEST_URI = $_SERVER['REQUEST_URI'];
+        $this->_view->type = $type;
+        $this->_view->price_range = $price_range;
+        $this->_view->per_page = $per_page;
+        $this->_view->render('category/index');
+    }
+    public function searchAction(){
+        $this->_view->sevenBanner           = $this->_model->getTopBanners(7);
+        $this->_view->settings              = $this->_model->getSettings();
+        $this->_view->categories            = $this->_model->getCategory();
+        $this->_view->title = 'Filter';
+        $this->createLinkCss();
+        $this->createLinkJs();
+        $this->_view->control = $this->_arrParam['controller'];
+        $type = isset($_GET["type"])? $_GET["type"] : '';
+        $current_page = isset($_GET["page"])? (int) $_GET["page"] : 1;
+        $per_page = isset($_GET["per_page"])? (int) $_GET["per_page"] : 6;
+        $limit_page = $current_page  > 1 ? $per_page * ($current_page - 1)  : 0;
+        $limit_cond= " limit ".$limit_page.",".$per_page;
+        $cond = '1 = 1 ';
+        if (isset($_POST['filter_form']) && $_POST['filter_form'] == 'filter_form'){
+            $link = '/search?';
+            $cat_id = isset($_POST['cat_id']) ? $_POST['cat_id'] : array();
+            $cat_id = !empty($cat_id) ? implode(',',$cat_id) : '';
 
+            if (!empty($cat_id)){
+                $link .='&cat_id='.$cat_id;
+            }
+            $price_range = isset($_POST['price_range']) ? $_POST['price_range'] : '';
+            if (!empty($price_range)){
+                $link .='&price_range='.$price_range;
+            }
+            $per_page = isset($_POST['per_page']) ? $_POST['per_page'] : 6;
+            if (!empty($per_page)){
+                $link .='&per_page='.$per_page;
+            }
+            header('Location: '.$link);die();
+        }
+        $cat_id = isset($_GET['cat_id']) ? $_GET['cat_id'] : '';
+        if (!empty($cat_id)){
+            $cond .= ' and child.id IN ('.$cat_id.')';
+        }
+        $price_range = isset($_GET['price_range']) ? (int) $_GET['price_range'] : 0;
+        if (!empty($price_range)){
+           if ($price_range == 1){
+               $from = 0;
+               $to = 30;
+               $cond .= ' and p.price <='.$to;
+           }elseif ($price_range == 2){
+               $from = 30;
+               $to = 60;
+               $cond .= ' and p.price >='.$from.' and p.price <= '.$to;
+           }elseif ($price_range == 3){
+               $from = 60;
+               $to = 120;
+               $cond .= ' and p.price >='.$from.' and p.price <= '.$to;
+           }elseif ($price_range == 4){
+               $from = 120;
+               $to = 200;
+               $cond .= ' and p.price >='.$from.' and p.price <= '.$to;
+           }elseif ($price_range == 5){
+               $from = 200;
+               $cond .= ' and p.price >='.$from;
+           }
+        }
+        $data = $this->_model->listSearch('products',$cond,$limit_cond);
+        $this->_view->data = $data;
+        $total_result = $this->_model->countRecordSearch('products',$cond);
+        $pagination = new Pagination($total_result, $per_page, $current_page);
+        //$REQUEST_URI = isset($_GET["page"]) ? $_SERVER['REQUEST_URI'] : '';
         $this->_view->getLinksHtml = $pagination->getLinksHtml('', 'page');
         $this->_view->action = $this->_arrParam['action'];
         $this->_view->total_result = $total_result;
         $this->_view->REDIRECT_URL = $_SERVER['REDIRECT_URL'];
         $this->_view->REQUEST_URI = $_SERVER['REQUEST_URI'];
+
         $this->_view->per_page = $per_page;
+        $this->_view->type = $type;
+        $this->_view->cat_id = $cat_id;
+        $this->_view->price_range = $price_range;
         $this->_view->render('category/index');
     }
     public function deleteAction(){

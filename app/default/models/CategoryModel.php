@@ -31,6 +31,21 @@ child.left BETWEEN parent.left AND parent.right GROUP BY p.id HAVING COUNT(p.id)
         $result = $this->ListRecord($query);
         return !empty($result) ? count($result) : 0;
     }
+    public function listSearch($table,$cond,$limit_cond = ''){
+        $this->setTable($table);
+        $query = 'SELECT p.* FROM `'.$table.'` as p, categories as child, categories as parent WHERE '.$cond.' and parent.left > 0  AND p.category_id = child.id  AND p.status = 1 AND
+child.left BETWEEN parent.left AND parent.right GROUP BY p.id HAVING COUNT(p.id) = SUM(parent.status)'.$limit_cond;
+        $result = $this->ListRecord($query);
+        return $result;
+    }
+    public function countRecordSearch($table,$cond){
+        $this->setTable($table);
+        //$query = 'SELECT * FROM `'.$table.'` WHERE `category_id` ='.$category_id;
+        $query = 'SELECT p.id FROM `'.$table.'` as p, categories as child, categories as parent WHERE '.$cond.' and parent.left > 0  AND p.category_id = child.id  AND p.status = 1 AND
+child.left BETWEEN parent.left AND parent.right GROUP BY p.id HAVING COUNT(p.id) = SUM(parent.status)';
+        $result = $this->ListRecord($query);
+        return !empty($result) ? count($result) : 0;
+    }
     public function form($arrParams, $task){
         if($task == 'add'){
             $arrParams['user_id']    = $_SESSION['userAdmin']['user_id'];;

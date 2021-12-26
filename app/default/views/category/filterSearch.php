@@ -3,6 +3,7 @@
     $cat_accordion = '';
     $category_filter = '';
     $link_categories = '/product-list/';
+    $array_cat = !empty($this->cat_id) ? explode(',',$this->cat_id) : array();
     if (!empty($listCat)){
         foreach ($this->categories as $key => $value){
             $category_name = $value['name'];
@@ -10,7 +11,7 @@
             $category_slug = makeSlug($category_name);
             $breakcrumbs = $link_categories.$category_slug.'-'.$category_id;
             $child_second = !empty($value['child_second']) ? $value['child_second'] : '';
-            $checked = $this->category_id == $category_id ? 'checked' : '';
+            $checked = in_array($category_id,$array_cat)   ? 'checked' : '';
             $category_filter .='
                  <li class="item">
                     <input class="typeSearch" value="'.$category_id.'" '.$checked.' type="checkbox" id="'.$category_slug.'_item" name="cat_id[]">
@@ -36,7 +37,7 @@
                     $category_child_name = $v['name'];
                     $category_child_id = $v['id'];
                     $category_child_slug = makeSlug($category_child_name);
-                    $checked_child = $this->category_id == $category_child_id ? 'checked' : '';
+                    $checked_child = in_array($category_child_id,$array_cat)   ? 'checked' : '';
                     $breakcrumbs_child = $link_categories.strtolower($category_child_slug).'-'.$v['id'];
                     $category_filter .='
                          <li class="item">
@@ -118,23 +119,28 @@
                                 <p class="title_filter_box text-uppercase">Prices</p>
                                 <ul class="list-unstyled list_fil">
                                     <li class="item">
-                                        <input class="typeSearch" type="radio" value="1" id="0-30" name="price_range">
+                                        <input class="typeSearch" type="radio" <?php if ($this->price_range == 1) echo 'checked'?>
+                                               value="1" id="0-30" name="price_range">
                                         <label class="" for="0-30">$0 - 30.00</label>
                                     </li>
                                     <li class="item">
-                                        <input class="typeSearch" type="radio" value="2" id="30-60" name="price_range">
+                                        <input class="typeSearch" type="radio" <?php if ($this->price_range == 2) echo 'checked'?>
+                                               value="2" id="30-60" name="price_range">
                                         <label class="" for="30-60">$30.00 - 60.00</label>
                                     </li>
                                     <li class="item">
-                                        <input class="typeSearch" type="radio" value="3" id="60-120" name="price_range">
+                                        <input class="typeSearch" type="radio" <?php if ($this->price_range == 3) echo 'checked'?>
+                                               value="3" id="60-120" name="price_range">
                                         <label class="" for="60-120">$60.00 - 120.00</label>
                                     </li>
                                     <li class="item">
-                                        <input class="typeSearch" type="radio" value="4" id="120-200" name="price_range">
+                                        <input class="typeSearch" type="radio" <?php if ($this->price_range == 4) echo 'checked'?>
+                                               value="4" id="120-200" name="price_range">
                                         <label class="" for="120-200">$120.00 - 200.00</label>
                                     </li>
                                     <li class="item">
-                                        <input class="typeSearch" type="radio" value="5" id="over-200" name="price_range">
+                                        <input class="typeSearch" type="radio" <?php if ($this->price_range == 5) echo 'checked'?>
+                                               value="5" id="over-200" name="price_range">
                                         <label class="" for="over-200">Over $200</label>
                                     </li>
                                 </ul>

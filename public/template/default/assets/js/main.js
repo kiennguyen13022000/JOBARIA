@@ -15,10 +15,12 @@ $(function () {
   $(".per_page_select").select2({ dropdownCssClass: "per_page_css", width: "100%" });
   $('.per_page_select').on('select2:select', function (e) {
      let per_page = $(this).val();
-      var $form = $(this).closest('form');
-      $form.find('input[type=submit]').click();
-
+      $('input[name="per_page"]').val(per_page);
+      $('.filter_form').submit();
   });
+  $(".typeSearch").change(function () {
+    $(this).closest('form').submit();
+  })
   $(".select_sort").select2({ dropdownCssClass: "select_sort_css", width: "100%" });
   if ($(".jorbaria_slider").length > 0) {
     var $owl = $(".jorbaria_slider");
