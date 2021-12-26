@@ -68,3 +68,14 @@
     cursor: pointer;
     z-index: 1000;
 }
+.user-inbox-active{
+    border-radius: 40px;
+    background-color: #e8f5e9;
+}
+.user-inbox-active .inbox-item-img{
+    margin-left: 15px;
+}
+.user-inbox-active .inbox-item-author{
+    font-weight: bold;
+    color: #0b0b0b;
+}

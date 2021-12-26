@@ -32,10 +32,13 @@ function createHtmlGrid($productList, $type){
 
         if ($k == 4){
             $k = 0;
-            $html .= '</div><div class="item">';
+            $html .= '</div>';
+            if ($key < count($productList[$type])){
+                $html .= '<div class="item">';
+            }
         }
 
-        if (count($productList[$type]) - 1 == $key && $key % 3 != 0)
+        if (count($productList[$type]) - 1 == $key)
             $html .= '</div>';
         $k++;
     }

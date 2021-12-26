@@ -10,10 +10,25 @@ class ChatController extends Controller
         $userInfo =  Session::get('userAdmin')['userInfo'];
         $this->_view->userInfo = $userInfo;
         $this->_view->userInbox = $this->_model->getUserInbox($userInfo['id']);
+
         $this->_view->inboxDetail = [];
         if (!empty($this->_view->userInbox)){
+            $ids = [];
+            foreach ($this->_view->userInbox as $value){
+                $ids[] = $value['user_id'];
+            }
+            $ids = implode(',', $ids);
             $userChat = $this->_view->userInbox[0];
-            Session::set('userChat', $userChat);
+            Session::set('userChat', $userChat['user_id']);
+            $this->_view->inboxDetail = $this->_model->getInboxDetail($userInfo['id'], $userChat['user_id']);
+            $userInbox = $this->_model->getUserInboxEmpty($userInfo['id'], $ids);
+
+            $this->_view->userInbox = array_merge($this->_view->userInbox, $userInbox);
+
+        }else{
+            $this->_view->userInbox = $this->_model->getUserInboxEmpty($userInfo['id']);
+            $userChat = $this->_view->userInbox[0];
+            Session::set('userChat', $userChat['user_id']);
             $this->_view->inboxDetail = $this->_model->getInboxDetail($userInfo['id'], $userChat['user_chat']);
         }
         $this->_view->action = $this->_arrParam['action'];
@@ -33,6 +48,15 @@ class ChatController extends Controller
         Session::set('userChat', $id);
         $result = $this->_model->infoChatItem($id);
         echo json_encode($result);
+    }
+
+    public function inboxDetailAction(){
+        $userInfo =  Session::get('userAdmin')['userInfo'];
+        $this->_view->userInfo = $userInfo;
+        $user_id = $this->_arrParam['user_id'];
+        Session::set('userChat', $user_id);
+        $this->_view->inboxDetail = $this->_model->getInboxDetail($userInfo['id'], $user_id);
+        $this->_view->render('chat/inbox-detail', false);
     }
 
     public function messageAction(){
