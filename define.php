@@ -13,6 +13,10 @@ const DEFAULT_MODULE = 'default';
 const DEFAULT_CONTROLLER = 'index';
 const DEFAULT_ACTION = 'index';
 const DOMAIN_NAME = 'jobaria.local';
+const PAGE_NAME = 'Jobaria';
+const EMAIL_TEMPLATE_SUBSCRIBE = 1;
+const EMAIL_TEMPLATE_ORDER_SUCCESS = 2;
+const EMAIL_TEMPLATE_CONFIRM_ORDER_SUCCESSFULL = 3;
 
 // ====================== DATABASE ===========================
 const DB_HOST = 'localhost';

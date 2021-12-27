@@ -75,8 +75,9 @@ if ($status == 1){
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-header border-bottom bg-transparent">
-                    <h5 class="header-title mb-0">Order <?php echo $this->result['code'] ?></h5>
+                <div class="card-header border-bottom bg-transparent d-flex">
+                    <h5 class="header-title mb-0 mr-auto">Order <?php echo $this->result['code'] ?></h5>
+                    <a class="btn btn-outline-primary" target="_blank" href="index.php?module=admin&controller=order&action=invoice&id=<?php echo $this->id ?>"><i class="fas fa-print"></i> Print invoice</a>
                 </div>
                 <div class="card-body">
                     <div>
@@ -130,9 +131,9 @@ if ($status == 1){
                                         <i class="ri-map-pin-time-line h2 m-0 text-muted"></i>
                                     </div>
                                     <div class="flex-1">
-                                        <p class="mb-1">Tracking ID</p>
+                                        <p class="mb-1">Email</p>
                                         <h5 class="mt-0">
-                                            <?php echo $this->result['id'] ?>
+                                            <?php echo $this->result['email'] ?>
                                         </h5>
                                     </div>
                                 </div>

@@ -38,10 +38,14 @@ $(function () {
         img.height = 120;
         $('.preview__image').addClass('border rounded mt-2');
     });
+    var height_textarea = 220;
+    if ($('textarea.textarea.email_template_content').length > 0){
+        var height_textarea = 400;
+    }
     tinymce.init({
         selector: 'textarea.textarea',
-        height: 220,
-        menubar: false,
+        height: height_textarea,
+        menubar: true,
         plugins: [
             'advlist autolink lists link image charmap print preview anchor',
             'searchreplace visualblocks code fullscreen',

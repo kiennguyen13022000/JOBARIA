@@ -16,7 +16,7 @@
                                 $list.= '
                                     <div class="col-lg-4 col-md-3 col-xs-12" >
                                     <div class="email_standard w-100">
-                                        <a class="text-uppercase" href="index.php?module=admin&controller=setting&action=email_template&id='.$value['id'].'">
+                                        <a class="text-uppercase" href="index.php?module=admin&controller=setting&action=emailTemplate&id='.$value['id'].'">
                                             <img align="top" src="public/template/admin/images/file-icons/massmail.png">
                                             '.$value['template_name'].'
                                         </a>

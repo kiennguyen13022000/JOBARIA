@@ -24,7 +24,7 @@ class OrderController extends Controller
             $this->_view->button_form = '<button class="btn btn-primary" type="submit">Update</button>';
             $task = 'edit';
             $requiredPass = false;
-            $result = $this->_model->info($order_id);
+            $result = $this->_model->info($order_id,'orders');
             if (empty($result)) header('Location: index.php?module=admin&controller=order&action=list');
             $this->_view->result = $result;
             $this->_view->product_order = $this->_model->listProductOrder($order_id);
@@ -36,7 +36,6 @@ class OrderController extends Controller
 
         if(isset($this->_arrParam['form'])){
             $form = $this->_arrParam['form'];
-
             $update=$this->_model->edit($this->_arrParam, $task);
             if (!empty($update)){
                 $this->_model->sendMailConfirmOrder($order_id);
@@ -50,6 +49,17 @@ class OrderController extends Controller
         $this->_view->control = $this->_arrParam['controller'];
         $this->_view->action = $this->_arrParam['action'];
         $this->_view->render('order/edit');
+    }
+    public function invoiceAction(){
+        $this->_view->title = 'Invoice';
+        $this->createLinkCss();
+        $this->createLinkJs();
+        $order_id = $this->_arrParam['id'];
+        $result = $this->_model->info($order_id,'orders');
+        $this->_view->result = $result;
+        $this->_view->control = $this->_arrParam['controller'];
+        $this->_view->action = $this->_arrParam['action'];
+        $this->_view->render('order/invoice',false);
     }
     public function listAction(){
         $this->_view->title = 'List order';

@@ -49,6 +49,30 @@ class SettingController extends Controller
         $this->_view->action = $this->_arrParam['action'];
         $this->_view->render('settings/listTemplate');
     }
+    public function emailTemplateAction(){
+        $this->createLinkCss();
+        $this->createLinkJs();
+        $email_template_id = $this->_arrParam['id'];
+        if (isset($this->_arrParam['form'])){
+            $arrParams = $this->_arrParam['form'];
+            //$arrParams['user_id']      = $_SESSION['userAdmin']['user_id'];
+            //$arrParams['created_at']   = date('Y-m-d H:i:s', time());
+            $arrParams['updated_at']   = date('Y-m-d H:i:s', time());
+            $this->_model->setTable('email_template');
+            if( $this->_model->Update($arrParams, [['id', $email_template_id, '']])){
+                Session::set('success', '\'' . 'emailTemplate'.  '\'' );
+                Url::redirect('admin', 'setting', 'emailTemplate', ['id' => $this->_arrParam['id']]);
+            }
+        }
+
+        $data = $this->_model->info($email_template_id,'email_template');
+        $this->_view->data = $data;
+        $this->_view->title = !empty($data['template_name']) ? $data['template_name'] : 'Email template';
+        $this->_view->control = $this->_arrParam['controller'];
+        $this->_view->action = $this->_arrParam['action'];
+        $this->_view->id = $email_template_id;
+        $this->_view->render('settings/email_template');
+    }
     private function createLinkCss(){
         $css = array(
             array(

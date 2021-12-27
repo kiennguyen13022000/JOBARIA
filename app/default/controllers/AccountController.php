@@ -60,22 +60,18 @@ class AccountController extends Controller
         $this->_view->render('account/order-detail');
     }
     public function addToFavoritesAction(){
-        echo 'aba';
-//        $user = Session::get('user', []);
-//        echo '<pre>';
-//        print_r($user);
-//        echo '</pre>';
-//        if (empty($user)){
-//            echo json_encode(['result' => 'error']);
-//        }
-//        else{
-//            $user_id = $user['user_id'];
-//            $id = $this->_arrParam['id'];
-//            $result = $this->_model->addToFavorites($id, $user_id);
-//            if ($result == 'already-exist')
-//                echo json_encode(['result' => $result]);
-//            else
-//                echo json_encode(['result' => 'success']);
-//        }
+        $user = Session::get('user', []);
+        if (empty($user)){
+            echo json_encode(['result' => 'error']);
+        }
+        else{
+            $user_id = $user['user_id'];
+            $id = $this->_arrParam['id'];
+            $result = $this->_model->addToFavorites($id, $user_id);
+            if ($result == 'already-exist')
+                echo json_encode(['result' => $result]);
+            else
+                echo json_encode(['result' => 'success']);
+        }
     }
 }

@@ -85,6 +85,7 @@ class OrderController extends Controller
 
             $order_id = $this->_model->Insert($orderParams);
             if (!empty($order_id)){
+                $orderParams['order_id'] = $order_id;
                 $this->_model->sendMail($orderParams);
                 $arrayParrams = array();
                 for ($i = 0; $i <$number_type; $i++){
