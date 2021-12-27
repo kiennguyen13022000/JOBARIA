@@ -41,7 +41,7 @@ class IndexModel extends Model
             $queryFavorites = 'select `product_id` from `favorites` as f where f.user_id = ' . $user_id;
             $favorites = $this->ListRecord($queryFavorites);
             $newFavorites = [];
-            foreach ($favorites as $value) {
+            foreach ($favorites as $value){
                 $newFavorites[] = $value['product_id'];
             }
             $result['favorites'] = $newFavorites;
@@ -122,8 +122,7 @@ class IndexModel extends Model
 
     }
 
-    public function getSettings()
-    {
+    public function getSettings(){
         $query = 'select * from `configs`';
         $result = $this->ListRecord($query);
         $newResult = array();

@@ -65,8 +65,16 @@ class ChatController extends Controller
         $userChat =  Session::get('userChat');
 
         $chatModel = $this->_model->message($this->_arrParam['message'], $userInfo, $userChat);
-        $pusher->trigger('message-channel', 'message-event', $chatModel);
-        echo json_encode(['user_id' => $userInfo['id']]);
+        $chatModel['created_at'] = DateFormat::createDateFormat($chatModel['created_at']);
+        $pusher->trigger('private-message-'. $userChat .'-channel', 'message-event', $chatModel);
+        echo json_encode(['message' => $chatModel]);
+    }
+
+    public function authAction(){
+        $pusher = Pusher::inti();
+        if (!empty(Session::get('userAdmin'))){
+            echo $pusher->socket_auth($_POST['channel_name'], $_POST['socket_id']);
+        }
     }
     private function createLinkCss(){
         $css = array(
