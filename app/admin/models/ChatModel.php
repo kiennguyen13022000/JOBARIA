@@ -80,7 +80,7 @@ class ChatModel extends Model
         $arrParam['fullname']   = $userInfo['firstname'] . ' ' . $userInfo['lastname'];
         $arrParam['image']      = $userInfo['avatar'];
         $arrParam['content']    = mysqli_real_escape_string($this->connect, $message);
-        $arrParam['created_at'] = date('Y-m-d: H:i:s');
+        $arrParam['created_at'] = date('Y-m-d H:i:s', time());
         $this->Insert($arrParam);
         $lastId = $this->LastId();
         $query = "select * from `chats` where id = $lastId";

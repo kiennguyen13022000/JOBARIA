@@ -14,7 +14,7 @@
 
 </head>
 
-<body class="loading" data-layout='{"sidebar": { "color": "dark"}}'>
+<body class="loading left-side-menu-dark topbar-light"  >
 <!-- =============== header ====================-->
 <?php include_once 'block/header.php'?>
 <!-- =============== end header ====================-->
@@ -86,6 +86,24 @@
         let notifier = new AWN(options);
         notifier.success(msg, {durations: {success: 2000}});
     }
+
+    var userId = <?php echo Session::get('userAdmin')['user_id']; ?>;
+    localStorage.setItem('userId', userId);
+
+    // Pusher.logToConsole = true;
+
+    var pusher = new Pusher('f0da0738e29f80193f63', {
+        cluster: 'ap1',
+        authEndpoint: '/index.php?module=admin&controller=chat&action=auth'
+    });
+
+    var channel = pusher.subscribe('private-message-'+ userId +'-channel');
+    channel.bind('message-event', function(data) {
+        var message = renderInboxDetail(data, 'odd');
+        $('.conversation-list').append(message);
+        var d = $('.conversation-list');
+        $('.slimScrollBar').css({ top: d.prop("scrollHeight")});
+    });
 </script>
 </body>
 

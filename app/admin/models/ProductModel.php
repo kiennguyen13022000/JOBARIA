@@ -98,7 +98,6 @@ class ProductModel extends Model
     public function getReviews($id){
         $query = "select rv.*, u.avatar from `reviews` as rv left join `users` as u on u.id = rv.user_id where `product_id` = $id";
         $reviews = $this->ListRecord($query);
-
         return $reviews;
     }
 

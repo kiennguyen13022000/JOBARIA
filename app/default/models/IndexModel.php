@@ -127,7 +127,7 @@ class IndexModel extends Model
     }
     public function info($id){
         $query[]    = "select p.*, child.name as categoryName, GROUP_CONCAT(DISTINCT parent.name order by parent.left) as breakcrumbs";
-        $query[]    = "from `products` as p join `categories` as child, `categories` as parent";
+        $query[]    = "from `products` as p, `categories` as child, `categories` as parent";
         $query[]    = "WHERE p.id = $id and p.category_id = child.id";
         $query[]    = "and child.left BETWEEN parent.left AND parent.right";
         $query[]    = "AND parent.left > 0 ";
@@ -201,4 +201,7 @@ class IndexModel extends Model
             return false;
         }
     }
+
+
+
 }

@@ -11,9 +11,12 @@ $(document).ready(function() {
         }else{
             var url = '/index.php?module=admin&controller=chat&action=message';
             var data = {message: message};
-            $.post(url, data, function (data){
+            $.post(url, data, function (data2){
                 $("#emoji")[0].emojioneArea.setText('');
-                localStorage.setItem('userCurrent', data.user_id);
+                var inboxDetail = renderInboxDetail(data2.message, '');
+                $('.conversation-list').append(inboxDetail);
+                var d = $('.conversation-list');
+                $('.slimScrollBar').css({ top: d.prop("scrollHeight")});
                 $('.chat-empty').remove();
             }, 'json');
         }
@@ -37,6 +40,8 @@ $(document).ready(function() {
         var userId = $(this).attr('data-user_id');
         var data = {user_id: userId};
         $('.conversation-list').load(url, data);
+        var d = $('.conversation-list');
+        $('.slimScrollBar').css({ top: d.prop("scrollHeight")});
     });
 
     var d = $('.conversation-list');
@@ -104,7 +109,7 @@ function renderInboxDetail(data, type){
     var html = '<li class="clearfix '+ type +'">\n' +
 '                    <div class="chat-avatar">\n' +
 '                        <img src="'+ avatar +'">\n' +
-'                        <i>10:01</i>\n' +
+'                        <i>'+ data.created_at +'</i>\n' +
 '                    </div>\n' +
 '                    <div class="conversation-text">\n' +
 '                        <div class="ctext-wrap">\n' +
@@ -119,18 +124,3 @@ function renderInboxDetail(data, type){
     return html;
 }
 
-// Pusher.logToConsole = true;
-
-var pusher = new Pusher('f0da0738e29f80193f63', {
-    cluster: 'ap1'
-});
-
-var channel = pusher.subscribe('message-channel');
-channel.bind('message-event', function(data) {
-    var  userCurrent = localStorage.getItem('userCurrent');
-    var type = userCurrent == data.user_id ? '' : 'odd';
-    var message = renderInboxDetail(data, type);
-    $('.conversation-list').append(message);
-    var d = $('.conversation-list');
-    $('.slimScrollBar').css({ top: d.prop("scrollHeight")});
-});
