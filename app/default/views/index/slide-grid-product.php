@@ -10,9 +10,9 @@ function createHtmlGrid($productList, $type){
         $discount       = (int) $value['price'] - (int) $value['promotion'] * (int) $value['price'] / 100;
         $price = '';
         if ($value['promotion'] > 0){
-            $price = '<span class="text__price pr-2">'. number_format($value['price'], 0, ',', '.') .' ₫</span>';
+            $price = '<span class="text__price pr-2">$'. number_format($value['price'], 0, ',', '.') .'</span>';
         }
-        $formatDiscount = number_format($discount, 0, ',', '.') . ' ₫';
+        $formatDiscount = '$'.number_format($discount, 0, ',', '.');
         $html .= ' <div class="d-flex">
                         <div class="w-25 ">
                             <a href="detail.html" class="d-block">

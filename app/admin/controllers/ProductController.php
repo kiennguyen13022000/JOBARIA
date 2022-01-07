@@ -117,6 +117,7 @@ class ProductController extends Controller
 //            $sql = "UPDATE products SET slug = '".$slug."' WHERE id=".$v['id'];
 //            $this->_model->Query($sql);
 //        }
+        $this->_view->model = $this->_model;
         $this->_view->data = $this->_model->list();
         $this->_view->control = $this->_arrParam['controller'];
         $this->_view->action = $this->_arrParam['action'];
@@ -182,7 +183,11 @@ class ProductController extends Controller
         }
         echo json_encode(['affected' => $affected]);
     }
-
+    public function moveProductAction(){
+        $data = $this->_model->moveProduct($this->_arrParam['type'], $this->_arrParam['id']);
+        $this->_view->data = $data;
+        $this->_view->render('product/datatable', false);
+    }
     private function createLinkCss(){
         $css = array(
             array(

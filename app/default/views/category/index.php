@@ -11,6 +11,7 @@ if (!empty($data)){
         $price = $v['price'];
         $new_price = $price;
         $promotion = $v['promotion'];
+        $text__price__modal= '';
         if ($promotion > 0){
             $new_price = number_format($price - $price * $promotion / 100, 2, '.', ',');
             $text__price__modal = '<span class="price__discount">$'.$price.'</span>';

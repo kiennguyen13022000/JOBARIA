@@ -79,6 +79,7 @@ class OrderController extends Controller
             $orderParams['postcode'] = $_POST['postcode'];
             $orderParams['email'] = $_POST['email'];
             $orderParams['phone'] = $_POST['phone'];
+            $orderParams['notes'] = $_POST['notes'];
             $ship_defferent_address = !empty($_POST['ship_defferent_address']) ? 1 : 0;
             $orderParams['ship_defferent_address'] = $ship_defferent_address;
             $orderParams['shipping_address'] = !empty($ship_defferent_address) ? json_encode( $_POST['shipping_address'], JSON_UNESCAPED_UNICODE ) : '';
@@ -86,7 +87,6 @@ class OrderController extends Controller
             $order_id = $this->_model->Insert($orderParams);
             if (!empty($order_id)){
                 $orderParams['order_id'] = $order_id;
-                $this->_model->sendMail($orderParams);
                 $arrayParrams = array();
                 for ($i = 0; $i <$number_type; $i++){
                     $arrayParrams['order_id'] = $order_id;
@@ -103,6 +103,7 @@ class OrderController extends Controller
                     //$info = $this->_model->infoDetail($_POST['product_id'][$i],$field);
                     $this->_model->add($arrayParrams,'product_order');
                 }
+                $this->_model->sendMail($orderParams);
             }
             header('Location: /success');
         }
@@ -242,7 +243,7 @@ class OrderController extends Controller
                     $new_price = number_format($price - $price * $promotion / 100, 2, '.', ',');
                     $new_price_int = number_format($new_price_int - $new_price_int * $promotion / 100, 2, '.', '');
                 }
-                $price_product_by_num = number_format($new_price *  $number_product, 2, '.', ',');
+                $price_product_by_num = number_format($new_price_int *  $number_product, 2, '.', ',');
                 $price_product_by_num_int = number_format($new_price_int *  $number_product, 2, '.', '');
                 $total_price_cart += $price_product_by_num_int;
                 $renderCartHtml .='

@@ -27,8 +27,7 @@
                 $htmlCategory .= '<div class="shop__categories__item__right">
                                    <div class="row mx-0">';
                 foreach ($value['child_second'] as $keyChildSecond => $valueChildSecond){
-                   // $breakcrumbs_child = $link_categories.strtolower(str_replace(',','/',$valueChildSecond['breakcrumbs'])).'-'.$valueChildSecond['id'];
-                    $breakcrumbs_child = $link_categories.strtolower(str_replace(',','/',$valueChildSecond['name'])).'-'.$valueChildSecond['id'];
+                    $breakcrumbs_child = $link_categories.URL::filterURL($valueChildSecond['name']).'-'.$valueChildSecond['id'];
                     $htmlCategory .= '<div class="col-3 categories__item__right py-3">
                                       <ul class="nav flex-column">';
                     $htmlCategory .= '<li class="nav-item shop__categories__item">
@@ -38,8 +37,9 @@
                                   </li>';
                     if (!empty($valueChildSecond['child_third'])){
                         foreach ($valueChildSecond['child_third'] as $keyChildThird => $valueChildThird){
+                            $breakcrumbs_childThird = $link_categories.URL::filterURL($valueChildThird['name']).'-'.$valueChildThird['id'];
                             $htmlCategory .= '<li class="nav-item shop__categories__item">
-                                                <a class="nav-link py-1 categories__link" href="'.$breakcrumbs_child.'">
+                                                <a class="nav-link py-1 categories__link" href="'.$breakcrumbs_childThird.'">
                                                     '.$valueChildThird['name'].'
                                                 </a>
                                           </li>';

@@ -24,7 +24,7 @@ class ChatModel extends Model
         return ['infoChatItem' => $infoChatItem, 'chatDetail' => $chatDetail];
     }
 
-    public function getUserInboxEmpty($user_id, $ids){
+    public function getUserInboxEmpty($user_id, $ids = 0){
          $query = "SELECT c.content, c.user_id, c.user_chat, c.fullname, c.image as avatar
                         FROM chats as c WHERE id in (SELECT MAX(id) FROM chats WHERE user_chat = $user_id 
                         GROUP BY user_id)

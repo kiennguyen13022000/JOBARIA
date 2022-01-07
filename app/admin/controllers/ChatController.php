@@ -27,9 +27,13 @@ class ChatController extends Controller
 
         }else{
             $this->_view->userInbox = $this->_model->getUserInboxEmpty($userInfo['id']);
-            $userChat = $this->_view->userInbox[0];
-            Session::set('userChat', $userChat['user_id']);
-            $this->_view->inboxDetail = $this->_model->getInboxDetail($userInfo['id'], $userChat['user_chat']);
+            $userInbox_0 = !empty($this->_view->userInbox[0]) ? $this->_view->userInbox[0] : array();
+            if (!empty($userInbox_0)){
+                $userChat = $userInbox_0;
+                Session::set('userChat', $userChat['user_id']);
+                $this->_view->inboxDetail = $this->_model->getInboxDetail($userInfo['id'], $userChat['user_chat']);
+            }
+
         }
         $this->_view->action = $this->_arrParam['action'];
         $this->_view->render('chat/index');

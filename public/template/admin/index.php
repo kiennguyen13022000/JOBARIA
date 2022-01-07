@@ -86,6 +86,11 @@
         let notifier = new AWN(options);
         notifier.success(msg, {durations: {success: 2000}});
     }
+    else if (success == 'emailTemplate'){
+        msg = 'Update successful';
+        let notifier = new AWN(options);
+        notifier.success(msg, {durations: {success: 2000}});
+    }
 
     var userId = <?php echo Session::get('userAdmin')['user_id']; ?>;
     localStorage.setItem('userId', userId);

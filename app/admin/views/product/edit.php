@@ -173,7 +173,7 @@ if($ratingTotal > 0){
                                                 <input type="file" name="image" id="validationImg" value="<?php echo  $image; ?>"
                                                        class="input__image custom-file-input cursor"
                                                        size="" placeholder="Image">
-                                                <label class="custom-file-label" for="validationImg"><?php echo $choose_file; ?></label>
+                                                <label class="custom-file-label label_img" for="validationImg"><?php echo $choose_file; ?></label>
 
                                             </div>
                                             <img class="mt-3 preview__image <?php echo $img_product; ?>"

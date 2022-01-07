@@ -90,6 +90,13 @@ function moveNode(type, id){
         changeTrending();
     });
 }
+function moveProduct(type, id){
+    var data = {type: type, id: id};
+    $('#datatable').load('/index.php?module=admin&controller=product&action=moveProduct', data, function (){
+        changeStatus();
+        changeTrending();
+    });
+}
 function changeStatus(){
     $('.status__item').click(function (){
         var id = $(this).attr('data-id');

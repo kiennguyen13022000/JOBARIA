@@ -17,7 +17,12 @@ class CategoryModel extends Model
     }
     public function list($category_id,$table,$limit_cond = ''){
         $this->setTable($table);
-        //$query = 'SELECT * FROM `'.$table.'` WHERE `category_id` ='.$category_id;
+        $query_select = 'SELECT categories.left,categories.right FROM categories WHERE `id` ='.$category_id;
+        $result_select = $this->OneRecord($query_select);
+
+//        $query= 'SELECT p.* FROM products as p, categories as child, categories as parent WHERE p.category_id = child.id  AND p.status = 1 AND
+//child.left BETWEEN '.$result_select['left'].' AND '.$result_select['right'].' GROUP BY p.id HAVING COUNT(p.id) = SUM(parent.status)'.$limit_cond;
+
         $query = 'SELECT p.* FROM `'.$table.'` as p, categories as child, categories as parent WHERE parent.left > 0 AND child.id = '.$category_id.' AND p.category_id = child.id  AND p.status = 1 AND
 child.left BETWEEN parent.left AND parent.right GROUP BY p.id HAVING COUNT(p.id) = SUM(parent.status)'.$limit_cond;
         $result = $this->ListRecord($query);
@@ -33,6 +38,11 @@ child.left BETWEEN parent.left AND parent.right GROUP BY p.id HAVING COUNT(p.id)
     }
     public function listSearch($table,$cond,$limit_cond = ''){
         $this->setTable($table);
+        $query_select = 'SELECT categories.left,categories.right FROM categories';
+        $result_select = $this->OneRecord($query_select);
+//        $query= 'SELECT p.* FROM products as p, categories as child, categories as parent WHERE p.category_id = child.id  AND p.status = 1 AND
+//child.left BETWEEN '.$result_select['left'].' AND '.$result_select['right'].' GROUP BY p.id HAVING COUNT(p.id) = SUM(parent.status)'.$limit_cond;
+
         $query = 'SELECT p.* FROM `'.$table.'` as p, categories as child, categories as parent WHERE '.$cond.' and parent.left > 0  AND p.category_id = child.id  AND p.status = 1 AND
 child.left BETWEEN parent.left AND parent.right GROUP BY p.id HAVING COUNT(p.id) = SUM(parent.status)'.$limit_cond;
         $result = $this->ListRecord($query);
